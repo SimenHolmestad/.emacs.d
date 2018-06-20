@@ -1,0 +1,6 @@
+[submodule "packages/iy-go-to-char"]
+	path = packages/iy-go-to-char
+	url = https://github.com/doitian/iy-go-to-char.git
+[submodule "packages/tiny-tools"]
+	path = packages/tiny-tools
+	url = https://github.com/jaalto/project--emacs-tiny-tools.git
