@@ -1,7 +1,7 @@
 (add-to-list 'load-path "~/.emacs.d/packages/tiny-tools/lisp/tiny")
 (add-to-list 'load-path "~/.emacs.d/packages/tiny-tools/lisp/other")
 
-(global-set-key (kbd "C-ø") 'undo)
+(global-set-key (kbd "C-z") 'undo)
 
 (add-hook 'html-mode-hook
           (lambda ()
@@ -21,5 +21,5 @@
 
 (add-to-list 'load-path "~/.emacs.d/packages/iy-go-to-char/")
 (require 'iy-go-to-char)
-(global-set-key (kbd "C-æ") 'iy-go-to-char)
-(global-set-key (kbd "C-å") 'iy-go-to-char-backward)
+(global-set-key (kbd "C-i") 'iy-go-to-char)
+(global-set-key (kbd "M-i") 'iy-go-to-char-backward)
