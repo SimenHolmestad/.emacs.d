@@ -4,3 +4,4 @@
 !packages/**
 !.gitignore
 !.gitmodules
+!readme.md
