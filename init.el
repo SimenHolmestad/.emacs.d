@@ -45,3 +45,15 @@
 (require 'expand-region)
 (global-set-key (kbd "C-ø") 'er/expand-region)
 (delete-selection-mode 1)
+
+;;
+;; ace jump mode major function
+;; 
+(add-to-list 'load-path "~/.emacs.d/packages/ace-jump-mode/")
+(autoload
+  'ace-jump-mode
+  "ace-jump-mode"
+  "Emacs quick move minor mode"
+  t)
+;; you can select the key you prefer to
+(define-key global-map (kbd "C-æ") 'ace-jump-mode)
