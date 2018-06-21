@@ -39,3 +39,9 @@
 (setq web-mode-enable-css-colorization t)
 (setq web-mode-enable-current-element-highlight t)
 (setq web-mode-enable-current-column-highlight t)
+
+;; expand-region
+(add-to-list 'load-path "~/.emacs.d/packages/expand-region.el/")
+(require 'expand-region)
+(global-set-key (kbd "C-ø") 'er/expand-region)
+(delete-selection-mode 1)
