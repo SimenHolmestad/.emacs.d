@@ -1,3 +1,12 @@
+;; remove mouse stuff
+(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+
+;; start in fullscreen
+(custom-set-variables
+ '(initial-frame-alist (quote ((fullscreen . maximized)))))
+
 (add-to-list 'load-path "~/.emacs.d/packages/tiny-tools/lisp/tiny")
 (add-to-list 'load-path "~/.emacs.d/packages/tiny-tools/lisp/other")
 
