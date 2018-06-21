@@ -12,10 +12,6 @@
 
 (global-set-key (kbd "C-z") 'undo)
 
-(add-hook 'html-mode-hook
-          (lambda ()
-            (set (make-local-variable 'sgml-basic-offset) 4)))
-
 (custom-set-variables        
  '(ns-alternate-modifier nil)
  '(ns-command-modifier 'meta)
@@ -32,3 +28,14 @@
 (require 'iy-go-to-char)
 (global-set-key (kbd "C-i") 'iy-go-to-char)
 (global-set-key (kbd "M-i") 'iy-go-to-char-backward)
+
+;; web-mode for editing html-files, good docs at http://web-mode.org/
+(add-to-list 'load-path "~/.emacs.d/packages/web-mode/")
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+(setq web-mode-engines-alist
+      '(("django"    . "\\html\\'")))
+(setq web-mode-enable-auto-pairing t)
+(setq web-mode-enable-css-colorization t)
+(setq web-mode-enable-current-element-highlight t)
+(setq web-mode-enable-current-column-highlight t)
