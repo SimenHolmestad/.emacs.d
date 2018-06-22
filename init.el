@@ -11,6 +11,7 @@
 (add-to-list 'load-path "~/.emacs.d/packages/tiny-tools/lisp/other")
 
 (global-set-key (kbd "C-z") 'undo)
+(global-set-key (kbd "C-h") 'delete-backward-char)
 
 (custom-set-variables        
  '(ns-alternate-modifier nil)
@@ -44,16 +45,19 @@
 (add-to-list 'load-path "~/.emacs.d/packages/expand-region.el/")
 (require 'expand-region)
 (global-set-key (kbd "C-ø") 'er/expand-region)
-(delete-selection-mode 1)
 
-;;
-;; ace jump mode major function
-;; 
+;; ace-jump-mode
 (add-to-list 'load-path "~/.emacs.d/packages/ace-jump-mode/")
 (autoload
   'ace-jump-mode
   "ace-jump-mode"
   "Emacs quick move minor mode"
   t)
-;; you can select the key you prefer to
 (define-key global-map (kbd "C-æ") 'ace-jump-mode)
+
+;; multiple-cursors
+(add-to-list 'load-path "~/.emacs.d/packages/multiple-cursors.el")
+(require 'multiple-cursors)
+(global-set-key (kbd "C-@") 'mc/mark-next-like-this)
+(global-set-key (kbd "M-@") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C-@") 'mc/mark-all-like-this)

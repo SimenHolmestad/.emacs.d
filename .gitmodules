@@ -13,3 +13,6 @@
 [submodule "packages/ace-jump-mode"]
 	path = packages/ace-jump-mode
 	url = https://github.com/winterTTr/ace-jump-mode.git
+[submodule "packages/multiple-cursors.el"]
+	path = packages/multiple-cursors.el
+	url = https://github.com/magnars/multiple-cursors.el.git
