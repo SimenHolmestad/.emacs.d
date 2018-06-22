@@ -5,19 +5,25 @@
 
 ;; start in fullscreen
 (custom-set-variables
- '(initial-frame-alist (quote ((fullscreen . maximized)))))
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
+ '(inhibit-startup-screen t)
+ '(initial-frame-alist (quote ((fullscreen . maximized))))
+ '(ns-alternate-modifier nil)
+ '(ns-command-modifier (quote meta))
+ '(ns-right-command-modifier (quote super))
+ '(select-enable-clipboard t))
 
 (add-to-list 'load-path "~/.emacs.d/packages/tiny-tools/lisp/tiny")
 (add-to-list 'load-path "~/.emacs.d/packages/tiny-tools/lisp/other")
 
 (global-set-key (kbd "C-z") 'undo)
 (global-set-key (kbd "C-h") 'delete-backward-char)
-
-(custom-set-variables        
- '(ns-alternate-modifier nil)
- '(ns-command-modifier 'meta)
- '(ns-right-command-modifier 'super)
- '(x-select-enable-clipboard t))
 
 (setq backup-directory-alist `(("." . "~/.emacs.d/.backups")))
 
@@ -61,3 +67,39 @@
 (global-set-key (kbd "C-@") 'mc/mark-next-like-this)
 (global-set-key (kbd "M-@") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-@") 'mc/mark-all-like-this)
+
+;; add the solarized theme
+(add-to-list 'load-path "~/.emacs.d/packages/solarized")
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+
+;; a way to toggle themes found on stackexchange
+(defvar *haba-theme-dark* 'solarized-dark)
+(defvar *haba-theme-light* 'solarized-light)
+(defvar *haba-current-theme* *haba-theme-dark*)
+
+;; disable other themes before loading new one
+(defadvice load-theme (before theme-dont-propagate activate)
+  "Disable theme before loading new one."
+  (mapcar #'disable-theme custom-enabled-themes))
+
+
+(defun haba/next-theme (theme)
+  (if (eq theme 'default)
+      (disable-theme *haba-current-theme*)
+    (progn
+      (load-theme theme t)))
+  (setq *haba-current-theme* theme))
+
+(defun haba/toggle-theme ()
+  (interactive)
+  (cond ((eq *haba-current-theme* *haba-theme-dark*) (haba/next-theme *haba-theme-light*))
+        ((eq *haba-current-theme* *haba-theme-light*) (haba/next-theme 'default))
+        ((eq *haba-current-theme* 'default) (haba/next-theme *haba-theme-dark*))))
+
+(global-set-key (kbd "C-x t") 'haba/toggle-theme)
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

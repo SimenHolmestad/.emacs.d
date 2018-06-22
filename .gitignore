@@ -5,3 +5,5 @@
 !.gitignore
 !.gitmodules
 !readme.md
+!themes
+!themes/**
