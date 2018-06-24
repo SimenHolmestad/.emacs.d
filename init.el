@@ -33,8 +33,8 @@
 
 (add-to-list 'load-path "~/.emacs.d/packages/iy-go-to-char/")
 (require 'iy-go-to-char)
-(global-set-key (kbd "C-i") 'iy-go-to-char)
-(global-set-key (kbd "M-i") 'iy-go-to-char-backward)
+(global-set-key (kbd "C-.") 'iy-go-to-char)
+(global-set-key (kbd "M-.") 'iy-go-to-char-backward)
 
 ;; web-mode for editing html-files, good docs at http://web-mode.org/
 (add-to-list 'load-path "~/.emacs.d/packages/web-mode/")
@@ -71,8 +71,11 @@
 ;; add the solarized theme
 (add-to-list 'load-path "~/.emacs.d/packages/solarized")
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+(load-theme 'solarized-dark)
 
+;;
 ;; a way to toggle themes found on stackexchange
+;;
 (defvar *haba-theme-dark* 'solarized-dark)
 (defvar *haba-theme-light* 'solarized-light)
 (defvar *haba-current-theme* *haba-theme-dark*)
@@ -96,10 +99,22 @@
         ((eq *haba-current-theme* *haba-theme-light*) (haba/next-theme 'default))
         ((eq *haba-current-theme* 'default) (haba/next-theme *haba-theme-dark*))))
 
-(global-set-key (kbd "C-x t") 'haba/toggle-theme)
+(global-set-key (kbd "C-x t") 'haba/toggle-theme) ;; bind theme-toggling to c-x t
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+;; org-mode-modification
+(setq org-startup-indented t) ;; makes org-mode start in a prettier version
+(setq org-startup-truncated nil) ;; makes lines shift making it possible to write longer paragraphs
+
+;; dired-modification
+(add-to-list 'load-path "~/.emacs.d/packages/dired-details")
+(require 'dired-details)
+(setq-default dired-details-hidden-string "--- ")
+(dired-details-install)
+(global-set-key (kbd "C-c C-t") `dired-details-toggle)
+(setq dired-dwim-target t) ;; Makes it possible to move stuff between two dired-buffers fast
