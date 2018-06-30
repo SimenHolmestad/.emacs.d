@@ -33,8 +33,8 @@
 
 (add-to-list 'load-path "~/.emacs.d/packages/iy-go-to-char/")
 (require 'iy-go-to-char)
-(global-set-key (kbd "C-.") 'iy-go-to-char)
-(global-set-key (kbd "M-.") 'iy-go-to-char-backward)
+(global-set-key (kbd "C-å") 'iy-go-to-char)
+(global-set-key (kbd "M-å") 'iy-go-to-char-backward)
 
 ;; web-mode for editing html-files, good docs at http://web-mode.org/
 (add-to-list 'load-path "~/.emacs.d/packages/web-mode/")
@@ -83,7 +83,7 @@
 ;; disable other themes before loading new one
 (defadvice load-theme (before theme-dont-propagate activate)
   "Disable theme before loading new one."
-  (mapcar #'disable-theme custom-enabled-themes))
+  (mapc #'disable-theme custom-enabled-themes))
 
 
 (defun haba/next-theme (theme)
@@ -110,6 +110,9 @@
 ;; org-mode-modification
 (setq org-startup-indented t) ;; makes org-mode start in a prettier version
 (setq org-startup-truncated nil) ;; makes lines shift making it possible to write longer paragraphs
+(global-set-key (kbd "C-c C-æ") `org-store-link) ;; copy link to file
+(global-set-key (kbd "C-c C-ø") `org-insert-last-stored-link) ;; paste link to file
+
 
 ;; dired-modification
 (add-to-list 'load-path "~/.emacs.d/packages/dired-details")
@@ -118,3 +121,85 @@
 (dired-details-install)
 (global-set-key (kbd "C-c C-t") `dired-details-toggle)
 (setq dired-dwim-target t) ;; Makes it possible to move stuff between two dired-buffers fast
+
+;;
+;; elpy for python autocomplete and such
+;;
+;; if you wondered what dependencies elpy had, they are all here. Some of them could be cool to check out!
+(add-to-list 'load-path "~/.emacs.d/packages/elpy")
+(add-to-list 'load-path "~/.emacs.d/packages/s.el")
+(add-to-list 'load-path "~/.emacs.d/packages/pyenv")
+(add-to-list 'load-path "~/.emacs.d/packages/find-file-in-project")
+(add-to-list 'load-path "~/.emacs.d/packages/company-mode")
+(add-to-list 'load-path "~/.emacs.d/packages/highlight-indentation")
+(add-to-list 'load-path "~/.emacs.d/packages/yasnippet")
+(add-to-list 'load-path "~/.emacs.d/packages/emacs-epc")
+(add-to-list 'load-path "~/.emacs.d/packages/auto-complete")
+(require 'elpy)
+(elpy-enable)
+(pyvenv-activate "~/.emacs.d/emacs-env") ;; runs the global virtualenv
+(setq shell-file-name "/bin/bash")
+(global-set-key (kbd "C-l") `elpy-company-backend) ;; force auto-completion to start
+
+;; Use jupyter for python shells
+(setq python-shell-interpreter "jupyter"
+      python-shell-interpreter-args "console --simple-prompt"
+      python-shell-prompt-detect-failure-warning nil)
+(add-to-list 'python-shell-completion-native-disabled-interpreters
+             "jupyter")
+(setenv "PYTHONIOENCODING" "utf-8") ;; Makes sure python handles unicode characters
+
+;;
+;; Settings for current django project as i didn´t find a better place for them
+;;
+(elpy-set-test-runner `elpy-test-django-runner) ;; Find other test-runner-names by grepping the name tags
+(setenv "DJANGO_SETTINGS_MODULE" "buk.settings") ;; Makes it possible to run manage.py commands
+
+;; Django shell doesn´t work with elpy, so here´s a function from stackoverflow instead:
+(defun django-shell (&optional argprompt)
+  (interactive "P")
+  ;; Set the default shell if not already set
+  (labels ((read-django-project-dir 
+    (prompt dir)
+    (let* ((dir (read-directory-name prompt dir))
+           (manage (expand-file-name (concat dir "manage.py"))))
+      (if (file-exists-p manage)
+          (expand-file-name dir)
+        (progn
+          (message "%s is not a Django project directory" manage)
+          (sleep-for .5)
+          (read-django-project-dir prompt dir))))))
+(let* ((dir (read-django-project-dir 
+         "django project directory: " 
+         default-directory))
+       (project-name (first 
+              (remove-if (lambda (s) (or (string= "src" s) (string= "" s))) 
+                 (reverse (split-string dir "/")))))
+       (buffer-name (format "django-%s" project-name))
+       (manage (concat dir "manage.py")))
+  (cd dir)
+  (if (not (equal (buffer-name) buffer-name))
+      (switch-to-buffer-other-window
+       (apply 'make-comint buffer-name manage nil '("shell")))
+    (apply 'make-comint buffer-name manage nil '("shell")))
+  (make-local-variable 'comint-prompt-regexp)
+  (setq comint-prompt-regexp (concat py-shell-input-prompt-1-regexp "\\|"
+                     py-shell-input-prompt-2-regexp "\\|"
+                     "^([Pp]db) "))
+  (add-hook 'comint-output-filter-functions
+        'py-comint-output-filter-function)
+  ;; pdbtrack
+
+  (add-hook 'comint-output-filter-functions 'py-pdbtrack-track-stack-file)
+  (setq py-pdbtrack-do-tracking-p t)
+  (set-syntax-table py-mode-syntax-table)
+  (use-local-map py-shell-map)
+  (run-hooks 'py-shell-hook))))
+
+(global-set-key (kbd "C-c C-x s") `django-shell) ;; Set shortcut to django-shell
+
+;;
+;; elpy ends here
+;;
+
+(find-file "~/Dropbox/notater/todo.org") ;; I want emacs to start at the todo-list where i also can put in links to my most used files for easy access

@@ -16,3 +16,33 @@
 [submodule "packages/multiple-cursors.el"]
 	path = packages/multiple-cursors.el
 	url = https://github.com/magnars/multiple-cursors.el.git
+[submodule "packages/elpy"]
+	path = packages/elpy
+	url = https://github.com/jorgenschaefer/elpy
+[submodule "packages/s.el"]
+	path = packages/s.el
+	url = https://github.com/magnars/s.el
+[submodule "packages/pyenv"]
+	path = packages/pyenv
+	url = https://github.com/jorgenschaefer/pyvenv
+[submodule "packages/find-file-in-project"]
+	path = packages/find-file-in-project
+	url = https://github.com/technomancy/find-file-in-project
+[submodule "packages/company-mode"]
+	path = packages/company-mode
+	url = https://github.com/company-mode/company-mode
+[submodule "packages/highlight-indentation"]
+	path = packages/highlight-indentation
+	url = https://github.com/antonj/Highlight-Indentation-for-Emacs
+[submodule "packages/yasnippet"]
+	path = packages/yasnippet
+	url = https://github.com/joaotavora/yasnippet
+[submodule "packages/emacs-epc"]
+	path = packages/emacs-epc
+	url = https://github.com/kiwanami/emacs-epc
+[submodule "packages/auto-complete"]
+	path = packages/auto-complete
+	url = https://github.com/auto-complete/auto-complete
+[submodule "packages/emacs-jedi"]
+	path = packages/emacs-jedi
+	url = https://github.com/tkf/emacs-jedi
