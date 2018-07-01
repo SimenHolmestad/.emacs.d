@@ -12,9 +12,7 @@ ipykernel
 ipython
 ipython-genutils
 jedi
-jupyter-client
-jupyter-console
-jupyter-core
+jupyter
 mccabe
 parso
 pexpect
