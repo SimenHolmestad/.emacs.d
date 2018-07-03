@@ -36,3 +36,4 @@ tornado
 traitlets
 wcwidth
 yapf
+flake8
