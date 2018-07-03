@@ -202,4 +202,10 @@
 ;; elpy ends here
 ;;
 
+;; browse-kill-ring
+(add-to-list 'load-path "~/.emacs.d/packages/browse-kill-ring")
+(require 'browse-kill-ring)
+(browse-kill-ring-default-keybindings) ;; maps browse-kill-ring to M-y
+
+;; start in file
 (find-file "~/Dropbox/notater/todo.org") ;; I want emacs to start at the todo-list where i also can put in links to my most used files for easy access

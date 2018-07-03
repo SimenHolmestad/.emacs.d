@@ -46,3 +46,6 @@
 [submodule "packages/emacs-jedi"]
 	path = packages/emacs-jedi
 	url = https://github.com/tkf/emacs-jedi
+[submodule "packages/browse-kill-ring"]
+	path = packages/browse-kill-ring
+	url = https://github.com/T-J-Teru/browse-kill-ring.git
