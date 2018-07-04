@@ -207,5 +207,22 @@
 (require 'browse-kill-ring)
 (browse-kill-ring-default-keybindings) ;; maps browse-kill-ring to M-y
 
+;;
+;; magit
+;;
+;; First install dependencies
+(add-to-list 'load-path "~/.emacs.d/packages/dash")
+(add-to-list 'load-path "~/.emacs.d/packages/magit-popup")
+(add-to-list 'load-path "~/.emacs.d/packages/ghub")
+(add-to-list 'load-path "~/.emacs.d/packages/with-editor")
+(add-to-list 'load-path "~/.emacs.d/packages/magit/lisp")
+(require 'magit)
+
+(with-eval-after-load 'info
+  (info-initialize)
+  (add-to-list 'Info-directory-list
+               "~/.emacs.d/packages/magit/Documentation/"))
+(global-set-key (kbd "C-x g") 'magit-status)
+
 ;; start in file
 (find-file "~/Dropbox/notater/todo.org") ;; I want emacs to start at the todo-list where i also can put in links to my most used files for easy access

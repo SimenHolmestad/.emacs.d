@@ -16,3 +16,14 @@ python3 -m venv emacs-env
 source emacs-env/bin/activate
 pip install -r pip-requirements.txt
 ```
+
+### magit
+Magit is currently a hassle to install. While i have plan to make some kind of setup-script, currently, you will have to make a file called `config.mk` inside the ~/.emacs.d/packages/magit/ directory containing these lines:
+```
+LOAD_PATH  = -L ~/.emacs.d/packages/magit/lisp
+LOAD_PATH += -L ~/.emacs.d/packages/dash.el
+LOAD_PATH += -L ~/.emacs.d/packages/magit-popup
+LOAD_PATH += -L ~/.emacs.d/packages/ghub
+LOAD_PATH += -L ~/.emacs.d/packages/with-editor
+```
+and then run `make` within the ~/.emacs.d/packages/magit directory.

@@ -49,3 +49,18 @@
 [submodule "packages/browse-kill-ring"]
 	path = packages/browse-kill-ring
 	url = https://github.com/T-J-Teru/browse-kill-ring.git
+[submodule "packages/dash.el"]
+	path = packages/dash.el
+	url = https://github.com/magnars/dash.el
+[submodule "packages/magit-popup"]
+	path = packages/magit-popup
+	url = https://github.com/magit/magit-popup
+[submodule "packages/ghub"]
+	path = packages/ghub
+	url = https://github.com/magit/ghub
+[submodule "packages/with-editor"]
+	path = packages/with-editor
+	url = https://github.com/magit/with-editor
+[submodule "packages/magit"]
+	path = packages/magit
+	url = https://github.com/magit/magit.git
