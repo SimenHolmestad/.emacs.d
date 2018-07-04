@@ -33,8 +33,8 @@
 
 (add-to-list 'load-path "~/.emacs.d/packages/iy-go-to-char/")
 (require 'iy-go-to-char)
-(global-set-key (kbd "C-å") 'iy-go-to-char)
-(global-set-key (kbd "M-å") 'iy-go-to-char-backward)
+(global-set-key (kbd "C-l") 'iy-go-to-char)
+(global-set-key (kbd "M-L") 'iy-go-to-char-backward)
 
 ;; web-mode for editing html-files, good docs at http://web-mode.org/
 (add-to-list 'load-path "~/.emacs.d/packages/web-mode/")
@@ -139,7 +139,7 @@
 (elpy-enable)
 (pyvenv-activate "~/.emacs.d/emacs-env") ;; runs the global virtualenv
 (setq shell-file-name "/bin/bash")
-(global-set-key (kbd "C-l") `elpy-company-backend) ;; force auto-completion to start
+(global-set-key (kbd "C-å") `elpy-company-backend) ;; force auto-completion to start
 
 ;; Use jupyter for python shells
 (setq python-shell-interpreter "jupyter"
