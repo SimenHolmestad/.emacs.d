@@ -113,6 +113,25 @@
 (global-set-key (kbd "C-c C-æ") `org-store-link) ;; copy link to file
 (global-set-key (kbd "C-c C-ø") `org-insert-last-stored-link) ;; paste link to file
 
+;; MobileOrg-modification for syncing org-files to mobile
+(setq org-directory "~/Dropbox/notater")
+(setq org-mobile-inbox-for-pull "~/Dropbox/notater/fra-mobil.org")
+(setq org-mobile-directory "~/Dropbox/Apps/MobileOrg")
+
+(require 'org)
+(org-mobile-pull) ;; downloads new data from mobile on startup
+
+(setq org-mobile-files (apply #'list (mapcar (lambda (filename) (concat "~/Dropbox/notater/" filename))(directory-files "~/Dropbox/notater/" nil "\\.org$")))) ;; For some reason this has to be called in order for the function below to work
+
+(defun org-set-mobile-files-and-push ()
+  (when (eq major-mode 'org-mode)
+    (setq org-mobile-files (apply #'list
+				  (mapcar (lambda (filename)
+					    (concat "~/Dropbox/notater/" filename))(directory-files "~/Dropbox/notater/" nil "\\.org$")))) ;; add all files from this folder to be synced to mobile
+    (org-mobile-push)
+    ))
+
+(add-hook 'after-save-hook 'org-set-mobile-files-and-push) ;; pushes data after saving a file while in org-mode
 
 ;; dired-modification
 (add-to-list 'load-path "~/.emacs.d/packages/dired-details")
