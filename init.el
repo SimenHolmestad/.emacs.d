@@ -243,5 +243,9 @@
                "~/.emacs.d/packages/magit/Documentation/"))
 (global-set-key (kbd "C-x g") 'magit-status)
 
+;; Shell-modification
+(setenv "PATH" "/Users/simen/.emacs.d/emacs-env/bin:/opt/local/bin:/opt/local/sbin:/Users/simen/.rvm/gems/ruby-2.4.1/bin:/Users/simen/.rvm/gems/ruby-2.4.1@global/bin:/Users/simen/.rvm/rubies/ruby-2.4.1/bin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/TeX/texbin:/opt/X11/bin:/Users/simen/.rvm/bin")
+;; sets the path so system shell commands can be run from the emacs shell
+
 ;; start in file
 (find-file "~/Dropbox/notater/todo.org") ;; I want emacs to start at the todo-list where i also can put in links to my most used files for easy access
