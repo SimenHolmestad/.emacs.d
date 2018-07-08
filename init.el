@@ -112,6 +112,8 @@
 (setq org-startup-truncated nil) ;; makes lines shift making it possible to write longer paragraphs
 (global-set-key (kbd "C-c C-æ") `org-store-link) ;; copy link to file
 (global-set-key (kbd "C-c C-ø") `org-insert-last-stored-link) ;; paste link to file
+(setq org-image-actual-width nil)
+(setq org-startup-with-inline-images t)
 
 ;; MobileOrg-modification for syncing org-files to mobile
 (setq org-directory "~/Dropbox/notater")
@@ -121,17 +123,22 @@
 (require 'org)
 (org-mobile-pull) ;; downloads new data from mobile on startup
 
+(defun folder-equals (check-folder)
+  (let ((folder (car (last (split-string buffer-file-name "/") 2))))
+    (string-match check-folder folder))) ;; Checks if the parent folder of the buffer is <folder>
+
 (setq org-mobile-files (apply #'list (mapcar (lambda (filename) (concat "~/Dropbox/notater/" filename))(directory-files "~/Dropbox/notater/" nil "\\.org$")))) ;; For some reason this has to be called in order for the function below to work
 
 (defun org-set-mobile-files-and-push ()
-  (when (eq major-mode 'org-mode)
+  (when (and (eq major-mode 'org-mode) (folder-equals "notater"))
     (setq org-mobile-files (apply #'list
 				  (mapcar (lambda (filename)
 					    (concat "~/Dropbox/notater/" filename))(directory-files "~/Dropbox/notater/" nil "\\.org$")))) ;; add all files from this folder to be synced to mobile
     (org-mobile-push)
     ))
 
-(add-hook 'after-save-hook 'org-set-mobile-files-and-push) ;; pushes data after saving a file while in org-mode
+
+(add-hook 'after-save-hook 'org-set-mobile-files-and-push) ;; pushes data after saving an org-file in the "notater"-folder (These are the files that are synchronized)
 
 ;; dired-modification
 (add-to-list 'load-path "~/.emacs.d/packages/dired-details")
