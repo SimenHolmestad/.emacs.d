@@ -233,6 +233,10 @@
 (require 'browse-kill-ring)
 (browse-kill-ring-default-keybindings) ;; maps browse-kill-ring to M-y
 
+;; graphviz-dot-mode
+(add-to-list 'load-path "~/.emacs.d/packages/graphviz-dot-mode/")
+(require 'graphviz-dot-mode)
+
 ;;
 ;; magit
 ;;
