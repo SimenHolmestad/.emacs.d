@@ -237,6 +237,18 @@
 (add-to-list 'load-path "~/.emacs.d/packages/graphviz-dot-mode/")
 (require 'graphviz-dot-mode)
 
+(defun graphviz-set-dot-program (dot-program)
+  "Let user input a dot-program and make this the standard"
+  (interactive "sEnter name of the dot-program (dot, neato, twopi, circo, fdp): ")
+  (setq graphviz-dot-dot-program dot-program)
+  (graphviz-dot-mode)) ;; The mode needs to reload for changes to take place
+
+(setq graphviz-dot-dot-program "dot")
+(add-hook 'graphviz-dot-mode-hook (lambda ()
+				    (local-set-key (kbd "C-c s") 'graphviz-set-dot-program)))
+(setq graphviz-dot-indent-width 4)
+(setq graphviz-dot-auto-indent-on-semi nil)
+
 ;;
 ;; magit
 ;;
