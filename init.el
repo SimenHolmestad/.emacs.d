@@ -22,6 +22,7 @@
 (add-to-list 'load-path "~/.emacs.d/packages/tiny-tools/lisp/tiny")
 (add-to-list 'load-path "~/.emacs.d/packages/tiny-tools/lisp/other")
 
+(fset 'yes-or-no-p 'y-or-n-p) ;; Changes "yes or no" to "y or n"
 (global-set-key (kbd "C-z") 'undo)
 (global-set-key (kbd "C-h") 'delete-backward-char)
 
@@ -269,6 +270,19 @@
 ;; Shell-modification
 (setenv "PATH" "/Users/simen/.emacs.d/emacs-env/bin:/opt/local/bin:/opt/local/sbin:/Users/simen/.rvm/gems/ruby-2.4.1/bin:/Users/simen/.rvm/gems/ruby-2.4.1@global/bin:/Users/simen/.rvm/rubies/ruby-2.4.1/bin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/TeX/texbin:/opt/X11/bin:/Users/simen/.rvm/bin")
 ;; sets the path so system shell commands can be run from the emacs shell
+
+(defvar my-keys-minor-mode-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "C-c C-f") 'find-file-in-project)
+    map)
+  "my-keys-minor-mode keymap.")
+
+(define-minor-mode my-keys-minor-mode
+  "A minor mode so that my key settings override annoying major modes."
+  :init-value t
+  :lighter " my-keys")
+
+(my-keys-minor-mode 1)
 
 ;; start in file
 (find-file "~/Dropbox/notater/todo.org") ;; I want emacs to start at the todo-list where i also can put in links to my most used files for easy access
