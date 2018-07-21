@@ -25,7 +25,9 @@
 (fset 'yes-or-no-p 'y-or-n-p) ;; Changes "yes or no" to "y or n"
 (global-set-key (kbd "C-z") 'undo)
 (global-set-key (kbd "C-h") 'delete-backward-char)
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
 
+;; Send backup-files to the .backups-directory
 (setq backup-directory-alist `(("." . "~/.emacs.d/.backups")))
 
 (require 'linum)
@@ -51,7 +53,7 @@
 ;; expand-region
 (add-to-list 'load-path "~/.emacs.d/packages/expand-region.el/")
 (require 'expand-region)
-(global-set-key (kbd "C-ø") 'er/expand-region)
+(global-set-key (kbd "M-ø") 'er/expand-region)
 
 ;; ace-jump-mode
 (add-to-list 'load-path "~/.emacs.d/packages/ace-jump-mode/")
@@ -60,7 +62,7 @@
   "ace-jump-mode"
   "Emacs quick move minor mode"
   t)
-(define-key global-map (kbd "C-æ") 'ace-jump-mode)
+(define-key global-map (kbd "C-ø") 'ace-jump-mode)
 
 ;; multiple-cursors
 (add-to-list 'load-path "~/.emacs.d/packages/multiple-cursors.el")
@@ -148,6 +150,13 @@
 (dired-details-install)
 (global-set-key (kbd "C-c C-t") `dired-details-toggle)
 (setq dired-dwim-target t) ;; Makes it possible to move stuff between two dired-buffers fast
+
+;; Auto refresh buffers
+(global-auto-revert-mode 1)
+
+;; Also auto refresh dired, but be quiet about it
+(setq global-auto-revert-non-file-buffers t)
+(setq auto-revert-verbose nil)
 
 ;;
 ;; elpy for python autocomplete and such
