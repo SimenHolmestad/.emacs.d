@@ -76,3 +76,9 @@
 [submodule "packages/emacs-async"]
 	path = packages/emacs-async
 	url = https://github.com/jwiegley/emacs-async
+[submodule "packages/projectile"]
+	path = packages/projectile
+	url = https://github.com/bbatsov/projectile
+[submodule "packages/helm-projectile"]
+	path = packages/helm-projectile
+	url = https://github.com/bbatsov/helm-projectile

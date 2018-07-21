@@ -292,19 +292,14 @@
 (global-set-key (kbd "C-x C-f") #'helm-find-files)
 (helm-mode 1)
 
-
-(defvar my-keys-minor-mode-map
-  (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "C-c C-f") 'find-file-in-project)
-    map)
-  "my-keys-minor-mode keymap.")
-
-(define-minor-mode my-keys-minor-mode
-  "A minor mode so that my key settings override annoying major modes."
-  :init-value t
-  :lighter " my-keys")
-
-(my-keys-minor-mode 1)
+;; helm-projectile
+(add-to-list 'load-path "~/.emacs.d/packages/projectile")
+(add-to-list 'load-path "~/.emacs.d/packages/helm-projectile")
+(require 'projectile)
+(require 'helm-projectile)
+(projectile-global-mode)
+(setq projectile-completion-system 'helm)
+(helm-projectile-on)
 
 ;; start in file
 (find-file "~/Dropbox/notater/todo.org") ;; I want emacs to start at the todo-list where i also can put in links to my most used files for easy access
