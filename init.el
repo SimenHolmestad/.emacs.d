@@ -195,7 +195,7 @@
 (defun django-shell (&optional argprompt)
   (interactive "P")
   ;; Set the default shell if not already set
-  (labels ((read-django-project-dir 
+  (labels ((read-django-project-dir
     (prompt dir)
     (let* ((dir (read-directory-name prompt dir))
            (manage (expand-file-name (concat dir "manage.py"))))
@@ -205,11 +205,11 @@
           (message "%s is not a Django project directory" manage)
           (sleep-for .5)
           (read-django-project-dir prompt dir))))))
-(let* ((dir (read-django-project-dir 
-         "django project directory: " 
+(let* ((dir (read-django-project-dir
+         "django project directory: "
          default-directory))
-       (project-name (first 
-              (remove-if (lambda (s) (or (string= "src" s) (string= "" s))) 
+       (project-name (first
+              (remove-if (lambda (s) (or (string= "src" s) (string= "" s)))
                  (reverse (split-string dir "/")))))
        (buffer-name (format "django-%s" project-name))
        (manage (concat dir "manage.py")))
@@ -279,6 +279,19 @@
 ;; Shell-modification
 (setenv "PATH" "/Users/simen/.emacs.d/emacs-env/bin:/opt/local/bin:/opt/local/sbin:/Users/simen/.rvm/gems/ruby-2.4.1/bin:/Users/simen/.rvm/gems/ruby-2.4.1@global/bin:/Users/simen/.rvm/rubies/ruby-2.4.1/bin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/TeX/texbin:/opt/X11/bin:/Users/simen/.rvm/bin")
 ;; sets the path so system shell commands can be run from the emacs shell
+
+;; Helm
+
+(add-to-list 'load-path "~/.emacs.d/packages/emacs-async")
+(add-to-list 'load-path "~/.emacs.d/packages/popup-el")
+(add-to-list 'load-path "~/.emacs.d/packages/helm")
+(require 'helm-config)
+
+(global-set-key (kbd "M-x") #'helm-M-x)
+(global-set-key (kbd "C-x r b") #'helm-filtered-bookmarks)
+(global-set-key (kbd "C-x C-f") #'helm-find-files)
+(helm-mode 1)
+
 
 (defvar my-keys-minor-mode-map
   (let ((map (make-sparse-keymap)))

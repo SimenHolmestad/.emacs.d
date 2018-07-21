@@ -67,3 +67,12 @@
 [submodule "packages/graphviz-dot-mode"]
 	path = packages/graphviz-dot-mode
 	url = https://github.com/ppareit/graphviz-dot-mode
+[submodule "helm"]
+	path = packages/helm
+	url = https://github.com/emacs-helm/helm
+[submodule "packages/popup-el"]
+	path = packages/popup-el
+	url = https://github.com/auto-complete/popup-el
+[submodule "packages/emacs-async"]
+	path = packages/emacs-async
+	url = https://github.com/jwiegley/emacs-async
