@@ -3,59 +3,53 @@
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
-;; start in fullscreen
 (custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
- '(inhibit-startup-screen t)
- '(initial-frame-alist (quote ((fullscreen . maximized))))
+    ("d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default))) ;; needed for themes
+ '(inhibit-startup-screen t) ;; Do not open usual startup-screen
+ '(initial-frame-alist (quote ((fullscreen . maximized)))) ;; start in fullscreen
  '(ns-alternate-modifier nil)
  '(ns-command-modifier (quote meta))
  '(ns-right-command-modifier (quote super))
- '(select-enable-clipboard t))
-
-(add-to-list 'load-path "~/.emacs.d/packages/tiny-tools/lisp/tiny")
-(add-to-list 'load-path "~/.emacs.d/packages/tiny-tools/lisp/other")
+ '(select-enable-clipboard t)) ;; makes it possible to copy and paste to other programs
 
 (fset 'yes-or-no-p 'y-or-n-p) ;; Changes "yes or no" to "y or n"
 (global-set-key (kbd "C-z") 'undo)
-(global-set-key (kbd "C-h") 'delete-backward-char)
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
+(global-set-key (kbd "C-h") 'delete-backward-char) ;; You can use F1 for help
+(add-hook 'before-save-hook 'delete-trailing-whitespace) ;; Removes tabs and spaces before saving
 
 ;; Send backup-files to the .backups-directory
-(setq backup-directory-alist `(("." . "~/.emacs.d/.backups")))
+(setq backup-directory-alist `(("." . "~/.emacs.d/.backups"))) ;; So no backup-files pop up everywhere
 
 (require 'linum)
-(global-linum-mode t)
-(put 'downcase-region 'disabled nil)
+(global-linum-mode t) ;; Add line-numbers
 
+
+;; iy-go-to-char for char navigation by chars instead of C-f C-f C-f...
 (add-to-list 'load-path "~/.emacs.d/packages/iy-go-to-char/")
 (require 'iy-go-to-char)
 (global-set-key (kbd "C-l") 'iy-go-to-char)
 (global-set-key (kbd "M-L") 'iy-go-to-char-backward)
 
-;; web-mode for editing html-files, good docs at http://web-mode.org/
+
+;; Web-mode for editing html-files, docs at http://web-mode.org/
 (add-to-list 'load-path "~/.emacs.d/packages/web-mode/")
 (require 'web-mode)
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 (setq web-mode-engines-alist
-      '(("django"    . "\\html\\'")))
+      '(("django"    . "\\html\\'"))) ;; will indent django-tags in html-files
 (setq web-mode-enable-auto-pairing t)
 (setq web-mode-enable-css-colorization t)
-(setq web-mode-enable-current-element-highlight t)
-(setq web-mode-enable-current-column-highlight t)
 
-;; expand-region
+
+;; Expand-region
 (add-to-list 'load-path "~/.emacs.d/packages/expand-region.el/")
 (require 'expand-region)
 (global-set-key (kbd "M-ø") 'er/expand-region)
 
-;; ace-jump-mode
+
+;; Ace-jump-mode
 (add-to-list 'load-path "~/.emacs.d/packages/ace-jump-mode/")
 (autoload
   'ace-jump-mode
@@ -64,21 +58,21 @@
   t)
 (define-key global-map (kbd "C-ø") 'ace-jump-mode)
 
-;; multiple-cursors
+
+;; Multiple-cursors
 (add-to-list 'load-path "~/.emacs.d/packages/multiple-cursors.el")
 (require 'multiple-cursors)
 (global-set-key (kbd "C-@") 'mc/mark-next-like-this)
 (global-set-key (kbd "M-@") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-@") 'mc/mark-all-like-this)
 
-;; add the solarized theme
+
+;; Solarized-themes
 (add-to-list 'load-path "~/.emacs.d/packages/solarized")
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 (load-theme 'solarized-dark)
 
-;;
 ;; a way to toggle themes found on stackexchange
-;;
 (defvar *haba-theme-dark* 'solarized-dark)
 (defvar *haba-theme-light* 'solarized-light)
 (defvar *haba-current-theme* *haba-theme-dark*)
@@ -87,7 +81,6 @@
 (defadvice load-theme (before theme-dont-propagate activate)
   "Disable theme before loading new one."
   (mapc #'disable-theme custom-enabled-themes))
-
 
 (defun haba/next-theme (theme)
   (if (eq theme 'default)
@@ -102,53 +95,24 @@
         ((eq *haba-current-theme* *haba-theme-light*) (haba/next-theme 'default))
         ((eq *haba-current-theme* 'default) (haba/next-theme *haba-theme-dark*))))
 
-(global-set-key (kbd "C-x t") 'haba/toggle-theme) ;; bind theme-toggling to c-x t
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+(global-set-key (kbd "C-x t") 'haba/toggle-theme) ;; bind theme-toggling to c-x t (starts in dark-theme
 
-;; org-mode-modification
+
+;; Org-mode
 (setq org-startup-indented t) ;; makes org-mode start in a prettier version
 (setq org-startup-truncated nil) ;; makes lines shift making it possible to write longer paragraphs
 (global-set-key (kbd "C-c C-æ") `org-store-link) ;; copy link to file
 (global-set-key (kbd "C-c C-ø") `org-insert-last-stored-link) ;; paste link to file
-(setq org-image-actual-width nil)
-(setq org-startup-with-inline-images t)
-
-;; MobileOrg-modification for syncing org-files to mobile
-(setq org-directory "~/Dropbox/notater")
-(setq org-mobile-inbox-for-pull "~/Dropbox/notater/fra-mobil.org")
-(setq org-mobile-directory "~/Dropbox/Apps/MobileOrg")
-
-(require 'org)
-(org-mobile-pull) ;; downloads new data from mobile on startup
-
-(defun folder-equals (check-folder)
-  (let ((folder (car (last (split-string buffer-file-name "/") 2))))
-    (string-match check-folder folder))) ;; Checks if the parent folder of the buffer is <folder>
-
-(setq org-mobile-files (apply #'list (mapcar (lambda (filename) (concat "~/Dropbox/notater/" filename))(directory-files "~/Dropbox/notater/" nil "\\.org$")))) ;; For some reason this has to be called in order for the function below to work
-
-(defun org-set-mobile-files-and-push ()
-  (when (and (eq major-mode 'org-mode) (folder-equals "notater"))
-    (setq org-mobile-files (apply #'list
-				  (mapcar (lambda (filename)
-					    (concat "~/Dropbox/notater/" filename))(directory-files "~/Dropbox/notater/" nil "\\.org$")))) ;; add all files from this folder to be synced to mobile
-    (org-mobile-push)
-    ))
+(setq org-image-actual-width nil) ;; makes images appear smaller
+(setq org-startup-with-inline-images t) ;; makes images appear as images and not links
 
 
-(add-hook 'after-save-hook 'org-set-mobile-files-and-push) ;; pushes data after saving an org-file in the "notater"-folder (These are the files that are synchronized)
-
-;; dired-modification
-(add-to-list 'load-path "~/.emacs.d/packages/dired-details")
+;; Dired-modification
+(add-to-list 'load-path "~/.emacs.d/packages/dired-details") ;; makes dired look cleaner
 (require 'dired-details)
 (setq-default dired-details-hidden-string "--- ")
 (dired-details-install)
-(global-set-key (kbd "C-c C-t") `dired-details-toggle)
+(global-set-key (kbd "C-c C-t") `dired-details-toggle) ;; toggle between clean and "dirty" look
 (setq dired-dwim-target t) ;; Makes it possible to move stuff between two dired-buffers fast
 
 ;; Auto refresh buffers
@@ -158,10 +122,9 @@
 (setq global-auto-revert-non-file-buffers t)
 (setq auto-revert-verbose nil)
 
-;;
-;; elpy for python autocomplete and such
-;;
-;; if you wondered what dependencies elpy had, they are all here. Some of them could be cool to check out!
+
+;; Elpy
+;; dependencies first
 (add-to-list 'load-path "~/.emacs.d/packages/elpy")
 (add-to-list 'load-path "~/.emacs.d/packages/s.el")
 (add-to-list 'load-path "~/.emacs.d/packages/pyenv")
@@ -184,12 +147,6 @@
 (add-to-list 'python-shell-completion-native-disabled-interpreters
              "jupyter")
 (setenv "PYTHONIOENCODING" "utf-8") ;; Makes sure python handles unicode characters
-
-;;
-;; Settings for current django project as i didn´t find a better place for them
-;;
-(elpy-set-test-runner `elpy-test-django-runner) ;; Find other test-runner-names by grepping the name tags
-(setenv "DJANGO_SETTINGS_MODULE" "buk.settings") ;; Makes it possible to run manage.py commands
 
 ;; Django shell doesn´t work with elpy, so here´s a function from stackoverflow instead:
 (defun django-shell (&optional argprompt)
@@ -234,22 +191,20 @@
 
 (global-set-key (kbd "C-c C-x s") `django-shell) ;; Set shortcut to django-shell
 
-;;
-;; elpy ends here
-;;
 
-;; browse-kill-ring
+;; browse-kill-ring (instead of M-y M-y M-y...)
 (add-to-list 'load-path "~/.emacs.d/packages/browse-kill-ring")
 (require 'browse-kill-ring)
 (browse-kill-ring-default-keybindings) ;; maps browse-kill-ring to M-y
 
-;; graphviz-dot-mode
+
+;; Graphviz-dot-mode
 (add-to-list 'load-path "~/.emacs.d/packages/graphviz-dot-mode/")
 (require 'graphviz-dot-mode)
 
 (defun graphviz-set-dot-program (dot-program)
   "Let user input a dot-program and make this the standard"
-  (interactive "sEnter name of the dot-program (dot, neato, twopi, circo, fdp): ")
+  (interactive "Enter name of the dot-program (dot, neato, twopi, circo, fdp): ")
   (setq graphviz-dot-dot-program dot-program)
   (graphviz-dot-mode)) ;; The mode needs to reload for changes to take place
 
@@ -259,10 +214,8 @@
 (setq graphviz-dot-indent-width 4)
 (setq graphviz-dot-auto-indent-on-semi nil)
 
-;;
-;; magit
-;;
-;; First install dependencies
+
+;; Magit
 (add-to-list 'load-path "~/.emacs.d/packages/dash")
 (add-to-list 'load-path "~/.emacs.d/packages/magit-popup")
 (add-to-list 'load-path "~/.emacs.d/packages/ghub")
@@ -276,12 +229,8 @@
                "~/.emacs.d/packages/magit/Documentation/"))
 (global-set-key (kbd "C-x g") 'magit-status)
 
-;; Shell-modification
-(setenv "PATH" "/Users/simen/.emacs.d/emacs-env/bin:/opt/local/bin:/opt/local/sbin:/Users/simen/.rvm/gems/ruby-2.4.1/bin:/Users/simen/.rvm/gems/ruby-2.4.1@global/bin:/Users/simen/.rvm/rubies/ruby-2.4.1/bin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/TeX/texbin:/opt/X11/bin:/Users/simen/.rvm/bin")
-;; sets the path so system shell commands can be run from the emacs shell
 
 ;; Helm
-
 (add-to-list 'load-path "~/.emacs.d/packages/emacs-async")
 (add-to-list 'load-path "~/.emacs.d/packages/popup-el")
 (add-to-list 'load-path "~/.emacs.d/packages/helm")
@@ -292,7 +241,8 @@
 (global-set-key (kbd "C-x C-f") #'helm-find-files)
 (helm-mode 1)
 
-;; helm-projectile
+
+;; Helm-projectile
 (add-to-list 'load-path "~/.emacs.d/packages/projectile")
 (add-to-list 'load-path "~/.emacs.d/packages/helm-projectile")
 (require 'projectile)
@@ -301,5 +251,9 @@
 (setq projectile-completion-system 'helm)
 (helm-projectile-on)
 
-;; start in file
-(find-file "~/Dropbox/notater/todo.org") ;; I want emacs to start at the todo-list where i also can put in links to my most used files for easy access
+;; sets the basic django test to python3 because i can´t get shell aliases to work in ssh shell-commands (They do work in shh shells though...)
+(projectile-register-project-type 'django '("manage.py")
+                                  :test "python3 manage.py test")
+
+
+(load "~/.emacs.d/local_stuff" t) ;; loads machine-specific stuff
