@@ -4,15 +4,19 @@
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
 (custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default))) ;; needed for themes
- '(inhibit-startup-screen t) ;; Do not open usual startup-screen
- '(initial-frame-alist (quote ((fullscreen . maximized)))) ;; start in fullscreen
+    ("d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
+ '(inhibit-startup-screen t)
+ '(initial-frame-alist (quote ((fullscreen . maximized))))
  '(ns-alternate-modifier nil)
  '(ns-command-modifier (quote meta))
  '(ns-right-command-modifier (quote super))
- '(select-enable-clipboard t)) ;; makes it possible to copy and paste to other programs
+ '(select-enable-clipboard t))
 
 (fset 'yes-or-no-p 'y-or-n-p) ;; Changes "yes or no" to "y or n"
 (global-set-key (kbd "C-z") 'undo)
@@ -204,7 +208,7 @@
 
 (defun graphviz-set-dot-program (dot-program)
   "Let user input a dot-program and make this the standard"
-  (interactive "Enter name of the dot-program (dot, neato, twopi, circo, fdp): ")
+  (interactive "sEnter name of the dot-program (dot, neato, twopi, circo, fdp): ")
   (setq graphviz-dot-dot-program dot-program)
   (graphviz-dot-mode)) ;; The mode needs to reload for changes to take place
 
@@ -228,6 +232,14 @@
   (add-to-list 'Info-directory-list
                "~/.emacs.d/packages/magit/Documentation/"))
 (global-set-key (kbd "C-x g") 'magit-status)
+
+
+;; wgrep
+(add-to-list 'load-path "~/.emacs.d/packages/wgrep")
+(require 'wgrep)
+(global-set-key (kbd "M-g g") 'rgrep)
+(global-set-key (kbd "M-g w") 'wgrep-change-to-wgrep-mode)
+(global-set-key (kbd "M-g s") 'wgrep-save-all-buffers)
 
 
 ;; Helm
@@ -257,3 +269,9 @@
 
 
 (load "~/.emacs.d/local_stuff" t) ;; loads machine-specific stuff
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
