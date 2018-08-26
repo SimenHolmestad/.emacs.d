@@ -66,9 +66,9 @@
 ;; Multiple-cursors
 (add-to-list 'load-path "~/.emacs.d/packages/multiple-cursors.el")
 (require 'multiple-cursors)
-(global-set-key (kbd "C-@") 'mc/mark-next-like-this)
-(global-set-key (kbd "M-@") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C-c C-@") 'mc/mark-all-like-this)
+(global-set-key (kbd "C-æ") 'mc/mark-next-like-this)
+(global-set-key (kbd "M-æ") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c æ") 'mc/mark-all-like-this)
 
 
 ;; Solarized-themes
