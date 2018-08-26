@@ -219,6 +219,17 @@
 (setq graphviz-dot-auto-indent-on-semi nil)
 
 
+;; julia-mode
+(add-to-list 'load-path "~/.emacs.d/packages/julia-emacs")
+(require 'julia-mode)
+
+
+;; julia-repl
+(add-to-list 'load-path "~/.emacs.d/packages/julia-repl")
+(require 'julia-repl)
+(add-hook 'julia-mode-hook 'julia-repl-mode)
+
+
 ;; Magit
 (add-to-list 'load-path "~/.emacs.d/packages/dash")
 (add-to-list 'load-path "~/.emacs.d/packages/magit-popup")

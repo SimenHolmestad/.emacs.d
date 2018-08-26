@@ -85,3 +85,9 @@
 [submodule "packages/wgrep"]
 	path = packages/wgrep
 	url = https://github.com/mhayashi1120/Emacs-wgrep.git
+[submodule "packages/julia-emacs"]
+	path = packages/julia-emacs
+	url = https://github.com/JuliaEditorSupport/julia-emacs.git
+[submodule "packages/julia-repl"]
+	path = packages/julia-repl
+	url = https://github.com/tpapp/julia-repl.git
