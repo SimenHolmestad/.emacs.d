@@ -278,6 +278,8 @@
 (projectile-register-project-type 'django '("manage.py")
                                   :test "python3 manage.py test")
 
+(add-to-list 'load-path "~/.emacs.d/packages/typescript")
+(require 'typescript-mode)
 
 (load "~/.emacs.d/local_stuff" t) ;; loads machine-specific stuff
 (custom-set-faces
