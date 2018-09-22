@@ -37,3 +37,4 @@ traitlets
 wcwidth
 yapf
 flake8
+pyserial

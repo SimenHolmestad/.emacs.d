@@ -21,6 +21,8 @@
 (fset 'yes-or-no-p 'y-or-n-p) ;; Changes "yes or no" to "y or n"
 (global-set-key (kbd "C-z") 'undo)
 (global-set-key (kbd "C-h") 'delete-backward-char) ;; You can use F1 for help
+(global-set-key (kbd "C-+") 'text-scale-increase) ;; increase text-size
+(global-set-key (kbd "C--") 'text-scale-decrease) ;; decrease text-size
 (add-hook 'before-save-hook 'delete-trailing-whitespace) ;; Removes tabs and spaces before saving
 
 ;; Send backup-files to the .backups-directory
