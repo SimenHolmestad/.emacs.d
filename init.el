@@ -23,7 +23,6 @@
 (global-set-key (kbd "C-h") 'delete-backward-char) ;; You can use F1 for help
 (global-set-key (kbd "C-+") 'text-scale-increase) ;; increase text-size
 (global-set-key (kbd "C--") 'text-scale-decrease) ;; decrease text-size
-(add-hook 'before-save-hook 'delete-trailing-whitespace) ;; Removes tabs and spaces before saving
 
 ;; Send backup-files to the .backups-directory
 (setq backup-directory-alist `(("." . "~/.emacs.d/.backups"))) ;; So no backup-files pop up everywhere
@@ -282,8 +281,37 @@
 
 (add-to-list 'load-path "~/.emacs.d/packages/typescript")
 (require 'typescript-mode)
+(setq js-indent-level 2)
+
+
+;; tide mode (for typescript/javascript)
+(add-to-list 'load-path "~/.emacs.d/packages/flycheck")
+(add-to-list 'load-path "~/.emacs.d/packages/tide")
+(require 'tide)
+
+(defun setup-tide-mode ()
+  (interactive)
+  (tide-setup)
+  (flycheck-mode +1)
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (eldoc-mode +1)
+  (tide-hl-identifier-mode +1)
+  (company-mode +1))
+
+;; aligns annotation to the right hand side
+(setq company-tooltip-align-annotations t)
+
+;; formats the buffer before saving
+(add-hook 'before-save-hook 'tide-format-before-save)
+
+(add-hook 'typescript-mode-hook #'setup-tide-mode)
+(add-hook 'js-mode-hook #'setup-tide-mode)
+(flycheck-add-next-checker 'javascript-eslint 'javascript-tide 'append)
+
+(add-hook 'before-save-hook 'delete-trailing-whitespace) ;; Removes tabs and spaces before saving
 
 (load "~/.emacs.d/local_stuff" t) ;; loads machine-specific stuff
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

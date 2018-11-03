@@ -94,3 +94,9 @@
 [submodule "packages/typescript"]
 	path = packages/typescript
 	url = https://github.com/ananthakumaran/typescript.el.git
+[submodule "packages/tide"]
+	path = packages/tide
+	url = https://github.com/ananthakumaran/tide.git
+[submodule "packages/flycheck"]
+	path = packages/flycheck
+	url = https://github.com/flycheck/flycheck.git
