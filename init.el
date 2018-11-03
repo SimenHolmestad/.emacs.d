@@ -287,7 +287,6 @@
 ;; js-2 mode for better javascript highlighting
 (add-to-list 'load-path "~/.emacs.d/packages/js2")
 (require 'js2-mode)
-(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 (add-to-list 'interpreter-mode-alist '("node" . js2-mode))
 (add-to-list 'auto-mode-alist '("\\.jsx?\\'" . js2-jsx-mode))
 (add-to-list 'interpreter-mode-alist '("node" . js2-jsx-mode))
@@ -297,6 +296,7 @@
 (add-to-list 'load-path "~/.emacs.d/packages/rjsx-mode")
 (require 'rjsx-mode)
 (add-to-list 'auto-mode-alist '("components\\/.*\\.js\\'" . rjsx-mode))
+(add-to-list 'auto-mode-alist '("\\.js\\'" . rjsx-mode))
 
 
 ;; tide mode (for typescript/javascript)
@@ -321,7 +321,7 @@
 
 (add-hook 'typescript-mode-hook #'setup-tide-mode)
 (add-hook 'js-mode-hook #'setup-tide-mode)
-(flycheck-add-next-checker 'javascript-eslint 'javascript-tide 'append)
+(flycheck-add-next-checker 'javascript-eslint 'jsx-tide 'append)
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace) ;; Removes tabs and spaces before saving
 
