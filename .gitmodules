@@ -100,3 +100,9 @@
 [submodule "packages/flycheck"]
 	path = packages/flycheck
 	url = https://github.com/flycheck/flycheck.git
+[submodule "packages/js2"]
+	path = packages/js2
+	url = https://github.com/mooz/js2-mode.git
+[submodule "packages/rjsx-mode"]
+	path = packages/rjsx-mode
+	url = https://github.com/felipeochoa/rjsx-mode.git

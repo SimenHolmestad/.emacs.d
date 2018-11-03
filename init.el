@@ -284,6 +284,21 @@
 (setq js-indent-level 2)
 
 
+;; js-2 mode for better javascript highlighting
+(add-to-list 'load-path "~/.emacs.d/packages/js2")
+(require 'js2-mode)
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+(add-to-list 'interpreter-mode-alist '("node" . js2-mode))
+(add-to-list 'auto-mode-alist '("\\.jsx?\\'" . js2-jsx-mode))
+(add-to-list 'interpreter-mode-alist '("node" . js2-jsx-mode))
+
+
+;; rjsx-mode
+(add-to-list 'load-path "~/.emacs.d/packages/rjsx-mode")
+(require 'rjsx-mode)
+(add-to-list 'auto-mode-alist '("components\\/.*\\.js\\'" . rjsx-mode))
+
+
 ;; tide mode (for typescript/javascript)
 (add-to-list 'load-path "~/.emacs.d/packages/flycheck")
 (add-to-list 'load-path "~/.emacs.d/packages/tide")
