@@ -135,13 +135,14 @@
 (add-to-list 'load-path "~/.emacs.d/packages/pyenv")
 (add-to-list 'load-path "~/.emacs.d/packages/find-file-in-project")
 (add-to-list 'load-path "~/.emacs.d/packages/company-mode")
+(setq company-dabbrev-downcase 0)
+(setq company-idle-delay 0) ;; Sets autocompletion delay to 0
 (add-to-list 'load-path "~/.emacs.d/packages/highlight-indentation")
 (add-to-list 'load-path "~/.emacs.d/packages/yasnippet")
 (add-to-list 'load-path "~/.emacs.d/packages/emacs-epc")
 (add-to-list 'load-path "~/.emacs.d/packages/auto-complete")
 (require 'elpy)
 (elpy-enable)
-(pyvenv-activate "~/.emacs.d/emacs-env") ;; runs the global virtualenv
 (setq shell-file-name "/bin/bash")
 (global-set-key (kbd "C-å") `elpy-company-backend) ;; force auto-completion to start
 
@@ -323,9 +324,12 @@
 (add-hook 'js-mode-hook #'setup-tide-mode)
 (flycheck-add-next-checker 'javascript-eslint 'jsx-tide 'append)
 
+(setq tide-completion-ignore-case t)
+
 (add-hook 'before-save-hook 'delete-trailing-whitespace) ;; Removes tabs and spaces before saving
 
 (load "~/.emacs.d/local_stuff" t) ;; loads machine-specific stuff
+(pyvenv-activate "~/.emacs.d/emacs-env") ;; runs the global python virtualenv. This needs to be done after the path is changed in local_stuff.el
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
