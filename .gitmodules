@@ -106,3 +106,9 @@
 [submodule "packages/rjsx-mode"]
 	path = packages/rjsx-mode
 	url = https://github.com/felipeochoa/rjsx-mode.git
+[submodule "packages/yasnippet-snippets"]
+	path = packages/yasnippet-snippets
+	url = https://github.com/AndreaCrotti/yasnippet-snippets
+[submodule "packages/react-snippets"]
+	path = packages/react-snippets
+	url = https://github.com/johnmastro/react-snippets.el.git

@@ -128,6 +128,15 @@
 (setq auto-revert-verbose nil)
 
 
+;; yasnippet
+(add-to-list 'load-path "~/.emacs.d/packages/yasnippet")
+(require 'yasnippet)
+(add-to-list 'load-path "~/.emacs.d/packages/yasnippet-snippets")
+(require 'yasnippet-snippets)
+(add-to-list 'load-path "~/.emacs.d/packages/react-snippets")
+(require 'react-snippets)
+
+
 ;; Elpy
 ;; dependencies first
 (add-to-list 'load-path "~/.emacs.d/packages/elpy")
@@ -312,7 +321,8 @@
   (setq flycheck-check-syntax-automatically '(save mode-enabled))
   (eldoc-mode +1)
   (tide-hl-identifier-mode +1)
-  (company-mode +1))
+  (company-mode +1)
+  (yas-minor-mode))
 
 ;; aligns annotation to the right hand side
 (setq company-tooltip-align-annotations t)
