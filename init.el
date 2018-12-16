@@ -36,6 +36,7 @@
 (require 'iy-go-to-char)
 (global-set-key (kbd "C-l") 'iy-go-to-char)
 (global-set-key (kbd "M-L") 'iy-go-to-char-backward)
+(global-set-key (kbd "M-s M-s") 'isearch-forward-symbol-at-point)
 
 
 ;; Web-mode for editing html-files, docs at http://web-mode.org/
