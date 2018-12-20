@@ -27,6 +27,9 @@
 ;; Send backup-files to the .backups-directory
 (setq backup-directory-alist `(("." . "~/.emacs.d/.backups"))) ;; So no backup-files pop up everywhere
 
+;; a string manipulation library
+(add-to-list 'load-path "~/.emacs.d/packages/s.el")
+
 (require 'linum)
 (global-linum-mode t) ;; Add line-numbers
 
@@ -76,6 +79,7 @@
 ;; Solarized-themes
 (add-to-list 'load-path "~/.emacs.d/packages/solarized")
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+(setq solarized-high-contrast-mode-line t)
 (load-theme 'solarized-dark)
 
 ;; a way to toggle themes found on stackexchange
@@ -99,9 +103,23 @@
   (interactive)
   (cond ((eq *haba-current-theme* *haba-theme-dark*) (haba/next-theme *haba-theme-light*))
         ((eq *haba-current-theme* *haba-theme-light*) (haba/next-theme 'default))
-        ((eq *haba-current-theme* 'default) (haba/next-theme *haba-theme-dark*))))
+        ((eq *haba-current-theme* 'default) (haba/next-theme *haba-theme-dark*)))
+  (spaceline-emacs-theme))
 
-(global-set-key (kbd "C-x t") 'haba/toggle-theme) ;; bind theme-toggling to c-x t (starts in dark-theme
+(global-set-key (kbd "C-x t") 'haba/toggle-theme) ;; bind theme-toggling to c-x t (starts in dark-theme)
+
+
+;; Spaceline for status bar
+(add-to-list 'load-path "~/.emacs.d/packages/powerline")
+(add-to-list 'load-path "~/.emacs.d/packages/spaceline")
+(require 'spaceline)
+(require 'spaceline-segments)
+(require 'spaceline-config)
+(spaceline-emacs-theme)
+(spaceline-helm-mode)
+(setq spaceline-minor-modes-separator " | ")
+(setq powerline-default-separator 'arrow)
+(setq powerline-image-apple-rgb t)
 
 
 ;; Org-mode
@@ -147,7 +165,6 @@
 ;; Elpy
 ;; dependencies first
 (add-to-list 'load-path "~/.emacs.d/packages/elpy")
-(add-to-list 'load-path "~/.emacs.d/packages/s.el")
 (add-to-list 'load-path "~/.emacs.d/packages/pyenv")
 (add-to-list 'load-path "~/.emacs.d/packages/find-file-in-project")
 (add-to-list 'load-path "~/.emacs.d/packages/company-mode")

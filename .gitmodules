@@ -115,3 +115,9 @@
 [submodule "packages/emacs-which-key"]
 	path = packages/emacs-which-key
 	url = https://github.com/justbur/emacs-which-key.git
+[submodule "packages/spaceline"]
+	path = packages/spaceline
+	url = https://github.com/TheBB/spaceline.git
+[submodule "packages/powerline"]
+	path = packages/powerline
+	url = https://github.com/milkypostman/powerline.git
