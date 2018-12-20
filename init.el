@@ -79,7 +79,8 @@
 ;; Solarized-themes
 (add-to-list 'load-path "~/.emacs.d/packages/solarized")
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-(setq solarized-high-contrast-mode-line t)
+(setq solarized-high-contrast-mode-line nil) ;; Set this for fancy mode-line
+(setq x-underline-at-descent-line t)
 (load-theme 'solarized-dark)
 
 ;; a way to toggle themes found on stackexchange
@@ -115,11 +116,12 @@
 (require 'spaceline)
 (require 'spaceline-segments)
 (require 'spaceline-config)
+(setq spaceline-minor-modes-separator " | ")
+(setq powerline-default-separator 'slant)
 (spaceline-emacs-theme)
 (spaceline-helm-mode)
-(setq spaceline-minor-modes-separator " | ")
-(setq powerline-default-separator 'arrow)
 (setq powerline-image-apple-rgb t)
+(setq powerline-height 20)
 
 
 ;; Org-mode

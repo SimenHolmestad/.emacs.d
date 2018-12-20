@@ -241,14 +241,14 @@ Alpha should be a float between 0 and 1."
           (s-mode-line-bg (if solarized-high-contrast-mode-line
                               base0 base02))
           (s-mode-line-underline (if solarized-high-contrast-mode-line
-                                     nil s-line))
+                                     nil nil))
 
           (s-mode-line-buffer-id-fg (if solarized-high-contrast-mode-line
                                         'unspecified base1))
           (s-mode-line-inactive-fg (if solarized-high-contrast-mode-line
-                                       base0 base01))
+                                       base0 base0))
           (s-mode-line-inactive-bg (if solarized-high-contrast-mode-line
-                                       base02 base03))
+                                       base02 base02))
           (s-mode-line-inactive-bc (if solarized-high-contrast-mode-line
                                        base02 base02))
           )
@@ -1795,10 +1795,10 @@ customize the resulting theme."
                                      `(:background ,base02 :foreground ,base00)))))
      `(powerline-inactive1 ((,class ,(if solarized-high-contrast-mode-line
                                          `(:background ,base03 :foreground ,base1)
-                                       `(:background ,base02 :foreground ,base01)))))
+                                       `(:background ,base03 :foreground ,base01)))))
      `(powerline-inactive2 ((,class ,(if solarized-high-contrast-mode-line
                                          `(:background ,base02 :foreground ,base1)
-                                       `(:background ,base03 :foreground ,base01)))))
+                                       `(:background ,base02 :foreground ,base1)))))
 ;;;;; pretty-mode
      `(pretty-mode-symbol-face  ((,class (:foreground ,yellow :weight normal))))
 ;;;;; prodigy
