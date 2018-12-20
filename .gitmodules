@@ -112,3 +112,6 @@
 [submodule "packages/react-snippets"]
 	path = packages/react-snippets
 	url = https://github.com/johnmastro/react-snippets.el.git
+[submodule "packages/emacs-which-key"]
+	path = packages/emacs-which-key
+	url = https://github.com/justbur/emacs-which-key.git

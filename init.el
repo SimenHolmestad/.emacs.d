@@ -129,6 +129,12 @@
 (setq auto-revert-verbose nil)
 
 
+;; which-key
+(add-to-list 'load-path "~/.emacs.d/packages/emacs-which-key")
+(require 'which-key) ;; makes it possible to see keybindings as you type
+(which-key-mode)
+
+
 ;; yasnippet
 (add-to-list 'load-path "~/.emacs.d/packages/yasnippet")
 (require 'yasnippet)
