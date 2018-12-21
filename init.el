@@ -102,10 +102,9 @@
 
 (defun haba/toggle-theme ()
   (interactive)
-  (cond ((eq *haba-current-theme* *haba-theme-dark*) (haba/next-theme *haba-theme-light*))
-        ((eq *haba-current-theme* *haba-theme-light*) (haba/next-theme 'default))
-        ((eq *haba-current-theme* 'default) (haba/next-theme *haba-theme-dark*)))
-  (spaceline-emacs-theme))
+  (cond ((eq *haba-current-theme* *haba-theme-dark*) (haba/next-theme *haba-theme-light*) (spaceline-emacs-theme))
+        ((eq *haba-current-theme* *haba-theme-light*) (haba/next-theme 'default) (powerline-revert))
+        ((eq *haba-current-theme* 'default) (haba/next-theme *haba-theme-dark*) (spaceline-emacs-theme))))
 
 (global-set-key (kbd "C-x t") 'haba/toggle-theme) ;; bind theme-toggling to c-x t (starts in dark-theme)
 
