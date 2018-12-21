@@ -121,6 +121,10 @@
 (spaceline-helm-mode)
 (setq powerline-image-apple-rgb t)
 (setq powerline-height 20)
+(add-to-list 'load-path "~/.emacs.d/packages/fancy-battery")
+(require 'fancy-battery)
+(add-hook 'after-init-hook #'fancy-battery-mode) ;; Shows battery in fullscreen mode
+(setq fancy-battery-show-percentage t)
 
 
 ;; Org-mode
