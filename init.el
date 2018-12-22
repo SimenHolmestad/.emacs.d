@@ -34,6 +34,13 @@
 (global-linum-mode t) ;; Add line-numbers
 
 
+;; windmove configuration
+(global-set-key (kbd "M-F") 'windmove-right)
+(global-set-key (kbd "M-B") 'windmove-left)
+(global-set-key (kbd "M-P") 'windmove-up)
+(global-set-key (kbd "M-N") 'windmove-down)
+
+
 ;; iy-go-to-char for char navigation by chars instead of C-f C-f C-f...
 (add-to-list 'load-path "~/.emacs.d/packages/iy-go-to-char/")
 (require 'iy-go-to-char)
