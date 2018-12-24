@@ -124,3 +124,6 @@
 [submodule "packages/fancy-battery"]
 	path = packages/fancy-battery
 	url = https://github.com/lunaryorn/fancy-battery.el.git
+[submodule "packages/emacs-htmlize"]
+	path = packages/emacs-htmlize
+	url = https://github.com/hniksic/emacs-htmlize.git

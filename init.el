@@ -141,6 +141,7 @@
 (global-set-key (kbd "C-c C-ø") `org-insert-last-stored-link) ;; paste link to file
 (setq org-image-actual-width nil) ;; makes images appear smaller
 (setq org-startup-with-inline-images t) ;; makes images appear as images and not links
+(add-to-list 'load-path "~/.emacs.d/packages/emacs-htmlize") ;; for exporting org to html
 
 
 ;; Dired-modification
