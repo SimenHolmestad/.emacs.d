@@ -142,6 +142,11 @@
 (setq org-image-actual-width nil) ;; makes images appear smaller
 (setq org-startup-with-inline-images t) ;; makes images appear as images and not links
 (add-to-list 'load-path "~/.emacs.d/packages/emacs-htmlize") ;; for exporting org to html
+(setq org-todo-keywords
+      '((sequence "TODO" "NEXT" "WAITING" "|" "DONE" "CANCELED")))
+(global-set-key (kbd "C-x C-o") `org-agenda)
+(add-hook 'org-agenda-mode-hook (lambda () (linum-mode 0))) ;; removes line-numbers in agenda buffers
+(setq org-agenda-window-setup 'current-window)
 
 
 ;; Dired-modification
