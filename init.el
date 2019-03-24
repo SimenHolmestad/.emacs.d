@@ -149,6 +149,14 @@
 (setq org-agenda-window-setup 'current-window)
 
 
+;; revert buffers without confirmation
+(defun revert-buffer-no-confirm ()
+    "Revert buffer without confirmation."
+    (interactive)
+    (revert-buffer :ignore-auto :noconfirm))
+(global-set-key (kbd "C-x C-å") `revert-buffer-no-confirm)
+
+
 ;; Dired-modification
 (add-to-list 'load-path "~/.emacs.d/packages/dired-details") ;; makes dired look cleaner
 (require 'dired-details)
