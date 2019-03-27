@@ -57,6 +57,9 @@
       '(("django"    . "\\html\\'"))) ;; will indent django-tags in html-files
 (setq web-mode-enable-auto-pairing t)
 (setq web-mode-enable-css-colorization t)
+;; (add-hook 'web-mode-hook
+;;    (lambda ()
+;;      (set (make-local-variable 'sgml-basic-offset) 4)))
 
 
 ;; Expand-region
