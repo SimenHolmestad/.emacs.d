@@ -175,6 +175,10 @@
 (setq global-auto-revert-non-file-buffers t)
 (setq auto-revert-verbose nil)
 
+;; Define b to go up one directory (since f is for going down)
+(eval-after-load 'dired
+  '(define-key dired-mode-map (kbd "b") 'dired-up-directory))
+
 
 ;; which-key
 (add-to-list 'load-path "~/.emacs.d/packages/emacs-which-key")
