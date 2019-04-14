@@ -2,6 +2,7 @@
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+(toggle-frame-fullscreen)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -12,7 +13,6 @@
    (quote
     ("d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
  '(inhibit-startup-screen t)
- '(initial-frame-alist (quote ((fullscreen . maximized))))
  '(ns-alternate-modifier nil)
  '(ns-command-modifier (quote meta))
  '(ns-right-command-modifier (quote super))
