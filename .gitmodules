@@ -127,3 +127,18 @@
 [submodule "packages/emacs-htmlize"]
 	path = packages/emacs-htmlize
 	url = https://github.com/hniksic/emacs-htmlize.git
+[submodule "packages/vue-mode"]
+	path = packages/vue-mode
+	url = https://github.com/AdamNiederer/vue-mode.git
+[submodule "packages/mmm-mode"]
+	path = packages/mmm-mode
+	url = https://github.com/purcell/mmm-mode.git
+[submodule "packages/vue-html-mode"]
+	path = packages/vue-html-mode
+	url = https://github.com/AdamNiederer/vue-html-mode.git
+[submodule "packages/ssass-mode"]
+	path = packages/ssass-mode
+	url = https://github.com/AdamNiederer/ssass-mode.git
+[submodule "packages/edit-indirect"]
+	path = packages/edit-indirect
+	url = https://github.com/Fanael/edit-indirect.git

@@ -366,6 +366,21 @@
 (add-to-list 'auto-mode-alist '("\\.js\\'" . rjsx-mode))
 
 
+;; vue-mode
+(add-to-list 'load-path "~/.emacs.d/packages/edit-indirect")
+(add-to-list 'load-path "~/.emacs.d/packages/ssass-mode")
+(add-to-list 'load-path "~/.emacs.d/packages/vue-html-mode")
+(add-to-list 'load-path "~/.emacs.d/packages/mmm-mode")
+(add-to-list 'load-path "~/.emacs.d/packages/vue-mode")
+(require 'vue-mode)
+(add-to-list 'auto-mode-alist '("\\.vue\\'" . vue-mode))
+
+;; remove background color
+(add-hook 'mmm-mode-hook
+          (lambda ()
+            (set-face-background 'mmm-default-submode-face nil)))
+
+
 ;; tide mode (for typescript/javascript)
 (add-to-list 'load-path "~/.emacs.d/packages/flycheck")
 (add-to-list 'load-path "~/.emacs.d/packages/tide")
@@ -396,6 +411,7 @@
 (add-hook 'before-save-hook 'delete-trailing-whitespace) ;; Removes tabs and spaces before saving
 
 (load "~/.emacs.d/local_stuff" t) ;; loads machine-specific stuff
+(load "~/.emacs.d/scripts" t) ;; loads scripts
 (pyvenv-activate "~/.emacs.d/emacs-env") ;; runs the global python virtualenv. This needs to be done after the path is changed in local_stuff.el
 
 (custom-set-faces
