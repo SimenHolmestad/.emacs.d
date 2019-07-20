@@ -8,3 +8,4 @@
 !themes
 !themes/**
 !pip-requirements.txt
+!config.org
