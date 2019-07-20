@@ -1,11 +1,5 @@
+# Ignore all files exept .gitignore, readme.md and config.org
 *
-!init.el
-!packages
-!packages/**
 !.gitignore
-!.gitmodules
 !readme.md
-!themes
-!themes/**
-!pip-requirements.txt
 !config.org
