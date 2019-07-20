@@ -1,28 +1,11 @@
 # .emacs.d
-My configuration of the emacs text editor. There are comments in the init file if you want to know what is going on. I might make a cleaner, more understandable version later.
+Konfigurasjonsfilen min til text-editoren emacs, som er ganske kul. Konfigurasjonen er skrevet i org-mode som gjør filen mye mer oversiktlig når man åpner den i emacs. Kodeblokkene inne org-filen blir kjørt av emacs ved oppstart (med `org-babel-load-file` i `init.el`), mens resten av org-filen blir ignorert.
 
-## setup
-Some basic setup is needed for the configuration to work. I have not yet installed it on another computer than my own mac, so you might have to tweak some stuff if you want to use it.
+## Hvordan kjøre emacs med denne konfigurasjonen
+1. Last ned emacs. Dette kan gjøres ved å følge [denne guiden](https://www.gnu.org/software/emacs/download.html)
+2. Klon deretter dette repoet inn i din hjemmefolder (`~/`). Folderen skal altså være `~/.emacs.d`
+3. Kjør emacs
 
-### submodule
-This project uses submodules so you have to run `git submodule init` followed by `git submodule update` after you´ve cloned the repository. This will install the git repositories within this repository (with lots of cool features)
+Det er en del pakker som blir innstallert første gang du kjører programmet, og det vil da ta lenger tid å starte programmet denne gangen.
 
-### python
-I use a "Global virtual environment" for python in emacs. To get this up and running you have to run these commands from the shell inside the .emacs.d folder:
-```
-pip install venv
-python3 -m venv emacs-env
-source emacs-env/bin/activate
-pip install -r pip-requirements.txt
-```
-
-### magit
-If you want to byte-compile magit (make it faster) you will have to make a file called `config.mk` inside the ~/.emacs.d/packages/magit/ directory containing these lines:
-```
-LOAD_PATH  = -L ~/.emacs.d/packages/magit/lisp
-LOAD_PATH += -L ~/.emacs.d/packages/dash.el
-LOAD_PATH += -L ~/.emacs.d/packages/magit-popup
-LOAD_PATH += -L ~/.emacs.d/packages/ghub
-LOAD_PATH += -L ~/.emacs.d/packages/with-editor
-```
-and then run `make` within the ~/.emacs.d/packages/magit directory.
+Det kommer noen compile-advarsler etter første oppstart av programmet. Dette kan være verdt å undersøke.
