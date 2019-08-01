@@ -38,6 +38,13 @@ Ellers vil backupene legge seg i hytt og pine
 #+BEGIN_SRC emacs-lisp
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 #+END_SRC
+** Riktig PATH
+#+BEGIN_SRC emacs-lisp
+(use-package exec-path-from-shell)
+
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
+#+END_SRC
 * Pakkehåndtering
 ** Package.el
 Brukes til å installere pakker og brukes av use-package
