@@ -6,6 +6,15 @@ Konfigurasjonsfilen min til text-editoren emacs, som er ganske kul. Konfigurasjo
 2. Klon deretter dette repoet inn i din hjemmefolder (`~/`). Folderen skal altså være `~/.emacs.d`
 3. Kjør emacs
 
-Det er en del pakker som blir innstallert første gang du kjører programmet, og det vil da ta lenger tid å starte programmet denne gangen.
+Det er en del pakker som blir innstallert første gang du kjører emacs, og det vil da ta lenger tid å starte denne gangen.
 
-Det kommer noen compile-advarsler etter første oppstart av programmet. Dette kan være verdt å undersøke.
+Det kommer noen compile-advarsler etter første oppstart av programmet. Dette kan være verdt å se litt på, men har ikke merket noe særlig problemer med det ennå.
+
+Filen init.el kommer til å endre seg når man kjører emacs første gangen, og burde ikke commites etter dette. For å sørge for at init.el ikke vises i git kan man kjøre
+```
+git update-index --assume-unchanged init.el
+```
+Og for å gjøre om operasjonen over kan kan man kjøre
+```
+git update-index --no-assume-unchanged init.el
+```

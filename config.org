@@ -38,13 +38,6 @@ Ellers vil backupene legge seg i hytt og pine
 #+BEGIN_SRC emacs-lisp
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 #+END_SRC
-** Riktig PATH
-#+BEGIN_SRC emacs-lisp
-(use-package exec-path-from-shell)
-
-(when (memq window-system '(mac ns x))
-  (exec-path-from-shell-initialize))
-#+END_SRC
 * Pakkehåndtering
 ** Package.el
 Brukes til å installere pakker og brukes av use-package
@@ -84,7 +77,6 @@ Starter auto-compile-on-load-mode som gjør at alle filer som loades også kompi
   :config (auto-compile-on-load-mode))
 (setq load-prefer-newer t)
 #+END_SRC
-
 * Themes
 ** Solarized
 #+begin_src emacs-lisp
@@ -137,6 +129,14 @@ En litt kulere linje på bunnen. Her må det litt tweaking til for at denne skal
 (use-package fancy-battery)
 (add-hook 'after-init-hook #'fancy-battery-mode) ;; Shows battery in fullscreen mode
 (setq fancy-battery-show-percentage t)
+#+END_SRC
+* Riktig PATH
+Sørger for at emacs sin PATH er den samme som systemet, slik at emacs kan finne det den trenger og at shellet i emacs fungerer riktig.
+#+BEGIN_SRC emacs-lisp
+  (use-package exec-path-from-shell)
+
+  (when (memq window-system '(mac ns x))
+    (exec-path-from-shell-initialize))
 #+END_SRC
 * Dired
 Endringer på emacs´ standard filnavigeringssystem
