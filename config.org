@@ -38,6 +38,11 @@ Ellers vil backupene legge seg i hytt og pine
 #+BEGIN_SRC emacs-lisp
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 #+END_SRC
+** Fjerning av dobbelbuffring
+Prøver dette etter at det har vært litt problemer som beskrevet her: https://sourceforge.net/p/vcxsrv/feature-requests/32/
+#+BEGIN_SRC emacs-lisp
+(modify-frame-parameters nil '((inhibit-double-buffering . t)))
+#+END_SRC
 * Pakkehåndtering
 ** Package.el
 Brukes til å installere pakker og brukes av use-package
@@ -229,6 +234,66 @@ Lar deg se alt du har kopiert tidligere
 #+BEGIN_SRC emacs-lisp
 (use-package browse-kill-ring
   :config (browse-kill-ring-default-keybindings))
+#+END_SRC
+* Yasnippet
+#+BEGIN_SRC emacs-lisp
+(use-package yasnippet)
+#+END_SRC
+* IDE-opplevelse
+** Lsp-mode
+For autocomplete, jump-to-definition o.s.v..., for å installere serverne som denne modusen bruker, se https://github.com/emacs-lsp/lsp-mode
+#+BEGIN_SRC emacs-lisp
+(use-package lsp-mode
+  :config
+  (setq lsp-prefer-flymake nil
+        lsp-enable-snippet nil)
+  (add-hook 'c++-mode-hook #'lsp)
+  (add-hook 'python-mode-hook #'lsp))
+(global-set-key (kbd "M-g d") 'lsp-describe-thing-at-point)
+(global-set-key (kbd "M-g f") 'lsp-find-references)
+(global-set-key (kbd "M-g r") 'lsp-rename)
+#+END_SRC
+Pycodestyle (som står for error-oppdagelse i python) kan endres ved å følge [[http://pycodestyle.pycqa.org/en/latest/intro.html][denne linken]].
+** Lsp-ui
+Bedre brukergrensesnitt
+#+BEGIN_SRC emacs-lisp
+(use-package lsp-ui
+  :requires lsp-mode flycheck
+  :config
+  (setq lsp-ui-flycheck-enable t
+        lsp-ui-flycheck-list-position 'right
+        lsp-ui-flycheck-live-reporting t))
+(add-hook 'lsp-mode-hook 'lsp-ui-mode)
+#+END_SRC
+
+For å få bort slitsomme popups. Man kan heller bruke `M-g d` (go to docs) og `Q` (stor Q) for å gå ut av denne.
+#+BEGIN_SRC emacs-lisp
+(setq lsp-ui-doc-enable nil)
+#+END_SRC
+** Company
+Company lsp
+#+BEGIN_SRC emacs-lisp
+(use-package company
+  :config
+  (setq company-idle-delay 0.2
+        company-minimum-prefix-length 1)
+  :hook (lsp-mode . company-box-mode))
+
+(use-package company-lsp
+  :requires company
+  :config
+  (push 'company-lsp company-backends)
+
+   ;; Disable client-side cache because the LSP server does a better job.
+  (setq company-transformers nil
+        company-lsp-async t
+        company-lsp-cache-candidates nil))
+#+END_SRC
+
+Company-box. Er litt usikker på om det er verdt å bruke denne, for den har dette problemet https://github.com/sebastiencs/company-box/issues/38. Dette kan fikses med løsningen som står der.
+#+BEGIN_SRC emacs-lisp
+  (use-package company-box
+    :hook (company-mode . company-box-mode))
 #+END_SRC
 * Which-key
 Viser deg hvilke keybindings som er mulige å bruke en viss tid etter at du har startet med å trykke en keybinding som C-x
