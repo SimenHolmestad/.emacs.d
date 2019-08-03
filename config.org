@@ -304,6 +304,14 @@ Fjerner linjenummer og sørger for at org-agenda alltid åpner i samme vindu
 ;; Syntax highlighting in exported html
 (use-package htmlize)
 #+END_SRC
+** Lage emacs-lisp source-block
+#+BEGIN_SRC emacs-lisp
+(eval-after-load 'org
+  '(progn
+    (add-to-list 'org-structure-template-alist '("el" "#+BEGIN_SRC emacs-lisp \n?\n#+END_SRC"))
+    (define-key org-mode-map (kbd "C-'") nil)
+    (global-set-key "\C-ca" 'org-agenda)))
+#+END_SRC
 * Graphviz-dot-mode
 Brukes til tegning av grafer med .dot-filer
 #+BEGIN_SRC emacs-lisp
@@ -322,13 +330,6 @@ Brukes til tegning av grafer med .dot-filer
   (setq graphviz-dot-auto-indent-on-semi nil)
 #+END_SRC
 * Nyttige funksjoner
-** Lag en SRC-blokk rundt markering i org-mode
-Fungerer bare hvis man lager markeringen fra toppen og ned. Denne er laget som en keyboard-makro
-#+BEGIN_SRC emacs-lisp
-(fset 'add_source_block_to_region
-      [return ?# ?+ ?E ?N ?D ?_ ?S ?R ?C ?\C-x ?\C-x ?\C-p ?\C-n return ?\C-p ?# ?+ ?B ?E ?G ?I ?N ?_ ?S ?R ?C])
-(global-set-key (kbd "C-x å") 'add_source_block_to_region)
-#+END_SRC
 ** Lag SRC-blokk og åpne
 Lager en SRC-blokk i et org-dokument og åpner et nytt vindu hvor du kan redigere denne.
 #+BEGIN_SRC emacs-lisp
