@@ -1,3 +1,11 @@
+* Ting som burde installeres
+Under kommer en liste over ting som burde installeres og terminalkommandoene som kreves for å gjøre dette på mac.
+- Ripgrep -> brew install ripgrep
+- The silver searcher -> brew install ag
+- python -> brew install python3
+- python language server -> pip install python-language-server
+- pycodestyle -> pip install pycodestyle
+- git -> brew install git
 * Startup
 ** Fjern unødvendig vindusplass
 #+BEGIN_SRC emacs-lisp
@@ -203,7 +211,7 @@ Brukes for git i emacs. Veldig snedig.
   :bind ("C-x g" . magit-status))
 #+END_SRC
 * Helm
-Veldig fint til navigering
+Veldig fint til navigering.
 #+BEGIN_SRC emacs-lisp
 (use-package helm
   :bind (("M-x" . helm-M-x)
@@ -211,6 +219,11 @@ Veldig fint til navigering
          ("C-x C-f" . helm-find-files))
   :config
   (helm-mode 1))
+#+END_SRC
+Legger også til tilhørende søkemotorer egnet for raske søk i prosjekt
+#+BEGIN_SRC emacs-lisp
+(use-package helm-ag)
+(use-package helm-rg)
 #+END_SRC
 * Projectile
 For å finne filer på projekt-basis
