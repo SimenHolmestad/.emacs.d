@@ -38,11 +38,6 @@ Ellers vil backupene legge seg i hytt og pine
 #+BEGIN_SRC emacs-lisp
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 #+END_SRC
-** Fjerning av dobbelbuffring
-Prøver dette etter at det har vært litt problemer som beskrevet her: https://sourceforge.net/p/vcxsrv/feature-requests/32/
-#+BEGIN_SRC emacs-lisp
-(modify-frame-parameters nil '((inhibit-double-buffering . t)))
-#+END_SRC
 * Pakkehåndtering
 ** Package.el
 Brukes til å installere pakker og brukes av use-package
@@ -131,9 +126,9 @@ En litt kulere linje på bunnen. Her må det litt tweaking til for at denne skal
 (set-face-attribute 'mode-line-inactive nil
                     :box nil)
 
-(use-package fancy-battery)
-(add-hook 'after-init-hook #'fancy-battery-mode) ;; Shows battery in fullscreen mode
-(setq fancy-battery-show-percentage t)
+  ;; (use-package fancy-battery)
+  ;; (add-hook 'after-init-hook #'fancy-battery-mode) ;; Shows battery in fullscreen mode
+  ;; (setq fancy-battery-show-percentage t)
 #+END_SRC
 * Riktig PATH
 Sørger for at emacs sin PATH er den samme som systemet, slik at emacs kan finne det den trenger og at shellet i emacs fungerer riktig.
@@ -257,6 +252,7 @@ Pycodestyle (som står for error-oppdagelse i python) kan endres ved å følge [
 ** Lsp-ui
 Bedre brukergrensesnitt
 #+BEGIN_SRC emacs-lisp
+(use-package flycheck)
 (use-package lsp-ui
   :requires lsp-mode flycheck
   :config
@@ -277,7 +273,7 @@ Company lsp
   :config
   (setq company-idle-delay 0.2
         company-minimum-prefix-length 1)
-  :hook (lsp-mode . company-box-mode))
+  :hook (lsp-mode . company-mode))
 
 (use-package company-lsp
   :requires company
