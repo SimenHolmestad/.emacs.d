@@ -335,6 +335,27 @@ Vil søke etter det ordet som cursoren er over
 #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "M-s M-s") 'isearch-forward-symbol-at-point)
 #+END_SRC
+* Kompilering
+Bruk M-g c til kompilering og M-g C til rekompilering
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "M-g c") 'compile)
+(global-set-key (kbd "M-g C") 'recompile)
+#+END_SRC
+Denne funksjonen kan brukes for å toggle om kompileringen skal vises lenge eller ikke. Mesteparten er funnet [[https://emacs.stackexchange.com/questions/62/hide-compilation-window][her]].
+#+BEGIN_SRC emacs-lisp
+    (defun toggle-show-compile ()
+      (interactive)
+      (setq compilation-finish-function
+            (unless compilation-finish-function
+                (lambda (buf str)
+                  (if (null (string-match ".*exited abnormally.*" str))
+                      ;;no errors, make the compilation window go away in a few seconds
+                      (progn
+                        (kill-buffer (get-buffer-create "*compilation*"))
+                        (message "No Compilation Errors!"))))))
+      (cond (compilation-finish-function (message "Not showing successful compilations"))
+            (t (message "Showing successful compilations"))))
+#+END_SRC
 * Org-mode
 ** Bedre utseende
 Får org-mode til å starte med indenterte punkter og muliggjør lenger linjer ved at linjene går over når de blir for lange. Dropper i tillegg linjenummer på disse filene.
