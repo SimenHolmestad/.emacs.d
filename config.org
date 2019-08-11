@@ -38,6 +38,11 @@ Ellers vil backupene legge seg i hytt og pine
 (require 'linum)
 (global-linum-mode t)
 #+END_SRC
+Utenom i bildefiler og i pdf-filer
+#+BEGIN_SRC emacs-lisp
+(add-hook 'image-mode-hook (lambda () (linum-mode 0)))
+(add-hook 'doc-view-mode-hook (lambda () (linum-mode 0)))
+#+END_SRC
 ** Auto-refresh av buffere
 #+BEGIN_SRC emacs-lisp
 (global-auto-revert-mode 1)
@@ -123,20 +128,20 @@ Råkopiert fra internett. Lar deg toggle mellom themes med "C-x t"
 ** Spaceline
 En litt kulere linje på bunnen. Her må det litt tweaking til for at denne skal se bra ut.
 #+BEGIN_SRC emacs-lisp
-(use-package spaceline)
-(setq spaceline-minor-modes-separator " | ")
-(setq powerline-default-separator 'slant)
-(spaceline-emacs-theme)
-(spaceline-helm-mode)
-(setq powerline-image-apple-rgb t)
-(setq powerline-height 20)
-(setq x-underline-at-descent-line t)
-(set-face-attribute 'mode-line-inactive nil
-                    :box nil)
+  (use-package spaceline)
+  (setq spaceline-minor-modes-separator " | ")
+  (setq powerline-default-separator 'slant)
+  (spaceline-emacs-theme)
+  (spaceline-helm-mode)
+  (setq powerline-image-apple-rgb t)
+  (setq powerline-height 20)
+  (setq x-underline-at-descent-line t)
+  (set-face-attribute 'mode-line-inactive nil
+		      :box nil)
 
-  ;; (use-package fancy-battery)
-  ;; (add-hook 'after-init-hook #'fancy-battery-mode) ;; Shows battery in fullscreen mode
-  ;; (setq fancy-battery-show-percentage t)
+  (use-package fancy-battery)
+  (add-hook 'after-init-hook #'fancy-battery-mode) ;; Shows battery in fullscreen mode
+  (setq fancy-battery-show-percentage t)
 #+END_SRC
 * Riktig PATH
 Sørger for at emacs sin PATH er den samme som systemet, slik at emacs kan finne det den trenger og at shellet i emacs fungerer riktig.
@@ -374,8 +379,8 @@ Sørger for at bilder vises i bilder og ikke tekst og gjør bildene mindre
 ** Kopiering og liming av linker
 Legger til shortcuts for å lagre linker til en fil og for å lime inn linken i et org-dokument
 #+BEGIN_SRC emacs-lisp
-  (global-set-key (kbd "C-x Æ") `org-store-link)
-  (global-set-key (kbd "C-x Ø") `org-insert-last-stored-link)
+  (global-set-key (kbd "C-x C-ø") `org-store-link)
+  (global-set-key (kbd "C-x ø") `org-insert-last-stored-link)
 #+END_SRC
 ** Flere todo-muligheter
 Gjør det mulig å ha todos i flere tilstander en bare TODO og DONE
