@@ -178,6 +178,9 @@ Refresh buffere automatisk uten å komme med noen meldinger om det
 Veldig god løsning på flere cursors
 #+begin_src emacs-lisp
 (use-package multiple-cursors
+  :config
+  (setq mc/always-run-for-all 1)
+  (define-key mc/keymap (kbd "<return>") nil)
   :bind (("C-æ" . 'mc/mark-next-like-this)
          ("M-æ" . 'mc/mark-previous-like-this)
          ("C-x C-æ" . 'mc/mark-all-like-this)))
@@ -411,6 +414,19 @@ Fjerner linjenummer og sørger for at org-agenda alltid åpner i samme vindu
     (add-to-list 'org-structure-template-alist '("el" "#+BEGIN_SRC emacs-lisp \n?\n#+END_SRC"))
     (define-key org-mode-map (kbd "C-'") nil)
     (global-set-key "\C-ca" 'org-agenda)))
+#+END_SRC
+** Speed keys
+Gjør at man kan bruke spesielle shortcuts på starten av en heading, for eksempel "t" for å toggle todos.
+#+BEGIN_SRC emacs-lisp
+(setq org-use-speed-commands t)
+#+END_SRC
+** Org-download
+Gjør det mulig å legge til bilder i en org-buffer ved hjelp av drag-and-drop
+#+BEGIN_SRC emacs-lisp
+(use-package org-download
+  :config
+  ;; add support to dired
+  (add-hook 'dired-mode-hook 'org-download-enable))
 #+END_SRC
 * Graphviz-dot-mode
 Brukes til tegning av grafer med .dot-filer
