@@ -285,7 +285,12 @@ Bedre brukergrensesnitt
   :config
   (setq lsp-ui-flycheck-enable t
         lsp-ui-flycheck-list-position 'right
-        lsp-ui-flycheck-live-reporting t))
+        lsp-ui-flycheck-live-reporting t
+        lsp-ui-sideline-enable nil)
+  :bind
+  (:map lsp-mode-map
+        ("C-c s"   . lsp-ui-sideline-mode)))
+
 (add-hook 'lsp-mode-hook 'lsp-ui-mode)
 #+END_SRC
 
