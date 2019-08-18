@@ -63,8 +63,8 @@ Legg til ekstra pakkebehandlere (På det tidspunktet dette var skrevet var ikke 
   ;; (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/"))
 
   (setq package-archives '(("gnu" . "http://mirrors.163.com/elpa/gnu/")
-			  ("melpa" . "https://melpa.org/packages/")
-			  ("org" . "http://orgmode.org/elpa/")))
+                          ("melpa" . "https://melpa.org/packages/")
+                          ("org" . "http://orgmode.org/elpa/")))
 #+END_SRC
 Start package.el
 #+BEGIN_SRC emacs-lisp
@@ -264,12 +264,18 @@ For autocomplete, jump-to-definition o.s.v..., for å installere serverne som de
   (setq lsp-prefer-flymake nil
         lsp-enable-snippet nil)
   (add-hook 'c++-mode-hook #'lsp)
-  (add-hook 'python-mode-hook #'lsp))
+  (add-hook 'python-mode-hook #'lsp)
+  (add-hook 'js-mode-hook #'lsp))
 (global-set-key (kbd "M-g d") 'lsp-describe-thing-at-point)
 (global-set-key (kbd "M-g f") 'lsp-find-references)
 (global-set-key (kbd "M-g r") 'lsp-rename)
 #+END_SRC
 Pycodestyle (som står for error-oppdagelse i python) kan endres ved å følge [[http://pycodestyle.pycqa.org/en/latest/intro.html][denne linken]].
+
+Ettersom M-. brukes for å "hoppe til definisjon" med lsp, trengs ikke den fra js-mode:
+#+BEGIN_SRC emacs-lisp
+(add-hook 'js-mode-hook (lambda () (define-key js-mode-map (kbd "M-.") 'nil)))
+#+END_SRC
 ** Lsp-ui
 Bedre brukergrensesnitt
 #+BEGIN_SRC emacs-lisp
@@ -311,6 +317,23 @@ Company-box. Er litt usikker på om det er verdt å bruke denne, for den har det
 #+BEGIN_SRC emacs-lisp
   (use-package company-box
     :hook (company-mode . company-box-mode))
+#+END_SRC
+* Javascript
+** js2-mode
+For bedre javascript:
+#+BEGIN_SRC emacs-lisp
+(use-package js2-mode)
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+#+END_SRC
+** rjsx-mode
+For react-syntax
+#+BEGIN_SRC emacs-lisp
+(use-package rjsx-mode)
+(add-to-list 'auto-mode-alist '("\\.js\\'" . rjsx-mode))
+#+END_SRC
+** Indentering med 2 mellomrom i stedet for 4
+#+BEGIN_SRC emacs-lisp
+(setq js-indent-level 2)
 #+END_SRC
 * Which-key
 Viser deg hvilke keybindings som er mulige å bruke en viss tid etter at du har startet med å trykke en keybinding som C-x
