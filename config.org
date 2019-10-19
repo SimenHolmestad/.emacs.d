@@ -211,7 +211,14 @@ Ivy trengs for å søke i store mengder kandidater. Litt raskere enn Helm
     (setq ivy-use-virtual-buffers t)
     (setq enable-recursive-minibuffers t)
     (setq ivy-count-format "(%d/%d) ")
-    (setq ivy-height 30))
+    (setq ivy-height 30)
+    (setq ivy-wrap t)
+    (setq ivy-re-builders-alist
+          '((t . ivy--regex-ignore-order)))
+
+    (define-key ivy-minibuffer-map (kbd "<return>") 'ivy-alt-done)
+    (define-key ivy-minibuffer-map (kbd "C-j") 'ivy-done)
+    (define-key ivy-minibuffer-map (kbd "C-l") 'ivy-backward-delete-char))
 #+END_SRC
 
 Swiper er en alternativ måte å søke på.
