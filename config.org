@@ -269,6 +269,7 @@ For autocomplete, jump-to-definition o.s.v..., for å installere serverne som de
 (global-set-key (kbd "M-g d") 'lsp-describe-thing-at-point)
 (global-set-key (kbd "M-g f") 'lsp-find-references)
 (global-set-key (kbd "M-g r") 'lsp-rename)
+(global-set-key (kbd "M-g t") 'lsp-ui-imenu)
 #+END_SRC
 Pycodestyle (som står for error-oppdagelse i python) kan endres ved å følge [[http://pycodestyle.pycqa.org/en/latest/intro.html][denne linken]].
 
