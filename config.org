@@ -200,32 +200,47 @@ Brukes for git i emacs. Veldig snedig.
 (use-package magit
   :bind ("C-x g" . magit-status))
 #+END_SRC
-* Helm
-Veldig fint til navigering.
+* Ivy, swiper and counsel
+Ivy trengs for å søke i store mengder kandidater. Litt raskere enn Helm
 #+BEGIN_SRC emacs-lisp
-(use-package helm
-  :bind (("M-x" . helm-M-x)
-         ("C-x r b" . helm-filtered-bookmarks)
-         ("C-x C-f" . helm-find-files))
-  :config
-  (helm-mode 1))
+  (use-package ivy
+    :defer 0.1
+    :bind (("C-c C-r" . ivy-resume))
+    :config
+    (ivy-mode 1)
+    (setq ivy-use-virtual-buffers t)
+    (setq enable-recursive-minibuffers t)
+    (setq ivy-count-format "(%d/%d) ")
+    (setq ivy-height 30))
 #+END_SRC
-Legger også til tilhørende søkemotorer egnet for raske søk i prosjekt
+
+Swiper er en alternativ måte å søke på.
 #+BEGIN_SRC emacs-lisp
-(use-package helm-ag)
-(use-package helm-rg)
+(use-package swiper
+  :ensure t
+  :config
+  (global-set-key "\C-s" 'swiper)
+  (global-set-key "\C-r" 'swiper))
+#+END_SRC
+
+Legger til Ivy i flere tilfeller
+#+BEGIN_SRC emacs-lisp
+(use-package counsel
+  :ensure t
+  :config
+  (counsel-mode))
 #+END_SRC
 * Projectile
 For å finne filer på projekt-basis
 #+BEGIN_SRC emacs-lisp
-(use-package projectile
-  :config
-  (projectile-mode)
-  (define-key projectile-mode-map (kbd "C-c C-p") 'projectile-command-map))
+  (use-package projectile
+    :config
+    (projectile-mode)
+    (define-key projectile-mode-map (kbd "C-c C-p") 'projectile-command-map))
 
-(use-package helm-projectile
-  :config
-  (helm-projectile-on))
+  (use-package counsel-projectile
+    :config
+    (counsel-projectile-mode))
 #+END_SRC
 * Browse-kill-ring
 Lar deg se alt du har kopiert tidligere
