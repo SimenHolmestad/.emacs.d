@@ -125,24 +125,6 @@ Råkopiert fra internett. Lar deg toggle mellom themes med "C-x t"
 
 (global-set-key (kbd "C-x t") 'haba/toggle-theme)
 #+END_SRC
-** Spaceline
-En litt kulere linje på bunnen. Her må det litt tweaking til for at denne skal se bra ut.
-#+BEGIN_SRC emacs-lisp
-  (use-package spaceline)
-  (setq spaceline-minor-modes-separator " | ")
-  (setq powerline-default-separator 'slant)
-  (spaceline-emacs-theme)
-  (spaceline-helm-mode)
-  (setq powerline-image-apple-rgb t)
-  (setq powerline-height 20)
-  (setq x-underline-at-descent-line t)
-  (set-face-attribute 'mode-line-inactive nil
-		      :box nil)
-
-  (use-package fancy-battery)
-  (add-hook 'after-init-hook #'fancy-battery-mode) ;; Shows battery in fullscreen mode
-  (setq fancy-battery-show-percentage t)
-#+END_SRC
 * Riktig PATH
 Sørger for at emacs sin PATH er den samme som systemet, slik at emacs kan finne det den trenger og at shellet i emacs fungerer riktig.
 #+BEGIN_SRC emacs-lisp
