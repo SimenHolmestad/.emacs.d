@@ -318,10 +318,10 @@ Company lsp
         company-lsp-cache-candidates nil))
 #+END_SRC
 
-Company-box. Er litt usikker på om det er verdt å bruke denne, for den har dette problemet https://github.com/sebastiencs/company-box/issues/38. Dette kan fikses med løsningen som står der.
+Company-box. Er litt usikker på om det er verdt å bruke denne, for den har dette problemet https://github.com/sebastiencs/company-box/issues/38. Dette er mulig å fikse problemet med løsningen i linken, men det funket egentlig ikke så bra.
 #+BEGIN_SRC emacs-lisp
-  (use-package company-box
-    :hook (company-mode . company-box-mode))
+  ;; (use-package company-box
+  ;;   :hook (company-mode . company-box-mode))
 #+END_SRC
 * Javascript
 ** js2-mode
@@ -362,9 +362,12 @@ For å bytte mellom vinduer. Når man holder inne cmd+shift kan man tenke på ij
 (global-set-key (kbd "M-L") 'windmove-right)
 #+end_src
 ** Endre tekststørrelse
+For global zooming
 #+BEGIN_SRC emacs-lisp
-  (global-set-key (kbd "C-+") 'text-scale-increase)
-  (global-set-key (kbd "C--") 'text-scale-decrease)
+  (use-package default-text-scale
+    :bind (("C-+" . 'default-text-scale-increase)
+           ("C-x C-0" . 'default-text-scale-reset)
+           ("C--" . 'default-text-scale-decrease)))
 #+END_SRC
 ** Søk etter symbol(ord)
 Vil søke etter det ordet som cursoren er over
