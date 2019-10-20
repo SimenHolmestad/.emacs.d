@@ -51,6 +51,12 @@ Utenom i bildefiler og i pdf-filer
 #+BEGIN_SRC emacs-lisp
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 #+END_SRC
+** Ikke spørr før sletting av buffer med prosess
+#+BEGIN_SRC emacs-lisp
+(setq kill-buffer-query-functions
+  (remq 'process-kill-buffer-query-function
+         kill-buffer-query-functions))
+#+END_SRC
 * Pakkehåndtering
 ** Package.el
 Brukes til å installere pakker og brukes av use-package
@@ -96,6 +102,28 @@ Starter auto-compile-on-load-mode som gjør at alle filer som loades også kompi
 (use-package solarized-theme)
 (load-theme 'solarized-dark)
 #+end_src
+** Powerline
+En litt kulere linje på bunnen.
+#+BEGIN_SRC emacs-lisp
+  (use-package powerline
+    :config
+    (setq powerline-default-separator 'slant
+          powerline-display-buffer-size nil
+          powerline-display-mule-info nil)
+    (powerline-default-theme)
+    (remove-hook 'focus-out-hook 'powerline-unset-selected-window)
+    (setq powerline-height 20)
+    (setq x-underline-at-descent-line t)
+    (setq powerline-image-apple-rgb t)
+    (set-face-attribute 'mode-line-inactive nil
+                        :box nil))
+#+end_src
+Fancy-battery viser batteriet nederst i "mode line" som det heter.
+#+BEGIN_SRC emacs-lisp
+  (use-package fancy-battery)
+  (add-hook 'after-init-hook #'fancy-battery-mode) ;; Shows battery in fullscreen mode
+  (setq fancy-battery-show-percentage t)
+#+end_src
 ** Toggling av themes
 Råkopiert fra internett. Lar deg toggle mellom themes med "C-x t"
 #+BEGIN_SRC emacs-lisp
@@ -117,9 +145,10 @@ Råkopiert fra internett. Lar deg toggle mellom themes med "C-x t"
 
 (defun haba/toggle-theme ()
   (interactive)
-  (cond ((eq *haba-current-theme* *haba-theme-dark*) (haba/next-theme *haba-theme-light*) (spaceline-emacs-theme))
-        ((eq *haba-current-theme* *haba-theme-light*) (haba/next-theme 'default) (powerline-revert))
-        ((eq *haba-current-theme* 'default) (haba/next-theme *haba-theme-dark*) (spaceline-emacs-theme)))
+  (cond ((eq *haba-current-theme* *haba-theme-dark*) (haba/next-theme *haba-theme-light*))
+        ((eq *haba-current-theme* *haba-theme-light*) (haba/next-theme 'default))
+        ((eq *haba-current-theme* 'default) (haba/next-theme *haba-theme-dark*)))
+  (powerline-reset)
   (set-face-attribute 'mode-line-inactive nil
                     :box nil)) ;; needed for spaceline to look better
 
