@@ -289,8 +289,17 @@ Lar deg se alt du har kopiert tidligere
   :config (browse-kill-ring-default-keybindings))
 #+END_SRC
 * Yasnippet
+Bytter ut tab med C-M-Enter slik at tab ikke skal gjøre flere ting.
 #+BEGIN_SRC emacs-lisp
 (use-package yasnippet)
+(yas-reload-all)
+
+(define-key yas-minor-mode-map (kbd "<tab>") nil)
+(define-key yas-minor-mode-map (kbd "TAB") nil)
+(define-key yas-minor-mode-map (kbd "<C-M-return>") 'yas-expand)
+(define-key yas-minor-mode-map (kbd "C-x <C-M-return>") 'yas-visit-snippet-file)
+(define-key yas-minor-mode-map (kbd "C-c <C-M-return>") 'yas-describe-tables)
+(yas-global-mode 1)
 #+END_SRC
 * IDE-opplevelse
 ** Lsp-mode
