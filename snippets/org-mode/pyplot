@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: python plot
+# key: pyplot
+# --
+#+begin_src python :results file :exports results
+  import matplotlib.pyplot as plt
+  import numpy as np
+  filename = "${1:filename}.png"
+  $0
+  plt.savefig(filename)
+  return filename # return filename to org-mode
+#+end_src

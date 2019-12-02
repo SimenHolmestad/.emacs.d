@@ -297,9 +297,14 @@ Bytter ut tab med C-M-Enter slik at tab ikke skal gjøre flere ting.
 (define-key yas-minor-mode-map (kbd "<tab>") nil)
 (define-key yas-minor-mode-map (kbd "TAB") nil)
 (define-key yas-minor-mode-map (kbd "<C-M-return>") 'yas-expand)
-(define-key yas-minor-mode-map (kbd "C-x <C-M-return>") 'yas-visit-snippet-file)
+(define-key yas-minor-mode-map (kbd "C-x <C-M-return>") 'yas-new-snippet)
 (define-key yas-minor-mode-map (kbd "C-c <C-M-return>") 'yas-describe-tables)
 (yas-global-mode 1)
+#+END_SRC
+
+Bruk yasnippets-snippets som default. Snippetsene som ligger i .emacs.d/snippets overrider disse
+#+BEGIN_SRC emacs-lisp
+(use-package yasnippet-snippets)
 #+END_SRC
 * IDE-opplevelse
 ** Lsp-mode

@@ -1,5 +1,7 @@
-# Ignore all files exept .gitignore, readme.md and config.org
-*
+# Ignore all files exept .gitignore, readme.md, config.org and the snippet folder
+/*
+/*/
 !.gitignore
 !readme.md
 !config.org
+!/snippets/
