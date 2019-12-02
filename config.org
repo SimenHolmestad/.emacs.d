@@ -46,6 +46,8 @@ Utenom i bildefiler og i pdf-filer
 ** Auto-refresh av buffere
 #+BEGIN_SRC emacs-lisp
 (global-auto-revert-mode 1)
+(setq auto-revert-interval 1) ;; Refresh buffers faster
+(auto-revert-set-timer) ;; For updating the auto-refresh.
 #+END_SRC
 ** Fjerning av unødvendig whitespace
 #+BEGIN_SRC emacs-lisp
@@ -226,8 +228,10 @@ Veldig fin til å søke etter ord som ligger i flere foldere. Kan da også endre
 * Magit
 Brukes for git i emacs. Veldig snedig.
 #+BEGIN_SRC emacs-lisp
-(use-package magit
-  :bind ("C-x g" . magit-status))
+  (use-package magit
+    :bind ("C-x g" . magit-status))
+  (global-set-key (kbd "M-g b") 'magit-blame)
+  (global-set-key (kbd "M-g h") 'magit-log-buffer-file)
 #+END_SRC
 * Ivy, swiper and counsel
 Ivy trengs for å søke i store mengder kandidater. Litt raskere enn Helm
@@ -250,13 +254,13 @@ Ivy trengs for å søke i store mengder kandidater. Litt raskere enn Helm
     (define-key ivy-minibuffer-map (kbd "C-l") 'ivy-backward-delete-char))
 #+END_SRC
 
-Swiper er en alternativ måte å søke på.
+Swiper er en alternativ måte å søke på. Den er kommentert ut inntil videre.
 #+BEGIN_SRC emacs-lisp
-(use-package swiper
-  :ensure t
-  :config
-  (global-set-key "\C-s" 'swiper)
-  (global-set-key "\C-r" 'swiper))
+  ;; (use-package swiper
+  ;;   :ensure t
+  ;;   :config
+  ;;   (global-set-key "\C-s" 'swiper)
+  ;;   (global-set-key "\C-r" 'swiper))
 #+END_SRC
 
 Legger til Ivy i flere tilfeller
@@ -298,7 +302,8 @@ For autocomplete, jump-to-definition o.s.v..., for å installere serverne som de
         lsp-enable-snippet nil)
   (add-hook 'c++-mode-hook #'lsp)
   (add-hook 'python-mode-hook #'lsp)
-  (add-hook 'js-mode-hook #'lsp))
+  (add-hook 'js-mode-hook #'lsp)
+  (add-hook 'latex-mode-hook #'lsp))
 (global-set-key (kbd "M-g d") 'lsp-describe-thing-at-point)
 (global-set-key (kbd "M-g f") 'lsp-find-references)
 (global-set-key (kbd "M-g r") 'lsp-rename)
@@ -493,6 +498,14 @@ Gjør det mulig å legge til bilder i en org-buffer ved hjelp av drag-and-drop
   ;; add support to dired
   (add-hook 'dired-mode-hook 'org-download-enable))
 #+END_SRC
+** Kompilering av kode
+#+begin_src emacs-lisp
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((python . t) (latex . t)))
+(setq org-confirm-babel-evaluate nil)
+(setq org-babel-python-command "python3")
+#+end_src
 * Graphviz-dot-mode
 Brukes til tegning av grafer med .dot-filer
 #+BEGIN_SRC emacs-lisp
