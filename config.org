@@ -220,11 +220,15 @@ Veldig god løsning på flere cursors
          ("M-æ" . 'mc/mark-previous-like-this)
          ("C-x C-æ" . 'mc/mark-all-like-this)))
 #+end_src
-* Ace-jump-mode
+* Avy
 Lar deg hoppe til et ord på skjermen ved hjelp av den første bokstaven
 #+begin_src emacs-lisp
-(use-package ace-jump-mode
-  :bind (("C-ø" . 'ace-jump-mode)))
+(use-package avy
+  :config
+  (global-set-key (kbd "C-ø") 'avy-goto-word-or-subword-1)
+  (setq avy-styles-alist '((avy-goto-word-or-subword-1 . at-full)))
+  (setq avy-keys (number-sequence ?a ?w)))
+
 #+end_src
 * Iy-go-to-char
 For å gå til neste bokstav av en type
