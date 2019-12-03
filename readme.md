@@ -2,7 +2,7 @@
 Konfigurasjonsfilen min til text-editoren emacs, som er ganske kul. Konfigurasjonen er skrevet i org-mode som gjør filen mye mer oversiktlig når man åpner den i emacs. Kodeblokkene inne org-filen blir kjørt av emacs ved oppstart (med `org-babel-load-file` i `init.el`), mens resten av org-filen blir ignorert.
 
 ## Hvordan kjøre emacs med denne konfigurasjonen
-1. Last ned emacs. Dette kan gjøres ved å følge [denne guiden](https://www.gnu.org/software/emacs/download.html), evnt kan man gjøre det på [denne måten](https://github.com/d12frosted/homebrew-emacs-plus) for å få med en del ekstra pakker.
+1. Last ned emacs. Dette kan gjøres ved å følge [denne guiden](https://www.gnu.org/software/emacs/download.html), evnt kan man gjøre det på [denne måten](https://github.com/railwaycat/homebrew-emacsmacport) (med `brew cask`) for å få en versjon med ekstra funksjonalitet for OSX, som for eksempel retina-support.
 2. Klon deretter dette repoet inn i din hjemmefolder (`~/`). Folderen skal altså være `~/.emacs.d`
 3. Kjør emacs
 
