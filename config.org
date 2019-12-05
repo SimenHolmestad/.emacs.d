@@ -1,3 +1,4 @@
+#+PROPERTY: header-args :results silent
 * Ting som burde installeres
 Under kommer en liste over ting som burde installeres og terminalkommandoene som kreves for å gjøre dette på mac.
 - Ripgrep -> brew install ripgrep
@@ -109,30 +110,19 @@ Starter auto-compile-on-load-mode som gjør at alle filer som loades også kompi
 ** Powerline
 En litt kulere linje på bunnen.
 #+BEGIN_SRC emacs-lisp
-  ;; (use-package powerline
-  ;;   :config
-  ;;   (setq powerline-default-separator 'slant
-  ;;         powerline-display-buffer-size nil
-  ;;         powerline-display-mule-info nil)
-  ;;   (powerline-default-theme)
-  ;;   (remove-hook 'focus-out-hook 'powerline-unset-selected-window)
-  ;;   (setq powerline-height 20)
-  ;;   (setq x-underline-at-descent-line t)
-  ;;   (setq powerline-image-apple-rgb t)
-  ;;   (set-face-attribute 'mode-line-inactive nil
-  ;;                       :box nil))
-#+end_src
-
-#+BEGIN_SRC emacs-lisp
-  (use-package spaceline)
-  (setq spaceline-minor-modes-separator " | ")
-  (setq powerline-default-separator 'slant)
-  (spaceline-emacs-theme)
-  (setq powerline-image-apple-rgb nil)
-  (setq powerline-height 20)
-  (setq x-underline-at-descent-line t)
-  (set-face-attribute 'mode-line-inactive nil
-		      :box nil)
+  (use-package spaceline
+    :config
+    (setq spaceline-minor-modes-separator " | ")
+    (setq powerline-default-separator 'slant)
+    (spaceline-emacs-theme)
+    (setq powerline-image-apple-rgb nil)
+    (setq powerline-height 22)
+    (setq x-underline-at-descent-line t)
+    (set-face-attribute 'mode-line-inactive nil
+                      :box nil))
+    (custom-set-faces
+    '(mode-line ((t
+    (:underline nil :overline nil :box)))))
 #+END_SRC
 
 Fancy-battery viser batteriet nederst i "mode line" som det heter.
@@ -140,6 +130,16 @@ Fancy-battery viser batteriet nederst i "mode line" som det heter.
   (use-package fancy-battery)
   (add-hook 'after-init-hook #'fancy-battery-mode) ;; Shows battery in fullscreen mode
   (setq fancy-battery-show-percentage t)
+#+end_src
+
+Diminish brukes for å fjerne minor modes fra mode line
+#+begin_src emacs-lisp
+(use-package diminish)
+(eval-after-load 'org-indent '(diminish 'org-indent-mode))
+(eval-after-load 'eldoc
+  '(if
+       (fboundp 'diminish)
+       (diminish 'eldoc-mode)))
 #+end_src
 ** Toggling av themes
 Råkopiert fra internett. Lar deg toggle mellom themes med "C-x t"
@@ -227,8 +227,8 @@ Lar deg hoppe til et ord på skjermen ved hjelp av den første bokstaven
   :config
   (global-set-key (kbd "C-ø") 'avy-goto-word-or-subword-1)
   (setq avy-styles-alist '((avy-goto-word-or-subword-1 . at-full)))
-  (setq avy-keys (number-sequence ?a ?w)))
-
+  (setq avy-keys (number-sequence ?a ?w))
+  (setq avy-background t))
 #+end_src
 * Iy-go-to-char
 For å gå til neste bokstav av en type
@@ -264,6 +264,7 @@ Ivy trengs for å søke i store mengder kandidater. Litt raskere enn Helm
 #+BEGIN_SRC emacs-lisp
   (use-package ivy
     :defer 0.1
+    :diminish ivy-mode
     :bind (("C-c C-r" . ivy-resume))
     :config
     (ivy-mode 1)
@@ -293,6 +294,7 @@ Legger til Ivy i flere tilfeller
 #+BEGIN_SRC emacs-lisp
 (use-package counsel
   :ensure t
+  :diminish counsel-mode
   :config
   (counsel-mode))
 #+END_SRC
@@ -317,7 +319,8 @@ Lar deg se alt du har kopiert tidligere
 * Yasnippet
 Bytter ut tab med C-M-Enter slik at tab ikke skal gjøre flere ting.
 #+BEGIN_SRC emacs-lisp
-(use-package yasnippet)
+(use-package yasnippet
+  :diminish yas-minor-mode)
 (yas-reload-all)
 
 (define-key yas-minor-mode-map (kbd "<tab>") nil)
@@ -339,7 +342,8 @@ For autocomplete, jump-to-definition o.s.v..., for å installere serverne som de
 (use-package lsp-mode
   :config
   (setq lsp-prefer-flymake nil
-        lsp-enable-snippet nil)
+        lsp-enable-snippet nil
+        lsp-eldoc-enable-hover nil)
   (add-hook 'c++-mode-hook #'lsp)
   (add-hook 'python-mode-hook #'lsp)
   (add-hook 'js-mode-hook #'lsp)
@@ -358,7 +362,8 @@ Ettersom M-. brukes for å "hoppe til definisjon" med lsp, trengs ikke den fra j
 ** Lsp-ui
 Bedre brukergrensesnitt
 #+BEGIN_SRC emacs-lisp
-(use-package flycheck)
+(use-package flycheck
+  :diminish flycheck-mode)
 (use-package lsp-ui
   :requires lsp-mode flycheck
   :config
@@ -381,6 +386,7 @@ For å få bort slitsomme popups. Man kan heller bruke `M-g d` (go to docs) og `
 Company lsp
 #+BEGIN_SRC emacs-lisp
 (use-package company
+  :diminish company-mode
   :config
   (setq company-idle-delay 0.2
         company-minimum-prefix-length 1)
@@ -389,6 +395,7 @@ Company lsp
 (use-package company-lsp
   :requires company
   :config
+  (setq company-backends ())
   (push 'company-lsp company-backends)
 
    ;; Disable client-side cache because the LSP server does a better job.
@@ -422,7 +429,8 @@ For react-syntax
 * Which-key
 Viser deg hvilke keybindings som er mulige å bruke en viss tid etter at du har startet med å trykke en keybinding som C-x
 #+begin_src emacs-lisp
-(use-package which-key)
+(use-package which-key
+  :diminish which-key-mode)
 (which-key-mode)
 #+end_src
 * Endring av keybindings
