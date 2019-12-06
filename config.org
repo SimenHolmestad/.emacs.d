@@ -509,6 +509,10 @@ Gjør det mulig å ha todos i flere tilstander en bare TODO og DONE
   (setq org-todo-keywords
         '((sequence "TODO" "NEXT" "WAITING" "|" "DONE" "CANCELED")))
 #+END_SRC
+** Logging av når noe blir markert som done
+#+begin_src emacs-lisp
+(setq org-log-done 'time)
+#+end_src
 ** Org-agenda
 Fjerner linjenummer og sørger for at org-agenda alltid åpner i samme vindu
 #+BEGIN_SRC emacs-lisp
@@ -571,6 +575,18 @@ Brukes til tegning av grafer med .dot-filer
   (setq graphviz-dot-indent-width 4)
   (setq graphviz-dot-auto-indent-on-semi nil)
 #+END_SRC
+* Eyebrowse
+For vindukonfigurering
+#+begin_src emacs-lisp
+  (use-package eyebrowse
+    :config
+    (eyebrowse-mode t)
+    (define-key org-mode-map (kbd "C-M-i") nil)
+    (global-set-key (kbd "C-M-j") 'eyebrowse-create-window-config)
+    (global-set-key (kbd "C-x C-M-j") 'eyebrowse-close-window-config)
+    (global-set-key (kbd "C-M-i") 'eyebrowse-next-window-config)
+    (global-set-key (kbd "C-M-k") 'eyebrowse-prev-window-config))
+#+end_src
 * Nyttige funksjoner
 ** Lag SRC-blokk og åpne
 Lager en SRC-blokk i et org-dokument og åpner et nytt vindu hvor du kan redigere denne.
