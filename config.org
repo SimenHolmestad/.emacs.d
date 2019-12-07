@@ -203,6 +203,50 @@ Refresh buffere automatisk uten å komme med noen meldinger om det
 (setq global-auto-revert-non-file-buffers t)
 (setq auto-revert-verbose nil)
 #+END_SRC
+* Dash
+For å aksessere dokumentasjon direkte. "M-x counsel-dash-install-docset" kan brukes for å installere flere docsets, men disse må da legges til i koden under til riktig major-mode. Ser ut som om det også er mulig å installere docsets fra filer. Dette er beskrevet i git-repoet til [[https://github.com/dash-docs-el/helm-dash][helm-dash]]
+
+Listen over docsets er her:
+#+begin_src emacs-lisp
+  (setq sh-docset-list '("Python 3"
+                         "NumPy"
+                         "Matplotlib"
+                         "Emacs Lisp"
+                         "CSS"
+                         "HTML"
+                         "JavaScript"
+                         "React"))
+#+end_src
+
+Og koden for å legge docsets inn i riktig mode er her:
+#+begin_src emacs-lisp
+(use-package counsel-dash
+  :config
+  (setq counsel-dash-common-docsets sh-docset-list
+        dash-docs-enable-debugging  t
+        counsel-dash-min-length     2)
+  (add-hook 'python-mode-hook (lambda () (setq-local counsel-dash-docsets '("python 3" "NumPy" "Matplotlib"))))
+  (add-hook 'js-mode-hook (lambda () (setq-local counsel-dash-docsets '("CSS" "HTML" "JavaScript" "React"))))
+  (add-hook 'css-mode-hook (lambda () (setq-local counsel-dash-docsets '("CSS"))))
+  (add-hook 'html-mode-hook (lambda () (setq-local counsel-dash-docsets '("HTML" "CSS" "JavaScript"))))
+  (add-hook 'org-mode-hook (lambda () (setq-local counsel-dash-docsets '("Emacs Lisp"))))
+
+  (global-set-key (kbd "M-g d") 'counsel-dash-at-point)
+  (global-set-key (kbd "M-g D") 'counsel-dash))
+#+end_src
+For å laste ned alle docsettene som er brukt over, kan du kjøre "M-x sh-install-dash-docsets" som er definert under. Denne kan fort ta 20 minutter.
+#+begin_src emacs-lisp
+  (defun sh-install-docsets (docset-list)
+    "Install all docsets in docset-list recursively"
+    (dash-docs-install-docset (replace-regexp-in-string " " "_" (car docset-list)))
+    (if (cdr docset-list)
+        (sh-install-docsets (cdr docset-list))))
+
+  (defun sh-install-dash-docsets ()
+    "Install all specified docsets in sh-docset-list. This might take a while"
+    (interactive)
+    (sh-install-docsets sh-docset-list))
+#+end_src
 * Ispell
 #+begin_src emacs-lisp
 (setq ispell-program-name "aspell")
@@ -356,7 +400,7 @@ For autocomplete, jump-to-definition o.s.v..., for å installere serverne som de
   (add-hook 'python-mode-hook #'lsp)
   (add-hook 'js-mode-hook #'lsp)
   (add-hook 'latex-mode-hook #'lsp))
-(global-set-key (kbd "M-g d") 'lsp-describe-thing-at-point)
+(global-set-key (kbd "M-g i") 'lsp-describe-thing-at-point)
 (global-set-key (kbd "M-g f") 'lsp-find-references)
 (global-set-key (kbd "M-g r") 'lsp-rename)
 (global-set-key (kbd "M-g t") 'lsp-ui-imenu)
