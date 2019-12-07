@@ -52,9 +52,10 @@ Utenom i bildefiler og i pdf-filer
 (setq auto-revert-interval 1) ;; Refresh buffers faster
 (auto-revert-set-timer) ;; For updating the auto-refresh.
 #+END_SRC
-** Fjerning av unødvendig whitespace
+** Fjerning av unødvendig whitespace og alltid newline til slutt
 #+BEGIN_SRC emacs-lisp
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
+(setq require-final-newline t)
 #+END_SRC
 ** Ikke spørr før sletting av buffer med prosess
 #+BEGIN_SRC emacs-lisp
@@ -202,12 +203,19 @@ Refresh buffere automatisk uten å komme med noen meldinger om det
 (setq global-auto-revert-non-file-buffers t)
 (setq auto-revert-verbose nil)
 #+END_SRC
+* Ispell
+#+begin_src emacs-lisp
+(setq ispell-program-name "aspell")
+(ispell-change-dictionary "english" t)
+(global-set-key (kbd "M-g o") 'ispell-word)
+(global-set-key (kbd "M-g O") 'ispell-buffer)
+#+end_src
 * PDF-tools
 #+begin_src emacs-lisp
-;; (use-package pdf-tools)
-;; (add-hook 'pdf-tools-enabled-hook 'auto-revert-mode)
-;; (add-to-list 'auto-mode-alist '("\\.pdf\\'" . pdf-tools-install))
-;; (setq pdf-view-use-scaling t) ;; mulig at denne vil fungere
+  (use-package pdf-tools)
+  (add-hook 'pdf-tools-enabled-hook 'auto-revert-mode)
+  (add-to-list 'auto-mode-alist '("\\.pdf\\'" . pdf-tools-install))
+  (setq pdf-view-use-scaling t) ;; mulig at denne vil fungere
 #+end_src
 * Multiple cursors
 Veldig god løsning på flere cursors
