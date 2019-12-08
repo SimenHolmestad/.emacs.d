@@ -311,6 +311,11 @@ Brukes for git i emacs. Veldig snedig.
   (global-set-key (kbd "M-g b") 'magit-blame)
   (global-set-key (kbd "M-g h") 'magit-log-buffer-file)
 #+END_SRC
+Magit forge er en pakke som lar deg interagere med github og gitlab direkte i emacs
+#+begin_src emacs-lisp
+(use-package forge
+  :after magit)
+#+end_src
 * Ivy, swiper and counsel
 Ivy trengs for å søke i store mengder kandidater. Litt raskere enn Helm
 #+BEGIN_SRC emacs-lisp
@@ -542,6 +547,9 @@ Får org-mode til å starte med indenterte punkter og muliggjør lenger linjer v
 (setq org-startup-indented t)
 (setq org-startup-truncated nil)
 (add-hook 'org-mode-hook (lambda () (linum-mode 0)))
+  (use-package org-bullets
+    :hook (org-mode . org-bullets-mode)
+    :init (setq org-bullets-bullet-list '("◉" "◉" "◉" "◉")))
 #+END_SRC
 
 Sørger for at bilder vises i bilder og ikke tekst og gjør bildene mindre
@@ -631,13 +639,16 @@ Brukes til tegning av grafer med .dot-filer
 For vindukonfigurering
 #+begin_src emacs-lisp
   (use-package eyebrowse
+    :init
+    (setq eyebrowse-mode-map nil)
     :config
     (eyebrowse-mode t)
     (define-key org-mode-map (kbd "C-M-i") nil)
     (global-set-key (kbd "C-M-j") 'eyebrowse-create-window-config)
     (global-set-key (kbd "C-x C-M-j") 'eyebrowse-close-window-config)
     (global-set-key (kbd "C-M-i") 'eyebrowse-next-window-config)
-    (global-set-key (kbd "C-M-k") 'eyebrowse-prev-window-config))
+    (global-set-key (kbd "C-M-k") 'eyebrowse-prev-window-config)
+    (setq eyebrowse-wrap-around t))
 #+end_src
 * Nyttige funksjoner
 ** Lag SRC-blokk og åpne
