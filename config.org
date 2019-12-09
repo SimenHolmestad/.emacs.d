@@ -352,6 +352,10 @@ Legger til Ivy i flere tilfeller
 (use-package counsel
   :ensure t
   :diminish counsel-mode
+  :bind
+  (("M-y" . counsel-yank-pop)
+   :map ivy-minibuffer-map
+   ("M-y" . ivy-next-line-and-call))
   :config
   (counsel-mode))
 #+END_SRC
@@ -647,8 +651,7 @@ For vindukonfigurering
     (global-set-key (kbd "C-M-j") 'eyebrowse-create-window-config)
     (global-set-key (kbd "C-x C-M-j") 'eyebrowse-close-window-config)
     (global-set-key (kbd "C-M-i") 'eyebrowse-next-window-config)
-    (global-set-key (kbd "C-M-k") 'eyebrowse-prev-window-config)
-    (setq eyebrowse-wrap-around t))
+    (global-set-key (kbd "C-M-k") 'eyebrowse-prev-window-config))
 #+end_src
 * Nyttige funksjoner
 ** Lag SRC-blokk og åpne
