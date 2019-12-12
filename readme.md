@@ -1,20 +1,20 @@
 # .emacs.d
-Konfigurasjonsfilen min til text-editoren emacs, som er ganske kul. Konfigurasjonen er skrevet i org-mode som gjør filen mye mer oversiktlig når man åpner den i emacs. Kodeblokkene inne org-filen blir kjørt av emacs ved oppstart (med `org-babel-load-file` i `init.el`), mens resten av org-filen blir ignorert.
+My configuration file for the emacs text editor. It is written in and org-mode-file (.org) for easier organisation and a better editing experience in emacs. All the code blocks in the org-file are run with the `org-babel-load-file`-function in `init.el` when emacs starts.
 
-## Hvordan kjøre emacs med denne konfigurasjonen
-1. Last ned emacs. Dette kan gjøres ved å følge [denne guiden](https://www.gnu.org/software/emacs/download.html), evnt kan man gjøre det på [denne måten](https://github.com/railwaycat/homebrew-emacsmacport) (med `brew cask`) for å få en versjon med ekstra funksjonalitet for OSX, som for eksempel retina-support.
-2. Klon deretter dette repoet inn i din hjemmefolder (`~/`). Folderen skal altså være `~/.emacs.d`
-3. Kjør emacs
+Although you are free to use my configuration as a starting point for emacs, I would rather recommend you to make your own config-file and steal stuff from this one (and others!) while you go along. Some of the fun part of emacs is to configure it the way you want.
 
-Det er en del pakker som blir innstallert første gang du kjører emacs, og det vil da ta lenger tid å starte denne gangen.
+## How to run emacs with this configuration
+1. Download emacs. This can be done by following [this guide](https://www.gnu.org/software/emacs/download.html), but in my experience [this version](https://github.com/railwaycat/homebrew-emacsmacport) (using `brew cask`) is better for mac than the regular homebrew version.
+2. Clone this repo into your home folder
+3. Run emacs
 
-Det kommer noen compile-advarsler etter første oppstart av programmet. Dette kan være verdt å se litt på, men har ikke merket noe særlig problemer med det ennå.
+Be prepared to wait a bit while starting emacs for the first time, as it will take some time to download all the packages. There will perhaps be some compile warnings after the packages are downloaded, and these might be smart to check out.
 
-Filen init.el kommer til å endre seg når man kjører emacs første gangen, og burde ikke commites etter dette. For å sørge for at init.el ikke vises i git kan man kjøre
+The `init.el`-file is going to change after running emacs for the first time with this config and should not be committed afterwards. To make sure `init.el` is not shown in git, you can run the command:
 ```
 git update-index --assume-unchanged init.el
 ```
-Og for å gjøre om operasjonen over kan kan man kjøre
+To undo the operation above, you can run:
 ```
 git update-index --no-assume-unchanged init.el
 ```

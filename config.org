@@ -1,79 +1,81 @@
 #+PROPERTY: header-args :results silent
-* Ting som burde installeres
-Under kommer en liste over ting som burde installeres og terminalkommandoene som kreves for å gjøre dette på mac.
-- Ripgrep -> brew install ripgrep
-- The silver searcher -> brew install ag
-- python -> brew install python3
-- python language server -> pip install python-language-server
-- pycodestyle -> pip install pycodestyle
-- git -> brew install git
+* Requirements
+A list of stuff that should be installed to utilize everything in this config:
+- The silver searcher: `brew install ag`
+- Python: `brew install python3`
+- Python language server: `pip install python-language-server`
+- Pycodestyle: `pip install pycodestyle`
+- Git: `brew install git`
+- Typescript language server: `npm install -g typescript-language-server`
+- Documentation: see [[Dash]]
 * Startup
-** Fjern unødvendig vindusplass
+** Remove unnecessary window space
 #+BEGIN_SRC emacs-lisp
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 #+END_SRC
-** Start i fullscreen
+** Start in full screen
 #+BEGIN_SRC emacs-lisp
   (toggle-frame-fullscreen)
   (setq inhibit-startup-screen t)
 #+END_SRC
-** Endring av mac-taster
-Lar deg bruke cmd-tasten for meta og alt-tasten til paranteser slik det er på det norske mac-tastaturet
+** Change mac keyboard settings
+Change cmd-key to meta and let alt function as normal for special keys.
 #+BEGIN_SRC emacs-lisp
    (setq ns-alternate-modifier nil)
-   (setq mac-pass-command-to-system nil)
    (setq ns-command-modifier (quote meta))
 #+END_SRC
-** Endre fra "yes or no" til "y or n"
+Also not send command-key to system as weird stuff will happen.
+#+begin_src emacs-lisp
+   (setq mac-pass-command-to-system nil)
+#+end_src
+** Change from "yes or no" to "y or n"
 #+BEGIN_SRC emacs-lisp
   (fset 'yes-or-no-p 'y-or-n-p)
 #+END_SRC
-** Send backup til en egen backup-folder
-Ellers vil backupene legge seg i hytt og pine
+** Send backup-files to backup-folder
+If this is not done the backup-files will be everywhere.
 #+BEGIN_SRC emacs-lisp
   (setq backup-directory-alist `(("." . "~/.emacs.d/.backups")))
 #+END_SRC
-** Linjenummer overalt
+** Line numbers everywhere
 #+BEGIN_SRC emacs-lisp
 (require 'linum)
 (global-linum-mode t)
 #+END_SRC
-Utenom i bildefiler og i pdf-filer
+Except for image and PDF-files.
 #+BEGIN_SRC emacs-lisp
 (add-hook 'image-mode-hook (lambda () (linum-mode 0)))
 (add-hook 'doc-view-mode-hook (lambda () (linum-mode 0)))
 (add-hook 'pdf-view-mode-hook (lambda () (linum-mode 0)))
 #+END_SRC
-** Auto-refresh av buffere
+** Auto refresh of buffers
 #+BEGIN_SRC emacs-lisp
 (global-auto-revert-mode 1)
 (setq auto-revert-interval 1) ;; Refresh buffers faster
 (auto-revert-set-timer) ;; For updating the auto-refresh.
 #+END_SRC
-** Fjerning av unødvendig whitespace og alltid newline til slutt
+** Whitespace-control
+Remove whitespace at end of line on save and require newline at end of file.
 #+BEGIN_SRC emacs-lisp
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 (setq require-final-newline t)
 #+END_SRC
-** Ikke spørr før sletting av buffer med prosess
+** Don't ask before killing buffers with processes
 #+BEGIN_SRC emacs-lisp
 (setq kill-buffer-query-functions
   (remq 'process-kill-buffer-query-function
          kill-buffer-query-functions))
 #+END_SRC
-* Pakkehåndtering
+* Package handling
 ** Package.el
-Brukes til å installere pakker og brukes av use-package
+Is used for installing packages and is required for use-package.
 #+BEGIN_SRC emacs-lisp
   (require 'package)
 #+END_SRC
-Legg til ekstra pakkebehandlere (På det tidspunktet dette var skrevet var ikke elpa oppe, så det som står nå er en workaround)
+Add more package archives.
 #+BEGIN_SRC emacs-lisp
-  ;; (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-  ;; (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/"))
-
   (setq package-archives '(("gnu" . "http://mirrors.163.com/elpa/gnu/")
                           ("melpa" . "https://melpa.org/packages/")
                           ("org" . "http://orgmode.org/elpa/")))
@@ -82,34 +84,35 @@ Start package.el
 #+BEGIN_SRC emacs-lisp
   (package-initialize)
 #+END_SRC
-Oppdaterer pakkelisten hvis dette er første gangen emacs starter
+Update the package list if this is the first time emacs starts
 #+BEGIN_SRC emacs-lisp
-(when (not package-archive-contents)
-  (package-refresh-contents))
+  (when (not package-archive-contents)
+    (package-refresh-contents))
 #+END_SRC
 ** Use-package
-Use-package brukes for å holde orden på hvilke pakker som er installert og gjør en del smarte ting for å ikke kjøre kode når det ikke trengs.
+Used for installing other packages smoothly.
 #+BEGIN_SRC emacs-lisp
-(unless (package-installed-p 'use-package)
-  (package-install 'use-package))
-(require 'use-package)
-(setq use-package-always-ensure t)
+  (unless (package-installed-p 'use-package)
+    (package-install 'use-package))
+  (require 'use-package)
+  (setq use-package-always-ensure t)
 #+END_SRC
 ** Auto-compile
-Starter auto-compile-on-load-mode som gjør at alle filer som loades også kompileres. (og dermed kjører raskere). Den vil visst ikke kompilere filer flere ganger.
+Compile all packages.
 #+BEGIN_SRC emacs-lisp
-(use-package auto-compile
-  :config (auto-compile-on-load-mode))
-(setq load-prefer-newer t)
+  (use-package auto-compile
+    :config (auto-compile-on-load-mode))
+  (setq load-prefer-newer t)
 #+END_SRC
 * Themes
 ** Solarized
+I like this theme.
 #+begin_src emacs-lisp
 (use-package solarized-theme)
 (load-theme 'solarized-dark)
 #+end_src
-** Powerline
-En litt kulere linje på bunnen.
+** Spaceline
+Configure the mode line (the line at the bottom of the screen)
 #+BEGIN_SRC emacs-lisp
   (use-package spaceline
     :config
@@ -126,14 +129,14 @@ En litt kulere linje på bunnen.
     (:underline nil :overline nil :box)))))
 #+END_SRC
 
-Fancy-battery viser batteriet nederst i "mode line" som det heter.
+Show battery info in the mode line as emacs often run in fullscreen.
 #+BEGIN_SRC emacs-lisp
   (use-package fancy-battery)
-  (add-hook 'after-init-hook #'fancy-battery-mode) ;; Shows battery in fullscreen mode
+  (add-hook 'after-init-hook #'fancy-battery-mode)
   (setq fancy-battery-show-percentage t)
 #+end_src
 
-Diminish brukes for å fjerne minor modes fra mode line
+Use diminish to hide some minor modes in the mode line. Minor modes can be shown with "C-h m" instead.
 #+begin_src emacs-lisp
 (use-package diminish)
 (eval-after-load 'org-indent '(diminish 'org-indent-mode))
@@ -142,8 +145,8 @@ Diminish brukes for å fjerne minor modes fra mode line
        (fboundp 'diminish)
        (diminish 'eldoc-mode)))
 #+end_src
-** Toggling av themes
-Råkopiert fra internett. Lar deg toggle mellom themes med "C-x t"
+** Toggling of themes
+Makes it possible to toggle themes with "C-x t"
 #+BEGIN_SRC emacs-lisp
 (defvar *haba-theme-dark* 'solarized-dark)
 (defvar *haba-theme-light* 'solarized-light)
@@ -167,13 +170,14 @@ Råkopiert fra internett. Lar deg toggle mellom themes med "C-x t"
         ((eq *haba-current-theme* *haba-theme-light*) (haba/next-theme 'default))
         ((eq *haba-current-theme* 'default) (haba/next-theme *haba-theme-dark*)))
   (powerline-reset)
+  (run-hooks 'sh-post-theme-change-hook)
   (set-face-attribute 'mode-line-inactive nil
                     :box nil)) ;; needed for spaceline to look better
 
 (global-set-key (kbd "C-x t") 'haba/toggle-theme)
 #+END_SRC
-* Riktig PATH
-Sørger for at emacs sin PATH er den samme som systemet, slik at emacs kan finne det den trenger og at shellet i emacs fungerer riktig.
+* Correct path
+Make sure the emacs path is the same as the system path.
 #+BEGIN_SRC emacs-lisp
   (use-package exec-path-from-shell)
 
@@ -181,32 +185,33 @@ Sørger for at emacs sin PATH er den samme som systemet, slik at emacs kan finne
     (exec-path-from-shell-initialize))
 #+END_SRC
 * Dired
-Endringer på emacs´ standard filnavigeringssystem
-** Vis mindre stygge detaljer
+Configuration for Emacs' file navigation system.
+** Cleaner look
+Hide information about permissions and stuff.
 #+BEGIN_SRC emacs-lisp
-(add-hook 'dired-mode-hook (lambda () (dired-hide-details-mode)))
+  (add-hook 'dired-mode-hook (lambda () (dired-hide-details-mode)))
 #+END_SRC
-** Lettere kopiering
-Med to vinduer oppe vil denne automatisk gi filsti til det andre vinduet ved kopiering og flytting
+** Easier copying
+If there are two dired windows, the copy and move command should have the other window as target.
 #+BEGIN_SRC emacs-lisp
 (setq dired-dwim-target t)
 #+END_SRC
-** Bedre navigering
-Definerer b til å gå opp ett directory (siden man kan bruke f til å gå ned)
+** Better navigation
+Define b to go up a directory in dired mode, as f is used to go down/open a file.
 #+BEGIN_SRC emacs-lisp
 (eval-after-load 'dired
   '(define-key dired-mode-map (kbd "b") 'dired-up-directory))
 #+END_SRC
-** Auto-refresh av dired-buffere
-Refresh buffere automatisk uten å komme med noen meldinger om det
+** Auto-refresh of dired buffers
+Refresh dired buffers and be silent about it.
 #+BEGIN_SRC emacs-lisp
 (setq global-auto-revert-non-file-buffers t)
 (setq auto-revert-verbose nil)
 #+END_SRC
 * Dash
-For å aksessere dokumentasjon direkte. "M-x counsel-dash-install-docset" kan brukes for å installere flere docsets, men disse må da legges til i koden under til riktig major-mode. Ser ut som om det også er mulig å installere docsets fra filer. Dette er beskrevet i git-repoet til [[https://github.com/dash-docs-el/helm-dash][helm-dash]]
+Dash is a nice way of accessing documentation "M-x counsel-dash-install-docset" can be used to install more docsets, but if this is done, they must be added to the correct major-mode below. It looks like it might be possible to download files with documentation as well. This is described in the git-repo of [[https://github.com/dash-docs-el/helm-dash][helm-dash]].
 
-Listen over docsets er her:
+The list of docsets i have installed is listed here:
 #+begin_src emacs-lisp
   (setq sh-docset-list '("Python 3"
                          "NumPy"
@@ -215,10 +220,11 @@ Listen over docsets er her:
                          "CSS"
                          "HTML"
                          "JavaScript"
-                         "React"))
+                         "React"
+                         "Express"))
 #+end_src
 
-Og koden for å legge docsets inn i riktig mode er her:
+And the code adding these to the correct major-mode is here:
 #+begin_src emacs-lisp
 (use-package counsel-dash
   :config
@@ -226,7 +232,7 @@ Og koden for å legge docsets inn i riktig mode er her:
         dash-docs-enable-debugging  t
         counsel-dash-min-length     2)
   (add-hook 'python-mode-hook (lambda () (setq-local counsel-dash-docsets '("python 3" "NumPy" "Matplotlib"))))
-  (add-hook 'js-mode-hook (lambda () (setq-local counsel-dash-docsets '("CSS" "HTML" "JavaScript" "React"))))
+  (add-hook 'js-mode-hook (lambda () (setq-local counsel-dash-docsets '("CSS" "HTML" "JavaScript" "React" "Express"))))
   (add-hook 'css-mode-hook (lambda () (setq-local counsel-dash-docsets '("CSS"))))
   (add-hook 'html-mode-hook (lambda () (setq-local counsel-dash-docsets '("HTML" "CSS" "JavaScript"))))
   (add-hook 'org-mode-hook (lambda () (setq-local counsel-dash-docsets '("Emacs Lisp"))))
@@ -234,7 +240,7 @@ Og koden for å legge docsets inn i riktig mode er her:
   (global-set-key (kbd "M-g d") 'counsel-dash-at-point)
   (global-set-key (kbd "M-g D") 'counsel-dash))
 #+end_src
-For å laste ned alle docsettene som er brukt over, kan du kjøre "M-x sh-install-dash-docsets" som er definert under. Denne kan fort ta 20 minutter.
+To download all docsets in the list, it is possible to run "M-x sh-install-dash-docsets" which is defined below, but this might take 20 minutes.
 #+begin_src emacs-lisp
   (defun sh-install-docsets (docset-list)
     "Install all docsets in docset-list recursively"
@@ -248,6 +254,7 @@ For å laste ned alle docsettene som er brukt over, kan du kjøre "M-x sh-instal
     (sh-install-docsets sh-docset-list))
 #+end_src
 * Ispell
+Ispell is for spellchecking in emacs. "M-x flyspell-mode" and "M-x flyspell-prog-mode" can be used to see misspelled words in buffer. Ispell-word is useful for checking a current word, while ispell-buffer is interacitve for the whole buffer.
 #+begin_src emacs-lisp
 (setq ispell-program-name "aspell")
 (ispell-change-dictionary "english" t)
@@ -255,14 +262,15 @@ For å laste ned alle docsettene som er brukt over, kan du kjøre "M-x sh-instal
 (global-set-key (kbd "M-g O") 'ispell-buffer)
 #+end_src
 * PDF-tools
+PDF-tools is a better mode for displaying pdfs. It makes it possible to search through the text in the file.
 #+begin_src emacs-lisp
   (use-package pdf-tools)
   (add-hook 'pdf-tools-enabled-hook 'auto-revert-mode)
   (add-to-list 'auto-mode-alist '("\\.pdf\\'" . pdf-tools-install))
-  (setq pdf-view-use-scaling t) ;; mulig at denne vil fungere
+  (setq pdf-view-use-scaling t)
 #+end_src
 * Multiple cursors
-Veldig god løsning på flere cursors
+Allows for more than one cursor at once and is really handy.
 #+begin_src emacs-lisp
 (use-package multiple-cursors
   :config
@@ -273,7 +281,7 @@ Veldig god løsning på flere cursors
          ("C-x C-æ" . 'mc/mark-all-like-this)))
 #+end_src
 * Avy
-Lar deg hoppe til et ord på skjermen ved hjelp av den første bokstaven
+Makes you able to jump to a word on screen by inputting the first character.
 #+begin_src emacs-lisp
 (use-package avy
   :config
@@ -283,20 +291,20 @@ Lar deg hoppe til et ord på skjermen ved hjelp av den første bokstaven
   (setq avy-background t))
 #+end_src
 * Iy-go-to-char
-For å gå til neste bokstav av en type
+Lets you choose a character and go to the next instance of it.
 #+begin_src emacs-lisp
 (use-package iy-go-to-char
   :bind (("C-l" . 'iy-go-to-char)
          ("C-M-l" . 'iy-go-to-char-backward)))
 #+end_src
 * Expand region
-Lar deg gradvis utvide en selection til den dekker det du vil ha. Det er bare å trykke på "M-ø" mange nok ganger
+Selects an area around point and increases selection by logical units for every time "M-ø" is done.
 #+begin_src emacs-lisp
 (use-package expand-region
   :bind (("M-ø" . er/expand-region)))
 #+end_src
 * Wgrep
-Veldig fin til å søke etter ord som ligger i flere foldere. Kan da også endre på dette.
+Makes it possible to change content of multiple lines from a grep-search.
 #+BEGIN_SRC emacs-lisp
 (use-package wgrep
   :bind (("M-g g" . rgrep)
@@ -304,20 +312,20 @@ Veldig fin til å søke etter ord som ligger i flere foldere. Kan da også endre
          ("M-g s" . wgrep-save-all-buffers)))
 #+END_SRC
 * Magit
-Brukes for git i emacs. Veldig snedig.
+A really good tool for git.
 #+BEGIN_SRC emacs-lisp
   (use-package magit
     :bind ("C-x g" . magit-status))
   (global-set-key (kbd "M-g b") 'magit-blame)
   (global-set-key (kbd "M-g h") 'magit-log-buffer-file)
 #+END_SRC
-Magit forge er en pakke som lar deg interagere med github og gitlab direkte i emacs
+Magit forge lets you see issues and pull-requests from github and gitlab in emacs.
 #+begin_src emacs-lisp
 (use-package forge
   :after magit)
 #+end_src
 * Ivy, swiper and counsel
-Ivy trengs for å søke i store mengder kandidater. Litt raskere enn Helm
+Ivy is a tool to easily select from many candidates, like when finding files. It is very similar to the package helm, but has a little less functionality and might be a bit faster.
 #+BEGIN_SRC emacs-lisp
   (use-package ivy
     :defer 0.1
@@ -337,17 +345,7 @@ Ivy trengs for å søke i store mengder kandidater. Litt raskere enn Helm
     (define-key ivy-minibuffer-map (kbd "C-j") 'ivy-done)
     (define-key ivy-minibuffer-map (kbd "C-l") 'ivy-backward-delete-char))
 #+END_SRC
-
-Swiper er en alternativ måte å søke på. Den er kommentert ut inntil videre.
-#+BEGIN_SRC emacs-lisp
-  ;; (use-package swiper
-  ;;   :ensure t
-  ;;   :config
-  ;;   (global-set-key "\C-s" 'swiper)
-  ;;   (global-set-key "\C-r" 'swiper))
-#+END_SRC
-
-Legger til Ivy i flere tilfeller
+Counsel adds ivy features to more places.
 #+BEGIN_SRC emacs-lisp
 (use-package counsel
   :ensure t
@@ -360,7 +358,7 @@ Legger til Ivy i flere tilfeller
   (counsel-mode))
 #+END_SRC
 * Projectile
-For å finne filer på projekt-basis
+Projectile is used for managing projects in emacs and comes with a lot of handful features.
 #+BEGIN_SRC emacs-lisp
   (use-package projectile
     :config
@@ -371,14 +369,8 @@ For å finne filer på projekt-basis
     :config
     (counsel-projectile-mode))
 #+END_SRC
-* Browse-kill-ring
-Lar deg se alt du har kopiert tidligere
-#+BEGIN_SRC emacs-lisp
-(use-package browse-kill-ring
-  :config (browse-kill-ring-default-keybindings))
-#+END_SRC
 * Yasnippet
-Bytter ut tab med C-M-Enter slik at tab ikke skal gjøre flere ting.
+Yasnippet is used for handling snippets.
 #+BEGIN_SRC emacs-lisp
 (use-package yasnippet
   :diminish yas-minor-mode)
@@ -392,13 +384,13 @@ Bytter ut tab med C-M-Enter slik at tab ikke skal gjøre flere ting.
 (yas-global-mode 1)
 #+END_SRC
 
-Bruk yasnippets-snippets som default. Snippetsene som ligger i .emacs.d/snippets overrider disse
+Yasnippet comes with a lot of default snippets in the yasnippet-snippets-package, but the snippets in .emacs.d/snippets overrides the default ones with the same name.
 #+BEGIN_SRC emacs-lisp
 (use-package yasnippet-snippets)
 #+END_SRC
-* IDE-opplevelse
+* Language server protocol
 ** Lsp-mode
-For autocomplete, jump-to-definition o.s.v..., for å installere serverne som denne modusen bruker, se https://github.com/emacs-lsp/lsp-mode
+Language server protocol integration for autocompletion, jump-to-definition and so forth. See https://github.com/emacs-lsp/lsp-mode.
 #+BEGIN_SRC emacs-lisp
 (use-package lsp-mode
   :config
@@ -414,37 +406,32 @@ For autocomplete, jump-to-definition o.s.v..., for å installere serverne som de
 (global-set-key (kbd "M-g r") 'lsp-rename)
 (global-set-key (kbd "M-g t") 'lsp-ui-imenu)
 #+END_SRC
-Pycodestyle (som står for error-oppdagelse i python) kan endres ved å følge [[http://pycodestyle.pycqa.org/en/latest/intro.html][denne linken]].
+Pycodestyle which have some irritating defaults can be changed by following [[http://pycodestyle.pycqa.org/en/latest/intro.html][this link]].
 
-Ettersom M-. brukes for å "hoppe til definisjon" med lsp, trengs ikke den fra js-mode:
+"M-." is used for jump-to-definition lsp, so it needs to be removed from the js-mode keymap.
 #+BEGIN_SRC emacs-lisp
 (add-hook 'js-mode-hook (lambda () (define-key js-mode-map (kbd "M-.") 'nil)))
 #+END_SRC
 ** Lsp-ui
-Bedre brukergrensesnitt
+Some more lsp-mode integration
 #+BEGIN_SRC emacs-lisp
-(use-package flycheck
-  :diminish flycheck-mode)
-(use-package lsp-ui
-  :requires lsp-mode flycheck
-  :config
-  (setq lsp-ui-flycheck-enable t
-        lsp-ui-flycheck-list-position 'right
-        lsp-ui-flycheck-live-reporting t
-        lsp-ui-sideline-enable nil)
-  :bind
-  (:map lsp-mode-map
-        ("C-c s"   . lsp-ui-sideline-mode)))
-
-(add-hook 'lsp-mode-hook 'lsp-ui-mode)
+  (use-package flycheck
+    :diminish flycheck-mode)
+  (use-package lsp-ui
+    :requires lsp-mode flycheck
+    :config
+    (setq lsp-ui-flycheck-enable t
+          lsp-ui-flycheck-list-position 'right
+          lsp-ui-flycheck-live-reporting t
+          lsp-ui-sideline-enable nil
+          lsp-ui-doc-enable nil)
+    (add-hook 'lsp-mode-hook 'lsp-ui-mode)
+    :bind
+    (:map lsp-mode-map
+          ("C-c s"   . lsp-ui-sideline-mode)))
 #+END_SRC
-
-For å få bort slitsomme popups. Man kan heller bruke `M-g d` (go to docs) og `Q` (stor Q) for å gå ut av denne.
-#+BEGIN_SRC emacs-lisp
-(setq lsp-ui-doc-enable nil)
-#+END_SRC
-** Company
-Company lsp
+* Company
+Company is the "front end" for autocompletion and is setup to use lsp as its "backend".
 #+BEGIN_SRC emacs-lisp
 (use-package company
   :diminish company-mode
@@ -464,71 +451,61 @@ Company lsp
         company-lsp-async t
         company-lsp-cache-candidates nil))
 #+END_SRC
-
-Company-box. Er litt usikker på om det er verdt å bruke denne, for den har dette problemet https://github.com/sebastiencs/company-box/issues/38. Dette er mulig å fikse problemet med løsningen i linken, men det funket egentlig ikke så bra.
-#+BEGIN_SRC emacs-lisp
-  ;; (use-package company-box
-  ;;   :hook (company-mode . company-box-mode))
-#+END_SRC
 * Javascript
-** js2-mode
-For bedre javascript:
+Js2-mode for better javascript editing.
 #+BEGIN_SRC emacs-lisp
 (use-package js2-mode)
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 #+END_SRC
-** rjsx-mode
-For react-syntax
+RJSX-mode for react-syntax-highlighting and such.
 #+BEGIN_SRC emacs-lisp
 (use-package rjsx-mode)
 (add-to-list 'auto-mode-alist '("\\.js\\'" . rjsx-mode))
 #+END_SRC
-** Indentering med 2 mellomrom i stedet for 4
+Indenting with two tabs instead of four.
 #+BEGIN_SRC emacs-lisp
 (setq js-indent-level 2)
 #+END_SRC
 * Which-key
-Viser deg hvilke keybindings som er mulige å bruke en viss tid etter at du har startet med å trykke en keybinding som C-x
+Show possible keybindings if a keybinding is started and some time goes by.
 #+begin_src emacs-lisp
 (use-package which-key
   :diminish which-key-mode)
 (which-key-mode)
 #+end_src
-* Endring av keybindings
+* Change of keybinding
 ** Undo
-Setter to keybindings til undo for å være på den sikre siden
+Lets better set both control-z and command-z as undo just to be sure.
 #+BEGIN_SRC emacs-lisp
   (global-set-key (kbd "M-z") 'undo)
   (global-set-key (kbd "C-z") 'undo)
 #+END_SRC
 ** Windmove
-For å bytte mellom vinduer. Når man holder inne cmd+shift kan man tenke på ijkl som piltaster
+Use windmove to move between windows. The keys are in arrow-key-formation on the right hand.
 #+begin_src emacs-lisp
 (global-set-key (kbd "M-I") 'windmove-up)
 (global-set-key (kbd "M-J") 'windmove-left)
 (global-set-key (kbd "M-K") 'windmove-down)
 (global-set-key (kbd "M-L") 'windmove-right)
 #+end_src
-** Endre tekststørrelse
-For global zooming
+** Change text size globally
 #+BEGIN_SRC emacs-lisp
   (use-package default-text-scale
     :bind (("C-+" . 'default-text-scale-increase)
            ("C-x C-0" . 'default-text-scale-reset)
            ("C--" . 'default-text-scale-decrease)))
 #+END_SRC
-** Søk etter symbol(ord)
-Vil søke etter det ordet som cursoren er over
+** Search for word at point
 #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "M-s M-s") 'isearch-forward-symbol-at-point)
 #+END_SRC
-* Kompilering
-Bruk M-g c til kompilering og M-g C til rekompilering
+* Compiling
+Use M-g c to compile and M-g C to recompile.
 #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "M-g c") 'compile)
 (global-set-key (kbd "M-g C") 'recompile)
 #+END_SRC
-Denne funksjonen kan brukes for å toggle om kompileringen skal vises lenge eller ikke. Mesteparten er funnet [[https://emacs.stackexchange.com/questions/62/hide-compilation-window][her]].
+This function is used to toggle whether the finished compilation should show or not. Most of it is taken from [[https://emacs.stackexchange.com/questions/62/hide-compilation-window][this page]].
 #+BEGIN_SRC emacs-lisp
     (defun toggle-show-compile ()
       (interactive)
@@ -544,8 +521,8 @@ Denne funksjonen kan brukes for å toggle om kompileringen skal vises lenge elle
             (t (message "Showing successful compilations"))))
 #+END_SRC
 * Org-mode
-** Bedre utseende
-Får org-mode til å starte med indenterte punkter og muliggjør lenger linjer ved at linjene går over når de blir for lange. Dropper i tillegg linjenummer på disse filene.
+** Better look
+Some code to make org-files look better.
 #+BEGIN_SRC emacs-lisp
 (require 'org)
 (setq org-startup-indented t)
@@ -553,38 +530,43 @@ Får org-mode til å starte med indenterte punkter og muliggjør lenger linjer v
 (add-hook 'org-mode-hook (lambda () (linum-mode 0)))
   (use-package org-bullets
     :hook (org-mode . org-bullets-mode)
-    :init (setq org-bullets-bullet-list '("◉" "◉" "◉" "◉")))
+    :init (setq org-bullets-bullet-list '("◉" "◉" "◉" "◉"))
+    :config
+      (add-hook 'sh-post-theme-change-hook (lambda ()
+      (when (featurep 'org)
+      (org-save-outline-visibility 'use-markers (org-mode-restart))))))
+
 #+END_SRC
 
-Sørger for at bilder vises i bilder og ikke tekst og gjør bildene mindre
+Show images in org-files at 600px width. This works well when window is split in two.
 #+BEGIN_SRC emacs-lisp
-(setq org-image-actual-width nil)
+(setq org-image-actual-width 600)
 (setq org-startup-with-inline-images t)
 #+END_SRC
-** Kopiering og liming av linker
-Legger til shortcuts for å lagre linker til en fil og for å lime inn linken i et org-dokument
+** Copy and paste links to files
+Make a bookmark in a file with "org-store-link" and paste it into another file with "org-insert-last-stored-link".
 #+BEGIN_SRC emacs-lisp
   (global-set-key (kbd "C-x C-ø") `org-store-link)
   (global-set-key (kbd "C-x ø") `org-insert-last-stored-link)
 #+END_SRC
-** Flere todo-muligheter
-Gjør det mulig å ha todos i flere tilstander en bare TODO og DONE
+** More todo possibilities
+Cause just TODO and DONE is not enough.
 #+BEGIN_SRC emacs-lisp
   (setq org-todo-keywords
         '((sequence "TODO" "NEXT" "WAITING" "|" "DONE" "CANCELED")))
 #+END_SRC
-** Logging av når noe blir markert som done
+** Log time when something is marked as done
 #+begin_src emacs-lisp
 (setq org-log-done 'time)
 #+end_src
 ** Org-agenda
-Fjerner linjenummer og sørger for at org-agenda alltid åpner i samme vindu
+Remove line numbers and always open agenda view in same window.
 #+BEGIN_SRC emacs-lisp
 (add-hook 'org-agenda-mode-hook (lambda () (linum-mode 0)))
 (setq org-agenda-window-setup 'current-window)
 (global-set-key (kbd "C-x C-o") `org-agenda)
 #+END_SRC
-** Eksportering
+** Exporting
 #+BEGIN_SRC emacs-lisp
 ;; Github markdown
 (use-package ox-gfm)
@@ -593,28 +575,20 @@ Fjerner linjenummer og sørger for at org-agenda alltid åpner i samme vindu
 ;; Syntax highlighting in exported html
 (use-package htmlize)
 #+END_SRC
-** Lage emacs-lisp source-block
-#+BEGIN_SRC emacs-lisp
-(eval-after-load 'org
-  '(progn
-    (add-to-list 'org-structure-template-alist '("el" "#+BEGIN_SRC emacs-lisp \n?\n#+END_SRC"))
-    (define-key org-mode-map (kbd "C-'") nil)
-    (global-set-key "\C-ca" 'org-agenda)))
-#+END_SRC
 ** Speed keys
-Gjør at man kan bruke spesielle shortcuts på starten av en heading, for eksempel "t" for å toggle todos.
+Extra shortcut while in front of an org heading like "t" for toggle todo.
 #+BEGIN_SRC emacs-lisp
 (setq org-use-speed-commands t)
 #+END_SRC
 ** Org-download
-Gjør det mulig å legge til bilder i en org-buffer ved hjelp av drag-and-drop
+Add drag and drop possibility.
 #+BEGIN_SRC emacs-lisp
 (use-package org-download
   :config
   ;; add support to dired
   (add-hook 'dired-mode-hook 'org-download-enable))
 #+END_SRC
-** Kompilering av kode
+** Languages for org source blocks
 #+begin_src emacs-lisp
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -623,7 +597,7 @@ Gjør det mulig å legge til bilder i en org-buffer ved hjelp av drag-and-drop
 (setq org-babel-python-command "python3")
 #+end_src
 * Graphviz-dot-mode
-Brukes til tegning av grafer med .dot-filer
+For drawing graphs by using .dot-files
 #+BEGIN_SRC emacs-lisp
   (use-package graphviz-dot-mode)
 
@@ -640,7 +614,7 @@ Brukes til tegning av grafer med .dot-filer
   (setq graphviz-dot-auto-indent-on-semi nil)
 #+END_SRC
 * Eyebrowse
-For vindukonfigurering
+For configuring multiple workspaces. The workspace number is shown in the lower left corner with spaceline.
 #+begin_src emacs-lisp
   (use-package eyebrowse
     :init
@@ -653,9 +627,9 @@ For vindukonfigurering
     (global-set-key (kbd "C-M-i") 'eyebrowse-next-window-config)
     (global-set-key (kbd "C-M-k") 'eyebrowse-prev-window-config))
 #+end_src
-* Nyttige funksjoner
-** Lag SRC-blokk og åpne
-Lager en SRC-blokk i et org-dokument og åpner et nytt vindu hvor du kan redigere denne.
+* Useful functions
+** Make source block and open
+Makes a source block in an org file and opens a new window for editing it.
 #+BEGIN_SRC emacs-lisp
 (defun org-src-create-and-open (lang)
   "Create a src block for the language the user types in, and open it in a new buffer."
@@ -669,23 +643,22 @@ Lager en SRC-blokk i et org-dokument og åpner et nytt vindu hvor du kan rediger
 
 (define-key org-mode-map (kbd "C-c b") 'org-src-create-and-open)
 #+END_SRC
-** Tilbakestille buffer
+** Revert buffer without confirmation
 #+BEGIN_SRC emacs-lisp
-;; revert buffers without confirmation
 (defun revert-buffer-no-confirm ()
     "Revert buffer without confirmation."
     (interactive)
     (revert-buffer :ignore-auto :noconfirm))
 (global-set-key (kbd "C-x C-å") `revert-buffer-no-confirm)
 #+END_SRC
-* Lokale innstillinger
-Lager en lokal emacs-fil ved navn "local_stuff.el" hvis denne ikke allerede eksisterer
+* Local settings
+Make a file for local code named "local_stuff.el" if this does not already exist.
 #+BEGIN_SRC emacs-lisp
 (defconst local-stuff-file (expand-file-name "local_stuff.el" user-emacs-directory))
 (unless (file-exists-p local-stuff-file)
-  (write-region ";; Fil for lokal elisp-kode som ikke skal på git-repoet" nil local-stuff-file))
+  (write-region ";; File for local elisp code" nil local-stuff-file))
 #+END_SRC
-Laster inn denne filen
+And load this file.
 #+BEGIN_SRC emacs-lisp
 (load "~/.emacs.d/local_stuff" t)
 #+END_SRC
