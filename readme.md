@@ -1,5 +1,5 @@
 # .emacs.d
-My configuration file for the emacs text editor. It is written in and org-mode-file (.org) for easier organisation and a better editing experience in emacs. All the code blocks in the org-file are run with the `org-babel-load-file`-function in `init.el` when emacs starts.
+My configuration file for the emacs text editor. It is written in an org-mode-file (.org) for easier organisation and a better editing experience in emacs. All the code blocks in the org-file are run with the `org-babel-load-file`-function in `init.el` when emacs starts.
 
 Although you are free to use my configuration as a starting point for emacs, I would rather recommend you to make your own config-file and steal stuff from this one (and others!) while you go along. Some of the fun part of emacs is to configure it the way you want.
 

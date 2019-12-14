@@ -68,6 +68,11 @@ Remove whitespace at end of line on save and require newline at end of file.
   (remq 'process-kill-buffer-query-function
          kill-buffer-query-functions))
 #+END_SRC
+** Sentences should end with a dot and one space
+This is useful when using tools like multiple cursors to select a sentence. It is kind of weird that this variable is true by default.
+#+begin_src emacs-lisp
+  (setq sentence-end-double-space nil)
+#+end_src
 * Package handling
 ** Package.el
 Is used for installing packages and is required for use-package.
