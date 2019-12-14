@@ -10,105 +10,110 @@ A list of stuff that should be installed to utilize everything in this config:
 - Documentation: see [[Dash]]
 * Startup
 ** Remove unnecessary window space
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
-#+END_SRC
+#+end_src
 ** Start in full screen
-#+BEGIN_SRC emacs-lisp
-  (toggle-frame-fullscreen)
-  (setq inhibit-startup-screen t)
-#+END_SRC
+#+begin_src emacs-lisp
+(toggle-frame-fullscreen)
+(setq inhibit-startup-screen t)
+#+end_src
 ** Change mac keyboard settings
 Change cmd-key to meta and let alt function as normal for special keys.
-#+BEGIN_SRC emacs-lisp
-   (setq ns-alternate-modifier nil)
-   (setq ns-command-modifier (quote meta))
-#+END_SRC
+#+begin_src emacs-lisp
+(setq ns-alternate-modifier nil)
+(setq ns-command-modifier (quote meta))
+#+end_src
+
 Also not send command-key to system as weird stuff will happen.
 #+begin_src emacs-lisp
-   (setq mac-pass-command-to-system nil)
+(setq mac-pass-command-to-system nil)
 #+end_src
 ** Change from "yes or no" to "y or n"
-#+BEGIN_SRC emacs-lisp
-  (fset 'yes-or-no-p 'y-or-n-p)
-#+END_SRC
+#+begin_src emacs-lisp
+(fset 'yes-or-no-p 'y-or-n-p)
+#+end_src
 ** Send backup-files to backup-folder
 If this is not done the backup-files will be everywhere.
-#+BEGIN_SRC emacs-lisp
-  (setq backup-directory-alist `(("." . "~/.emacs.d/.backups")))
-#+END_SRC
+#+begin_src emacs-lisp
+(setq backup-directory-alist `(("." . "~/.emacs.d/.backups")))
+#+end_src
 ** Line numbers everywhere
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (require 'linum)
 (global-linum-mode t)
-#+END_SRC
+#+end_src
+
 Except for image and PDF-files.
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (add-hook 'image-mode-hook (lambda () (linum-mode 0)))
 (add-hook 'doc-view-mode-hook (lambda () (linum-mode 0)))
 (add-hook 'pdf-view-mode-hook (lambda () (linum-mode 0)))
-#+END_SRC
+#+end_src
 ** Auto refresh of buffers
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (global-auto-revert-mode 1)
 (setq auto-revert-interval 1) ;; Refresh buffers faster
 (auto-revert-set-timer) ;; For updating the auto-refresh.
-#+END_SRC
+#+end_src
 ** Whitespace-control
 Remove whitespace at end of line on save and require newline at end of file.
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 (setq require-final-newline t)
-#+END_SRC
+#+end_src
 ** Don't ask before killing buffers with processes
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (setq kill-buffer-query-functions
   (remq 'process-kill-buffer-query-function
          kill-buffer-query-functions))
-#+END_SRC
+#+end_src
 ** Sentences should end with a dot and one space
 This is useful when using tools like multiple cursors to select a sentence. It is kind of weird that this variable is true by default.
 #+begin_src emacs-lisp
-  (setq sentence-end-double-space nil)
+(setq sentence-end-double-space nil)
 #+end_src
 * Package handling
 ** Package.el
 Is used for installing packages and is required for use-package.
-#+BEGIN_SRC emacs-lisp
-  (require 'package)
-#+END_SRC
+#+begin_src emacs-lisp
+(require 'package)
+#+end_src
+
 Add more package archives.
-#+BEGIN_SRC emacs-lisp
-  (setq package-archives '(("gnu" . "http://mirrors.163.com/elpa/gnu/")
-                          ("melpa" . "https://melpa.org/packages/")
-                          ("org" . "http://orgmode.org/elpa/")))
-#+END_SRC
+#+begin_src emacs-lisp
+(setq package-archives '(("gnu" . "http://mirrors.163.com/elpa/gnu/")
+                        ("melpa" . "https://melpa.org/packages/")
+                        ("org" . "http://orgmode.org/elpa/")))
+#+end_src
+
 Start package.el
-#+BEGIN_SRC emacs-lisp
-  (package-initialize)
-#+END_SRC
-Update the package list if this is the first time emacs starts
-#+BEGIN_SRC emacs-lisp
-  (when (not package-archive-contents)
-    (package-refresh-contents))
-#+END_SRC
+#+begin_src emacs-lisp
+(package-initialize)
+#+end_src
+
+Update the package list if this is the first time emacs starts.
+#+begin_src emacs-lisp
+(when (not package-archive-contents)
+  (package-refresh-contents))
+#+end_src
 ** Use-package
 Used for installing other packages smoothly.
-#+BEGIN_SRC emacs-lisp
-  (unless (package-installed-p 'use-package)
-    (package-install 'use-package))
-  (require 'use-package)
-  (setq use-package-always-ensure t)
-#+END_SRC
+#+begin_src emacs-lisp
+(unless (package-installed-p 'use-package)
+  (package-install 'use-package))
+(require 'use-package)
+(setq use-package-always-ensure t)
+#+end_src
 ** Auto-compile
 Compile all packages.
-#+BEGIN_SRC emacs-lisp
-  (use-package auto-compile
-    :config (auto-compile-on-load-mode))
-  (setq load-prefer-newer t)
-#+END_SRC
+#+begin_src emacs-lisp
+(use-package auto-compile
+  :config (auto-compile-on-load-mode))
+(setq load-prefer-newer t)
+#+end_src
 * Themes
 ** Solarized
 I like this theme.
@@ -117,28 +122,28 @@ I like this theme.
 (load-theme 'solarized-dark)
 #+end_src
 ** Spaceline
-Configure the mode line (the line at the bottom of the screen)
-#+BEGIN_SRC emacs-lisp
-  (use-package spaceline
-    :config
-    (setq spaceline-minor-modes-separator " | ")
-    (setq powerline-default-separator 'slant)
-    (spaceline-emacs-theme)
-    (setq powerline-image-apple-rgb nil)
-    (setq powerline-height 22)
-    (setq x-underline-at-descent-line t)
-    (set-face-attribute 'mode-line-inactive nil
-                      :box nil))
-    (custom-set-faces
-    '(mode-line ((t
-    (:underline nil :overline nil :box)))))
-#+END_SRC
+Configure the mode line. (the line at the bottom of the screen)
+#+begin_src emacs-lisp
+(use-package spaceline
+  :config
+  (setq spaceline-minor-modes-separator " | ")
+  (setq powerline-default-separator 'slant)
+  (spaceline-emacs-theme)
+  (setq powerline-image-apple-rgb nil)
+  (setq powerline-height 22)
+  (setq x-underline-at-descent-line t)
+  (set-face-attribute 'mode-line-inactive nil
+                    :box nil))
+  (custom-set-faces
+  '(mode-line ((t
+  (:underline nil :overline nil :box)))))
+#+end_src
 
 Show battery info in the mode line as emacs often run in fullscreen.
-#+BEGIN_SRC emacs-lisp
-  (use-package fancy-battery)
-  (add-hook 'after-init-hook #'fancy-battery-mode)
-  (setq fancy-battery-show-percentage t)
+#+begin_src emacs-lisp
+(use-package fancy-battery)
+(add-hook 'after-init-hook #'fancy-battery-mode)
+(setq fancy-battery-show-percentage t)
 #+end_src
 
 Use diminish to hide some minor modes in the mode line. Minor modes can be shown with "C-h m" instead.
@@ -151,8 +156,8 @@ Use diminish to hide some minor modes in the mode line. Minor modes can be shown
        (diminish 'eldoc-mode)))
 #+end_src
 ** Toggling of themes
-Makes it possible to toggle themes with "C-x t"
-#+BEGIN_SRC emacs-lisp
+Makes it possible to toggle themes with "C-x t".
+#+begin_src emacs-lisp
 (defvar *haba-theme-dark* 'solarized-dark)
 (defvar *haba-theme-light* 'solarized-light)
 (defvar *haba-current-theme* *haba-theme-dark*)
@@ -180,53 +185,53 @@ Makes it possible to toggle themes with "C-x t"
                     :box nil)) ;; needed for spaceline to look better
 
 (global-set-key (kbd "C-x t") 'haba/toggle-theme)
-#+END_SRC
+#+end_src
 * Correct path
 Make sure the emacs path is the same as the system path.
-#+BEGIN_SRC emacs-lisp
-  (use-package exec-path-from-shell)
+#+begin_src emacs-lisp
+(use-package exec-path-from-shell)
 
-  (when (memq window-system '(mac ns x))
-    (exec-path-from-shell-initialize))
-#+END_SRC
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
+#+end_src
 * Dired
 Configuration for Emacs' file navigation system.
 ** Cleaner look
 Hide information about permissions and stuff.
-#+BEGIN_SRC emacs-lisp
-  (add-hook 'dired-mode-hook (lambda () (dired-hide-details-mode)))
-#+END_SRC
+#+begin_src emacs-lisp
+(add-hook 'dired-mode-hook (lambda () (dired-hide-details-mode)))
+#+end_src
 ** Easier copying
 If there are two dired windows, the copy and move command should have the other window as target.
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (setq dired-dwim-target t)
-#+END_SRC
+#+end_src
 ** Better navigation
 Define b to go up a directory in dired mode, as f is used to go down/open a file.
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (eval-after-load 'dired
   '(define-key dired-mode-map (kbd "b") 'dired-up-directory))
-#+END_SRC
+#+end_src
 ** Auto-refresh of dired buffers
 Refresh dired buffers and be silent about it.
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (setq global-auto-revert-non-file-buffers t)
 (setq auto-revert-verbose nil)
-#+END_SRC
+#+end_src
 * Dash
 Dash is a nice way of accessing documentation "M-x counsel-dash-install-docset" can be used to install more docsets, but if this is done, they must be added to the correct major-mode below. It looks like it might be possible to download files with documentation as well. This is described in the git-repo of [[https://github.com/dash-docs-el/helm-dash][helm-dash]].
 
 The list of docsets i have installed is listed here:
 #+begin_src emacs-lisp
-  (setq sh-docset-list '("Python 3"
-                         "NumPy"
-                         "Matplotlib"
-                         "Emacs Lisp"
-                         "CSS"
-                         "HTML"
-                         "JavaScript"
-                         "React"
-                         "Express"))
+(setq sh-docset-list '("Python 3"
+                       "NumPy"
+                       "Matplotlib"
+                       "Emacs Lisp"
+                       "CSS"
+                       "HTML"
+                       "JavaScript"
+                       "React"
+                       "Express"))
 #+end_src
 
 And the code adding these to the correct major-mode is here:
@@ -245,18 +250,19 @@ And the code adding these to the correct major-mode is here:
   (global-set-key (kbd "M-g d") 'counsel-dash-at-point)
   (global-set-key (kbd "M-g D") 'counsel-dash))
 #+end_src
+
 To download all docsets in the list, it is possible to run "M-x sh-install-dash-docsets" which is defined below, but this might take 20 minutes.
 #+begin_src emacs-lisp
-  (defun sh-install-docsets (docset-list)
-    "Install all docsets in docset-list recursively"
-    (dash-docs-install-docset (replace-regexp-in-string " " "_" (car docset-list)))
-    (if (cdr docset-list)
-        (sh-install-docsets (cdr docset-list))))
+(defun sh-install-docsets (docset-list)
+  "Install all docsets in docset-list recursively"
+  (dash-docs-install-docset (replace-regexp-in-string " " "_" (car docset-list)))
+  (if (cdr docset-list)
+      (sh-install-docsets (cdr docset-list))))
 
-  (defun sh-install-dash-docsets ()
-    "Install all specified docsets in sh-docset-list. This might take a while"
-    (interactive)
-    (sh-install-docsets sh-docset-list))
+(defun sh-install-dash-docsets ()
+  "Install all specified docsets in sh-docset-list. This might take a while"
+  (interactive)
+  (sh-install-docsets sh-docset-list))
 #+end_src
 * Ispell
 Ispell is for spellchecking in emacs. "M-x flyspell-mode" and "M-x flyspell-prog-mode" can be used to see misspelled words in buffer. Ispell-word is useful for checking a current word, while ispell-buffer is interacitve for the whole buffer.
@@ -269,10 +275,10 @@ Ispell is for spellchecking in emacs. "M-x flyspell-mode" and "M-x flyspell-prog
 * PDF-tools
 PDF-tools is a better mode for displaying pdfs. It makes it possible to search through the text in the file.
 #+begin_src emacs-lisp
-  (use-package pdf-tools)
-  (add-hook 'pdf-tools-enabled-hook 'auto-revert-mode)
-  (add-to-list 'auto-mode-alist '("\\.pdf\\'" . pdf-tools-install))
-  (setq pdf-view-use-scaling t)
+(use-package pdf-tools)
+(add-hook 'pdf-tools-enabled-hook 'auto-revert-mode)
+(add-to-list 'auto-mode-alist '("\\.pdf\\'" . pdf-tools-install))
+(setq pdf-view-use-scaling t)
 #+end_src
 * Multiple cursors
 Allows for more than one cursor at once and is really handy.
@@ -310,20 +316,21 @@ Selects an area around point and increases selection by logical units for every 
 #+end_src
 * Wgrep
 Makes it possible to change content of multiple lines from a grep-search.
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package wgrep
   :bind (("M-g g" . rgrep)
          ("M-g w" . wgrep-change-to-wgrep-mode)
          ("M-g s" . wgrep-save-all-buffers)))
-#+END_SRC
+#+end_src
 * Magit
 A really good tool for git.
-#+BEGIN_SRC emacs-lisp
-  (use-package magit
-    :bind ("C-x g" . magit-status))
-  (global-set-key (kbd "M-g b") 'magit-blame)
-  (global-set-key (kbd "M-g h") 'magit-log-buffer-file)
-#+END_SRC
+#+begin_src emacs-lisp
+(use-package magit
+  :bind ("C-x g" . magit-status))
+(global-set-key (kbd "M-g b") 'magit-blame)
+(global-set-key (kbd "M-g h") 'magit-log-buffer-file)
+#+end_src
+
 Magit forge lets you see issues and pull-requests from github and gitlab in emacs.
 #+begin_src emacs-lisp
 (use-package forge
@@ -331,27 +338,28 @@ Magit forge lets you see issues and pull-requests from github and gitlab in emac
 #+end_src
 * Ivy, swiper and counsel
 Ivy is a tool to easily select from many candidates, like when finding files. It is very similar to the package helm, but has a little less functionality and might be a bit faster.
-#+BEGIN_SRC emacs-lisp
-  (use-package ivy
-    :defer 0.1
-    :diminish ivy-mode
-    :bind (("C-c C-r" . ivy-resume))
-    :config
-    (ivy-mode 1)
-    (setq ivy-use-virtual-buffers t)
-    (setq enable-recursive-minibuffers t)
-    (setq ivy-count-format "(%d/%d) ")
-    (setq ivy-height 30)
-    (setq ivy-wrap t)
-    (setq ivy-re-builders-alist
-          '((t . ivy--regex-ignore-order)))
+#+begin_src emacs-lisp
+(use-package ivy
+  :defer 0.1
+  :diminish ivy-mode
+  :bind (("C-c C-r" . ivy-resume))
+  :config
+  (ivy-mode 1)
+  (setq ivy-use-virtual-buffers t)
+  (setq enable-recursive-minibuffers t)
+  (setq ivy-count-format "(%d/%d) ")
+  (setq ivy-height 30)
+  (setq ivy-wrap t)
+  (setq ivy-re-builders-alist
+        '((t . ivy--regex-ignore-order)))
 
-    (define-key ivy-minibuffer-map (kbd "<return>") 'ivy-alt-done)
-    (define-key ivy-minibuffer-map (kbd "C-j") 'ivy-done)
-    (define-key ivy-minibuffer-map (kbd "C-l") 'ivy-backward-delete-char))
-#+END_SRC
+  (define-key ivy-minibuffer-map (kbd "<return>") 'ivy-alt-done)
+  (define-key ivy-minibuffer-map (kbd "C-j") 'ivy-done)
+  (define-key ivy-minibuffer-map (kbd "C-l") 'ivy-backward-delete-char))
+#+end_src
+
 Counsel adds ivy features to more places.
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package counsel
   :ensure t
   :diminish counsel-mode
@@ -361,22 +369,22 @@ Counsel adds ivy features to more places.
    ("M-y" . ivy-next-line-and-call))
   :config
   (counsel-mode))
-#+END_SRC
+#+end_src
 * Projectile
 Projectile is used for managing projects in emacs and comes with a lot of handful features.
-#+BEGIN_SRC emacs-lisp
-  (use-package projectile
-    :config
-    (projectile-mode)
-    (define-key projectile-mode-map (kbd "C-c C-p") 'projectile-command-map))
+#+begin_src emacs-lisp
+(use-package projectile
+  :config
+  (projectile-mode)
+  (define-key projectile-mode-map (kbd "C-c C-p") 'projectile-command-map))
 
-  (use-package counsel-projectile
-    :config
-    (counsel-projectile-mode))
-#+END_SRC
+(use-package counsel-projectile
+  :config
+  (counsel-projectile-mode))
+#+end_src
 * Yasnippet
 Yasnippet is used for handling snippets.
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package yasnippet
   :diminish yas-minor-mode)
 (yas-reload-all)
@@ -387,16 +395,16 @@ Yasnippet is used for handling snippets.
 (define-key yas-minor-mode-map (kbd "C-x <C-M-return>") 'yas-new-snippet)
 (define-key yas-minor-mode-map (kbd "C-c <C-M-return>") 'yas-describe-tables)
 (yas-global-mode 1)
-#+END_SRC
+#+end_src
 
 Yasnippet comes with a lot of default snippets in the yasnippet-snippets-package, but the snippets in .emacs.d/snippets overrides the default ones with the same name.
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package yasnippet-snippets)
-#+END_SRC
+#+end_src
 * Language server protocol
 ** Lsp-mode
 Language server protocol integration for autocompletion, jump-to-definition and so forth. See https://github.com/emacs-lsp/lsp-mode.
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package lsp-mode
   :config
   (setq lsp-prefer-flymake nil
@@ -410,34 +418,34 @@ Language server protocol integration for autocompletion, jump-to-definition and 
 (global-set-key (kbd "M-g f") 'lsp-find-references)
 (global-set-key (kbd "M-g r") 'lsp-rename)
 (global-set-key (kbd "M-g t") 'lsp-ui-imenu)
-#+END_SRC
+#+end_src
 Pycodestyle which have some irritating defaults can be changed by following [[http://pycodestyle.pycqa.org/en/latest/intro.html][this link]].
 
 "M-." is used for jump-to-definition lsp, so it needs to be removed from the js-mode keymap.
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (add-hook 'js-mode-hook (lambda () (define-key js-mode-map (kbd "M-.") 'nil)))
-#+END_SRC
+#+end_src
 ** Lsp-ui
-Some more lsp-mode integration
-#+BEGIN_SRC emacs-lisp
-  (use-package flycheck
-    :diminish flycheck-mode)
-  (use-package lsp-ui
-    :requires lsp-mode flycheck
-    :config
-    (setq lsp-ui-flycheck-enable t
-          lsp-ui-flycheck-list-position 'right
-          lsp-ui-flycheck-live-reporting t
-          lsp-ui-sideline-enable nil
-          lsp-ui-doc-enable nil)
-    (add-hook 'lsp-mode-hook 'lsp-ui-mode)
-    :bind
-    (:map lsp-mode-map
-          ("C-c s"   . lsp-ui-sideline-mode)))
-#+END_SRC
+Some more lsp-mode integration.
+#+begin_src emacs-lisp
+(use-package flycheck
+  :diminish flycheck-mode)
+(use-package lsp-ui
+  :requires lsp-mode flycheck
+  :config
+  (setq lsp-ui-flycheck-enable t
+        lsp-ui-flycheck-list-position 'right
+        lsp-ui-flycheck-live-reporting t
+        lsp-ui-sideline-enable nil
+        lsp-ui-doc-enable nil)
+  (add-hook 'lsp-mode-hook 'lsp-ui-mode)
+  :bind
+  (:map lsp-mode-map
+        ("C-c s"   . lsp-ui-sideline-mode)))
+#+end_src
 * Company
 Company is the "front end" for autocompletion and is setup to use lsp as its "backend".
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package company
   :diminish company-mode
   :config
@@ -455,22 +463,24 @@ Company is the "front end" for autocompletion and is setup to use lsp as its "ba
   (setq company-transformers nil
         company-lsp-async t
         company-lsp-cache-candidates nil))
-#+END_SRC
+#+end_src
 * Javascript
 Js2-mode for better javascript editing.
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package js2-mode)
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-#+END_SRC
+#+end_src
+
 RJSX-mode for react-syntax-highlighting and such.
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package rjsx-mode)
 (add-to-list 'auto-mode-alist '("\\.js\\'" . rjsx-mode))
-#+END_SRC
-Indenting with two tabs instead of four.
-#+BEGIN_SRC emacs-lisp
+#+end_src
+
+Indenting with two spaces instead of four.
+#+begin_src emacs-lisp
 (setq js-indent-level 2)
-#+END_SRC
+#+end_src
 * Which-key
 Show possible keybindings if a keybinding is started and some time goes by.
 #+begin_src emacs-lisp
@@ -481,10 +491,10 @@ Show possible keybindings if a keybinding is started and some time goes by.
 * Change of keybinding
 ** Undo
 Lets better set both control-z and command-z as undo just to be sure.
-#+BEGIN_SRC emacs-lisp
-  (global-set-key (kbd "M-z") 'undo)
-  (global-set-key (kbd "C-z") 'undo)
-#+END_SRC
+#+begin_src emacs-lisp
+(global-set-key (kbd "M-z") 'undo)
+(global-set-key (kbd "C-z") 'undo)
+#+end_src
 ** Windmove
 Use windmove to move between windows. The keys are in arrow-key-formation on the right hand.
 #+begin_src emacs-lisp
@@ -494,41 +504,42 @@ Use windmove to move between windows. The keys are in arrow-key-formation on the
 (global-set-key (kbd "M-L") 'windmove-right)
 #+end_src
 ** Change text size globally
-#+BEGIN_SRC emacs-lisp
-  (use-package default-text-scale
-    :bind (("C-+" . 'default-text-scale-increase)
-           ("C-x C-0" . 'default-text-scale-reset)
-           ("C--" . 'default-text-scale-decrease)))
-#+END_SRC
+#+begin_src emacs-lisp
+(use-package default-text-scale
+  :bind (("C-+" . 'default-text-scale-increase)
+         ("C-x C-0" . 'default-text-scale-reset)
+         ("C--" . 'default-text-scale-decrease)))
+#+end_src
 ** Search for word at point
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (global-set-key (kbd "M-s M-s") 'isearch-forward-symbol-at-point)
-#+END_SRC
+#+end_src
 * Compiling
 Use M-g c to compile and M-g C to recompile.
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (global-set-key (kbd "M-g c") 'compile)
 (global-set-key (kbd "M-g C") 'recompile)
-#+END_SRC
+#+end_src
+
 This function is used to toggle whether the finished compilation should show or not. Most of it is taken from [[https://emacs.stackexchange.com/questions/62/hide-compilation-window][this page]].
-#+BEGIN_SRC emacs-lisp
-    (defun toggle-show-compile ()
-      (interactive)
-      (setq compilation-finish-function
-            (unless compilation-finish-function
-                (lambda (buf str)
-                  (if (null (string-match ".*exited abnormally.*" str))
-                      ;;no errors, make the compilation window go away in a few seconds
-                      (progn
-                        (kill-buffer (get-buffer-create "*compilation*"))
-                        (message "No Compilation Errors!"))))))
-      (cond (compilation-finish-function (message "Not showing successful compilations"))
-            (t (message "Showing successful compilations"))))
-#+END_SRC
+#+begin_src emacs-lisp
+(defun toggle-show-compile ()
+  (interactive)
+  (setq compilation-finish-function
+        (unless compilation-finish-function
+            (lambda (buf str)
+              (if (null (string-match ".*exited abnormally.*" str))
+                  ;;no errors, make the compilation window go away in a few seconds
+                  (progn
+                    (kill-buffer (get-buffer-create "*compilation*"))
+                    (message "No Compilation Errors!"))))))
+  (cond (compilation-finish-function (message "Not showing successful compilations"))
+        (t (message "Showing successful compilations"))))
+#+end_src
 * Org-mode
 ** Better look
 Some code to make org-files look better.
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (require 'org)
 (setq org-startup-indented t)
 (setq org-startup-truncated nil)
@@ -541,59 +552,60 @@ Some code to make org-files look better.
       (when (featurep 'org)
       (org-save-outline-visibility 'use-markers (org-mode-restart))))))
 
-#+END_SRC
+#+end_src
 
 Show images in org-files at 600px width. This works well when window is split in two.
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (setq org-image-actual-width 600)
 (setq org-startup-with-inline-images t)
-#+END_SRC
+#+end_src
 ** Copy and paste links to files
-Make a bookmark in a file with "org-store-link" and paste it into another file with "org-insert-last-stored-link".
-#+BEGIN_SRC emacs-lisp
-  (global-set-key (kbd "C-x C-ø") `org-store-link)
-  (global-set-key (kbd "C-x ø") `org-insert-last-stored-link)
-#+END_SRC
+Make a bookmark in a file with "org-store-link" and paste it into another file with "org-insert-last-stored-link.
+#+begin_src emacs-lisp
+(global-set-key (kbd "C-x C-ø") `org-store-link)
+(global-set-key (kbd "C-x ø") `org-insert-last-stored-link)
+#+end_src
 ** More todo possibilities
 Cause just TODO and DONE is not enough.
-#+BEGIN_SRC emacs-lisp
-  (setq org-todo-keywords
-        '((sequence "TODO" "NEXT" "WAITING" "|" "DONE" "CANCELED")))
-#+END_SRC
+#+begin_src emacs-lisp
+(setq org-todo-keywords
+      '((sequence "TODO" "NEXT" "WAITING" "|" "DONE" "CANCELED")))
+#+end_src
 ** Log time when something is marked as done
 #+begin_src emacs-lisp
 (setq org-log-done 'time)
 #+end_src
 ** Org-agenda
 Remove line numbers and always open agenda view in same window.
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (add-hook 'org-agenda-mode-hook (lambda () (linum-mode 0)))
 (setq org-agenda-window-setup 'current-window)
 (global-set-key (kbd "C-x C-o") `org-agenda)
-#+END_SRC
+#+end_src
 ** Exporting
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 ;; Github markdown
 (use-package ox-gfm)
 ;; Twitter bootstrap
 (use-package ox-twbs)
 ;; Syntax highlighting in exported html
 (use-package htmlize)
-#+END_SRC
+#+end_src
 ** Speed keys
 Extra shortcut while in front of an org heading like "t" for toggle todo.
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (setq org-use-speed-commands t)
-#+END_SRC
+#+end_src
 ** Org-download
 Add drag and drop possibility.
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package org-download
   :config
   ;; add support to dired
   (add-hook 'dired-mode-hook 'org-download-enable))
-#+END_SRC
-** Languages for org source blocks
+#+end_src
+** Source blocks
+Add source block languages.
 #+begin_src emacs-lisp
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -601,69 +613,80 @@ Add drag and drop possibility.
 (setq org-confirm-babel-evaluate nil)
 (setq org-babel-python-command "python3")
 #+end_src
+
+Make lowercase the standard for templates.
+#+begin_src emacs-lisp
+(mapc (lambda (arg) (setcdr arg (list (downcase (cadr arg)))))
+    org-structure-template-alist)
+#+end_src
+
+Do not indent after editing source block.
+#+begin_src emacs-lisp
+(setq org-edit-src-content-indentation 0)
+#+end_src
 * Graphviz-dot-mode
-For drawing graphs by using .dot-files
-#+BEGIN_SRC emacs-lisp
-  (use-package graphviz-dot-mode)
+For drawing graphs by using .dot-files.
+#+begin_src emacs-lisp
+(use-package graphviz-dot-mode)
 
-  (defun graphviz-set-dot-program (dot-program)
-    "Let user input a dot-program and make this the standard"
-    (interactive "sEnter name of the dot-program (dot, neato, twopi, circo, fdp): ")
-    (setq graphviz-dot-dot-program dot-program)
-    (graphviz-dot-mode)) ;; The mode needs to reload for changes to take place
+(defun graphviz-set-dot-program (dot-program)
+  "Let user input a dot-program and make this the standard"
+  (interactive "sEnter name of the dot-program (dot, neato, twopi, circo, fdp): ")
+  (setq graphviz-dot-dot-program dot-program)
+  (graphviz-dot-mode)) ;; The mode needs to reload for changes to take place
 
-  (setq graphviz-dot-dot-program "dot")
-  (add-hook 'graphviz-dot-mode-hook (lambda ()
-                                      (local-set-key (kbd "C-c s") 'graphviz-set-dot-program)))
-  (setq graphviz-dot-indent-width 4)
-  (setq graphviz-dot-auto-indent-on-semi nil)
-#+END_SRC
+(setq graphviz-dot-dot-program "dot")
+(add-hook 'graphviz-dot-mode-hook (lambda ()
+                                    (local-set-key (kbd "C-c s") 'graphviz-set-dot-program)))
+(setq graphviz-dot-indent-width 4)
+(setq graphviz-dot-auto-indent-on-semi nil)
+#+end_src
 * Eyebrowse
 For configuring multiple workspaces. The workspace number is shown in the lower left corner with spaceline.
 #+begin_src emacs-lisp
-  (use-package eyebrowse
-    :init
-    (setq eyebrowse-mode-map nil)
-    :config
-    (eyebrowse-mode t)
-    (define-key org-mode-map (kbd "C-M-i") nil)
-    (global-set-key (kbd "C-M-j") 'eyebrowse-create-window-config)
-    (global-set-key (kbd "C-x C-M-j") 'eyebrowse-close-window-config)
-    (global-set-key (kbd "C-M-i") 'eyebrowse-next-window-config)
-    (global-set-key (kbd "C-M-k") 'eyebrowse-prev-window-config))
+(use-package eyebrowse
+  :init
+  (setq eyebrowse-mode-map nil)
+  :config
+  (eyebrowse-mode t)
+  (define-key org-mode-map (kbd "C-M-i") nil)
+  (global-set-key (kbd "C-M-j") 'eyebrowse-create-window-config)
+  (global-set-key (kbd "C-x C-M-j") 'eyebrowse-close-window-config)
+  (global-set-key (kbd "C-M-i") 'eyebrowse-next-window-config)
+  (global-set-key (kbd "C-M-k") 'eyebrowse-prev-window-config))
 #+end_src
 * Useful functions
 ** Make source block and open
 Makes a source block in an org file and opens a new window for editing it.
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (defun org-src-create-and-open (lang)
   "Create a src block for the language the user types in, and open it in a new buffer."
   (interactive
     (list (read-string "Programming language (emacs-lisp): ")))
   (when (equal lang "")
     (setq lang "emacs-lisp"))
-  (insert (format "#+BEGIN_SRC %s\n\n#+END_SRC" lang))
+  (insert (format "#+begin_src %s\n\n#+end_src" lang))
   (previous-line)
   (org-edit-src-code))
 
 (define-key org-mode-map (kbd "C-c b") 'org-src-create-and-open)
-#+END_SRC
+#+end_src
 ** Revert buffer without confirmation
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (defun revert-buffer-no-confirm ()
     "Revert buffer without confirmation."
     (interactive)
     (revert-buffer :ignore-auto :noconfirm))
 (global-set-key (kbd "C-x C-å") `revert-buffer-no-confirm)
-#+END_SRC
+#+end_src
 * Local settings
 Make a file for local code named "local_stuff.el" if this does not already exist.
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (defconst local-stuff-file (expand-file-name "local_stuff.el" user-emacs-directory))
 (unless (file-exists-p local-stuff-file)
   (write-region ";; File for local elisp code" nil local-stuff-file))
-#+END_SRC
+#+end_src
 And load this file.
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (load "~/.emacs.d/local_stuff" t)
-#+END_SRC
+#+end_src
