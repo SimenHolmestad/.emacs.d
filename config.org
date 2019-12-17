@@ -58,7 +58,7 @@ Except for image and PDF-files.
 (setq auto-revert-interval 1) ;; Refresh buffers faster
 (auto-revert-set-timer) ;; For updating the auto-refresh.
 #+end_src
-** Whitespace-control
+** Whitespace control
 Remove whitespace at end of line on save and require newline at end of file.
 #+begin_src emacs-lisp
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
@@ -133,27 +133,31 @@ Configure the mode line. (the line at the bottom of the screen)
   (setq powerline-height 22)
   (setq x-underline-at-descent-line t)
   (set-face-attribute 'mode-line-inactive nil
-                    :box nil))
-  (custom-set-faces
-  '(mode-line ((t
-  (:underline nil :overline nil :box)))))
+                    :box nil)
+  (add-hook 'sh-post-theme-change-hook (lambda ()
+  (set-face-attribute 'mode-line-inactive nil
+  		      :box nil))))
+
+(custom-set-faces '(mode-line ((t (:underline nil :overline nil :box)))))
 #+end_src
 
 Show battery info in the mode line as emacs often run in fullscreen.
 #+begin_src emacs-lisp
-(use-package fancy-battery)
-(add-hook 'after-init-hook #'fancy-battery-mode)
-(setq fancy-battery-show-percentage t)
+(use-package fancy-battery
+  :config
+  (add-hook 'after-init-hook #'fancy-battery-mode)
+  (setq fancy-battery-show-percentage t))
 #+end_src
 
 Use diminish to hide some minor modes in the mode line. Minor modes can be shown with "C-h m" instead.
 #+begin_src emacs-lisp
-(use-package diminish)
-(eval-after-load 'org-indent '(diminish 'org-indent-mode))
-(eval-after-load 'eldoc
-  '(if
-       (fboundp 'diminish)
-       (diminish 'eldoc-mode)))
+(use-package diminish
+  :config
+  (eval-after-load 'org-indent '(diminish 'org-indent-mode))
+  (eval-after-load 'eldoc
+    '(if
+	 (fboundp 'diminish)
+	 (diminish 'eldoc-mode))))
 #+end_src
 ** Toggling of themes
 Makes it possible to toggle themes with "C-x t".
@@ -180,19 +184,17 @@ Makes it possible to toggle themes with "C-x t".
         ((eq *haba-current-theme* *haba-theme-light*) (haba/next-theme 'default))
         ((eq *haba-current-theme* 'default) (haba/next-theme *haba-theme-dark*)))
   (powerline-reset)
-  (run-hooks 'sh-post-theme-change-hook)
-  (set-face-attribute 'mode-line-inactive nil
-                    :box nil)) ;; needed for spaceline to look better
+  (run-hooks 'sh-post-theme-change-hook)) ;; Some stuff needs to reset after theme change
 
 (global-set-key (kbd "C-x t") 'haba/toggle-theme)
 #+end_src
 * Correct path
 Make sure the emacs path is the same as the system path.
 #+begin_src emacs-lisp
-(use-package exec-path-from-shell)
-
-(when (memq window-system '(mac ns x))
-  (exec-path-from-shell-initialize))
+(use-package exec-path-from-shell
+  :config
+  (when (memq window-system '(mac ns x))
+    (exec-path-from-shell-initialize)))
 #+end_src
 * Dired
 Configuration for Emacs' file navigation system.
@@ -275,10 +277,11 @@ Ispell is for spellchecking in emacs. "M-x flyspell-mode" and "M-x flyspell-prog
 * PDF-tools
 PDF-tools is a better mode for displaying pdfs. It makes it possible to search through the text in the file.
 #+begin_src emacs-lisp
-(use-package pdf-tools)
-(add-hook 'pdf-tools-enabled-hook 'auto-revert-mode)
-(add-to-list 'auto-mode-alist '("\\.pdf\\'" . pdf-tools-install))
-(setq pdf-view-use-scaling t)
+(use-package pdf-tools
+  :config
+  (add-hook 'pdf-tools-enabled-hook 'auto-revert-mode)
+  (add-to-list 'auto-mode-alist '("\\.pdf\\'" . pdf-tools-install))
+  (setq pdf-view-use-scaling t))
 #+end_src
 * Multiple cursors
 Allows for more than one cursor at once and is really handy.
@@ -326,9 +329,10 @@ Makes it possible to change content of multiple lines from a grep-search.
 A really good tool for git.
 #+begin_src emacs-lisp
 (use-package magit
-  :bind ("C-x g" . magit-status))
-(global-set-key (kbd "M-g b") 'magit-blame)
-(global-set-key (kbd "M-g h") 'magit-log-buffer-file)
+  :bind ("C-x g" . magit-status)
+  :config
+  (global-set-key (kbd "M-g b") 'magit-blame)
+  (global-set-key (kbd "M-g h") 'magit-log-buffer-file))
 #+end_src
 
 Magit forge lets you see issues and pull-requests from github and gitlab in emacs.
@@ -352,7 +356,6 @@ Ivy is a tool to easily select from many candidates, like when finding files. It
   (setq ivy-wrap t)
   (setq ivy-re-builders-alist
         '((t . ivy--regex-ignore-order)))
-
   (define-key ivy-minibuffer-map (kbd "<return>") 'ivy-alt-done)
   (define-key ivy-minibuffer-map (kbd "C-j") 'ivy-done)
   (define-key ivy-minibuffer-map (kbd "C-l") 'ivy-backward-delete-char))
@@ -361,7 +364,6 @@ Ivy is a tool to easily select from many candidates, like when finding files. It
 Counsel adds ivy features to more places.
 #+begin_src emacs-lisp
 (use-package counsel
-  :ensure t
   :diminish counsel-mode
   :bind
   (("M-y" . counsel-yank-pop)
@@ -386,15 +388,15 @@ Projectile is used for managing projects in emacs and comes with a lot of handfu
 Yasnippet is used for handling snippets.
 #+begin_src emacs-lisp
 (use-package yasnippet
-  :diminish yas-minor-mode)
-(yas-reload-all)
-
-(define-key yas-minor-mode-map (kbd "<tab>") nil)
-(define-key yas-minor-mode-map (kbd "TAB") nil)
-(define-key yas-minor-mode-map (kbd "<C-M-return>") 'yas-expand)
-(define-key yas-minor-mode-map (kbd "C-x <C-M-return>") 'yas-new-snippet)
-(define-key yas-minor-mode-map (kbd "C-c <C-M-return>") 'yas-describe-tables)
-(yas-global-mode 1)
+  :diminish yas-minor-mode
+  :config
+  (yas-reload-all)
+  (define-key yas-minor-mode-map (kbd "<tab>") nil)
+  (define-key yas-minor-mode-map (kbd "TAB") nil)
+  (define-key yas-minor-mode-map (kbd "<C-M-return>") 'yas-expand)
+  (define-key yas-minor-mode-map (kbd "C-x <C-M-return>") 'yas-new-snippet)
+  (define-key yas-minor-mode-map (kbd "C-c <C-M-return>") 'yas-describe-tables)
+  (yas-global-mode 1))
 #+end_src
 
 Yasnippet comes with a lot of default snippets in the yasnippet-snippets-package, but the snippets in .emacs.d/snippets overrides the default ones with the same name.
@@ -413,15 +415,15 @@ Language server protocol integration for autocompletion, jump-to-definition and 
   (add-hook 'c++-mode-hook #'lsp)
   (add-hook 'python-mode-hook #'lsp)
   (add-hook 'js-mode-hook #'lsp)
-  (add-hook 'latex-mode-hook #'lsp))
-(global-set-key (kbd "M-g i") 'lsp-describe-thing-at-point)
-(global-set-key (kbd "M-g f") 'lsp-find-references)
-(global-set-key (kbd "M-g r") 'lsp-rename)
-(global-set-key (kbd "M-g t") 'lsp-ui-imenu)
+  (add-hook 'latex-mode-hook #'lsp)
+  (global-set-key (kbd "M-g i") 'lsp-describe-thing-at-point)
+  (global-set-key (kbd "M-g f") 'lsp-find-references)
+  (global-set-key (kbd "M-g r") 'lsp-rename)
+  (global-set-key (kbd "M-g t") 'lsp-ui-imenu))
 #+end_src
 Pycodestyle which have some irritating defaults can be changed by following [[http://pycodestyle.pycqa.org/en/latest/intro.html][this link]].
 
-"M-." is used for jump-to-definition lsp, so it needs to be removed from the js-mode keymap.
+"M-." is used for jump-to-definition in lsp-mode, so it needs to be removed from the js-mode keymap.
 #+begin_src emacs-lisp
 (add-hook 'js-mode-hook (lambda () (define-key js-mode-map (kbd "M-.") 'nil)))
 #+end_src
@@ -465,19 +467,14 @@ Company is the "front end" for autocompletion and is setup to use lsp as its "ba
         company-lsp-cache-candidates nil))
 #+end_src
 * Javascript
-Js2-mode for better javascript editing.
+RJSX-mode for javascript and jsx syntax highlighting and such.
 #+begin_src emacs-lisp
-(use-package js2-mode)
-(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+(use-package rjsx-mode
+  :config
+  (add-to-list 'auto-mode-alist '("\\.js\\'" . rjsx-mode)))
 #+end_src
 
-RJSX-mode for react-syntax-highlighting and such.
-#+begin_src emacs-lisp
-(use-package rjsx-mode)
-(add-to-list 'auto-mode-alist '("\\.js\\'" . rjsx-mode))
-#+end_src
-
-Indenting with two spaces instead of four.
+Indent with two spaces instead of four.
 #+begin_src emacs-lisp
 (setq js-indent-level 2)
 #+end_src
@@ -485,8 +482,9 @@ Indenting with two spaces instead of four.
 Show possible keybindings if a keybinding is started and some time goes by.
 #+begin_src emacs-lisp
 (use-package which-key
-  :diminish which-key-mode)
-(which-key-mode)
+  :diminish which-key-mode
+  :config
+  (which-key-mode))
 #+end_src
 * Change of keybinding
 ** Undo
@@ -627,19 +625,19 @@ Do not indent after editing source block.
 * Graphviz-dot-mode
 For drawing graphs by using .dot-files.
 #+begin_src emacs-lisp
-(use-package graphviz-dot-mode)
+(use-package graphviz-dot-mode
+  :config
+  (setq graphviz-dot-dot-program "dot")
+  (add-hook 'graphviz-dot-mode-hook (lambda ()
+				      (local-set-key (kbd "C-c s") 'graphviz-set-dot-program)))
+  (setq graphviz-dot-indent-width 4)
+  (setq graphviz-dot-auto-indent-on-semi nil))
 
 (defun graphviz-set-dot-program (dot-program)
   "Let user input a dot-program and make this the standard"
   (interactive "sEnter name of the dot-program (dot, neato, twopi, circo, fdp): ")
   (setq graphviz-dot-dot-program dot-program)
   (graphviz-dot-mode)) ;; The mode needs to reload for changes to take place
-
-(setq graphviz-dot-dot-program "dot")
-(add-hook 'graphviz-dot-mode-hook (lambda ()
-                                    (local-set-key (kbd "C-c s") 'graphviz-set-dot-program)))
-(setq graphviz-dot-indent-width 4)
-(setq graphviz-dot-auto-indent-on-semi nil)
 #+end_src
 * Eyebrowse
 For configuring multiple workspaces. The workspace number is shown in the lower left corner with spaceline.
