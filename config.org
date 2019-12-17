@@ -7,6 +7,7 @@ A list of stuff that should be installed to utilize everything in this config:
 - Pycodestyle: `pip install pycodestyle`
 - Git: `brew install git`
 - Typescript language server: `npm install -g typescript-language-server`
+- Aspell: `brew install aspell`
 - Documentation: see [[Dash]]
 * Startup
 ** Remove unnecessary window space
@@ -187,6 +188,30 @@ Makes it possible to toggle themes with "C-x t".
   (run-hooks 'sh-post-theme-change-hook)) ;; Some stuff needs to reset after theme change
 
 (global-set-key (kbd "C-x t") 'haba/toggle-theme)
+#+end_src
+* Window configuration
+A window in emacs is a part of the screen, while the "system window" which emacs runs in is called a frame.
+** Windmove
+Windmove is for moving between windows. The keys are in arrow-key-formation on the right hand.
+#+begin_src emacs-lisp
+(global-set-key (kbd "M-I") 'windmove-up)
+(global-set-key (kbd "M-J") 'windmove-left)
+(global-set-key (kbd "M-K") 'windmove-down)
+(global-set-key (kbd "M-L") 'windmove-right)
+#+end_src
+** Eyebrowse
+For configuring multiple workspaces. The workspace number is shown in the lower left corner with spaceline.
+#+begin_src emacs-lisp
+(use-package eyebrowse
+  :init
+  (setq eyebrowse-mode-map nil)
+  :config
+  (eyebrowse-mode t)
+  (define-key org-mode-map (kbd "C-M-i") nil)
+  (global-set-key (kbd "C-M-j") 'eyebrowse-create-window-config)
+  (global-set-key (kbd "C-x C-M-j") 'eyebrowse-close-window-config)
+  (global-set-key (kbd "C-M-i") 'eyebrowse-next-window-config)
+  (global-set-key (kbd "C-M-k") 'eyebrowse-prev-window-config))
 #+end_src
 * Correct path
 Make sure the emacs path is the same as the system path.
@@ -486,20 +511,12 @@ Show possible keybindings if a keybinding is started and some time goes by.
   :config
   (which-key-mode))
 #+end_src
-* Change of keybinding
+* Change of keybindings
 ** Undo
 Lets better set both control-z and command-z as undo just to be sure.
 #+begin_src emacs-lisp
 (global-set-key (kbd "M-z") 'undo)
 (global-set-key (kbd "C-z") 'undo)
-#+end_src
-** Windmove
-Use windmove to move between windows. The keys are in arrow-key-formation on the right hand.
-#+begin_src emacs-lisp
-(global-set-key (kbd "M-I") 'windmove-up)
-(global-set-key (kbd "M-J") 'windmove-left)
-(global-set-key (kbd "M-K") 'windmove-down)
-(global-set-key (kbd "M-L") 'windmove-right)
 #+end_src
 ** Change text size globally
 #+begin_src emacs-lisp
@@ -638,20 +655,6 @@ For drawing graphs by using .dot-files.
   (interactive "sEnter name of the dot-program (dot, neato, twopi, circo, fdp): ")
   (setq graphviz-dot-dot-program dot-program)
   (graphviz-dot-mode)) ;; The mode needs to reload for changes to take place
-#+end_src
-* Eyebrowse
-For configuring multiple workspaces. The workspace number is shown in the lower left corner with spaceline.
-#+begin_src emacs-lisp
-(use-package eyebrowse
-  :init
-  (setq eyebrowse-mode-map nil)
-  :config
-  (eyebrowse-mode t)
-  (define-key org-mode-map (kbd "C-M-i") nil)
-  (global-set-key (kbd "C-M-j") 'eyebrowse-create-window-config)
-  (global-set-key (kbd "C-x C-M-j") 'eyebrowse-close-window-config)
-  (global-set-key (kbd "C-M-i") 'eyebrowse-next-window-config)
-  (global-set-key (kbd "C-M-k") 'eyebrowse-prev-window-config))
 #+end_src
 * Useful functions
 ** Make source block and open
