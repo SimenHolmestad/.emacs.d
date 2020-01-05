@@ -298,6 +298,9 @@ Ispell is for spellchecking in emacs. "M-x flyspell-mode" and "M-x flyspell-prog
 (ispell-change-dictionary "english" t)
 (global-set-key (kbd "M-g o") 'ispell-word)
 (global-set-key (kbd "M-g O") 'ispell-buffer)
+(use-package markdown-mode
+  :config
+  (define-key markdown-mode-map (kbd "C-M-i") nil))
 #+end_src
 * PDF-tools
 PDF-tools is a better mode for displaying pdfs. It makes it possible to search through the text in the file.
