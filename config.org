@@ -499,7 +499,8 @@ RJSX-mode for javascript and jsx syntax highlighting and such.
 #+begin_src emacs-lisp
 (use-package rjsx-mode
   :config
-  (add-to-list 'auto-mode-alist '("\\.js\\'" . rjsx-mode)))
+  (add-to-list 'auto-mode-alist '("\\.js\\'" . rjsx-mode))
+  (setq js-switch-indent-offset 2))
 #+end_src
 
 Indent with two spaces instead of four.
