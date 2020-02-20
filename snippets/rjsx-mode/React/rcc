@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# uuid: 5fa22440-fa5b-4f3e-98d5-9abe8c68fd5b
+# name: reactClassCompoment
+# key: rcc
+# --
+
+import React, { Component } from 'react';
+
+class ${1:${TM_FILENAME_BASE}} extends Component {
+  render() {
+    return (
+      <div>
+        $0
+      </div>
+    );
+  }
+}
+
+export default $1;
