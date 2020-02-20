@@ -436,18 +436,23 @@ Yasnippet comes with a lot of default snippets in the yasnippet-snippets-package
 Language server protocol integration for autocompletion, jump-to-definition and so forth. See https://github.com/emacs-lsp/lsp-mode.
 #+begin_src emacs-lisp
 (use-package lsp-mode
+  :init
+  (setq lsp-keymap-prefix "C-x C-l")
   :config
   (setq lsp-prefer-flymake nil
         lsp-enable-snippet nil
         lsp-eldoc-enable-hover nil)
-  (add-hook 'c++-mode-hook #'lsp)
-  (add-hook 'python-mode-hook #'lsp)
-  (add-hook 'js-mode-hook #'lsp)
-  (add-hook 'latex-mode-hook #'lsp)
-  (global-set-key (kbd "M-g i") 'lsp-describe-thing-at-point)
-  (global-set-key (kbd "M-g f") 'lsp-find-references)
-  (global-set-key (kbd "M-g r") 'lsp-rename)
-  (global-set-key (kbd "M-g t") 'lsp-ui-imenu))
+  :hook(
+        (python-mode . lsp)
+        (css-mode .lsp)
+        (js-mode . lsp)
+        (rjsx-mode . lsp)
+        (html-mode . lsp)
+        (emacs-lisp-mode . lsp)))
+(global-set-key (kbd "M-g i") 'lsp-describe-thing-at-point)
+(global-set-key (kbd "M-g f") 'lsp-find-references)
+(global-set-key (kbd "M-g r") 'lsp-rename)
+(global-set-key (kbd "M-g t") 'lsp-ui-imenu)
 #+end_src
 Pycodestyle which have some irritating defaults can be changed by following [[http://pycodestyle.pycqa.org/en/latest/intro.html][this link]].
 
