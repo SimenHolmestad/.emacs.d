@@ -217,7 +217,9 @@ Remove conflicting keybindings for "C-M-i".
 #+begin_src emacs-lisp
 (define-key text-mode-map (kbd "C-M-i") 'nil)
 (define-key help-mode-map (kbd "C-M-i") 'nil)
-(define-key markdown-mode-map (kbd "C-M-i") 'nil)
+(use-package markdown-mode
+  :config
+  (define-key markdown-mode-map (kbd "C-M-i") nil))
 #+end_src
 * Correct path
 Make sure the emacs path is the same as the system path.
