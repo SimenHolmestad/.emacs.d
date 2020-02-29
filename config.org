@@ -213,6 +213,12 @@ For configuring multiple workspaces. The workspace number is shown in the lower 
   (global-set-key (kbd "C-M-i") 'eyebrowse-next-window-config)
   (global-set-key (kbd "C-M-k") 'eyebrowse-prev-window-config))
 #+end_src
+Remove conflicting keybindings for "C-M-i".
+#+begin_src emacs-lisp
+(define-key text-mode-map (kbd "C-M-i") 'nil)
+(define-key help-mode-map (kbd "C-M-i") 'nil)
+(define-key markdown-mode-map (kbd "C-M-i") 'nil)
+#+end_src
 * Correct path
 Make sure the emacs path is the same as the system path.
 #+begin_src emacs-lisp
@@ -298,9 +304,6 @@ Ispell is for spellchecking in emacs. "M-x flyspell-mode" and "M-x flyspell-prog
 (ispell-change-dictionary "english" t)
 (global-set-key (kbd "M-g o") 'ispell-word)
 (global-set-key (kbd "M-g O") 'ispell-buffer)
-(use-package markdown-mode
-  :config
-  (define-key markdown-mode-map (kbd "C-M-i") nil))
 #+end_src
 * PDF-tools
 PDF-tools is a better mode for displaying pdfs. It makes it possible to search through the text in the file.
