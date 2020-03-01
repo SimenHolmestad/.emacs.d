@@ -9,6 +9,8 @@ A list of stuff that should be installed to utilize everything in this config:
 - Typescript language server: `npm install -g typescript-language-server`
 - Aspell: `brew install aspell`
 - Documentation: see [[Dash]]
+
+To change the errors provided by pycodestyle it is possible to follow the instructions in [[http://pycodestyle.pycqa.org/en/latest/intro.html][this link]].
 * Startup
 ** Remove unnecessary window space
 #+begin_src emacs-lisp
@@ -436,6 +438,15 @@ Yasnippet comes with a lot of default snippets in the yasnippet-snippets-package
 #+begin_src emacs-lisp
 (use-package yasnippet-snippets)
 #+end_src
+* Treemacs
+I do not use this a lot, but sometimes it can be nice.
+#+begin_src emacs-lisp
+(use-package treemacs
+  :init
+  (add-hook 'treemacs-mode-hook
+            (lambda () (treemacs-resize-icons 15))))
+(global-set-key (kbd "M-g t") 'treemacs)
+#+end_src
 * Language server protocol
 ** Lsp-mode
 Language server protocol integration for autocompletion, jump-to-definition and so forth. See https://github.com/emacs-lsp/lsp-mode.
@@ -449,17 +460,19 @@ Language server protocol integration for autocompletion, jump-to-definition and 
         lsp-eldoc-enable-hover nil)
   :hook(
         (python-mode . lsp)
-        (css-mode .lsp)
+        (css-mode . lsp)
         (js-mode . lsp)
+        (java-mode . lsp)
         (rjsx-mode . lsp)
         (html-mode . lsp)
         (emacs-lisp-mode . lsp)))
 (global-set-key (kbd "M-g i") 'lsp-describe-thing-at-point)
 (global-set-key (kbd "M-g f") 'lsp-find-references)
 (global-set-key (kbd "M-g r") 'lsp-rename)
-(global-set-key (kbd "M-g t") 'lsp-ui-imenu)
+(global-set-key (kbd "M-g T") 'lsp-ui-imenu)
+(global-set-key (kbd "M-g l") 'lsp-format-buffer)
+(global-set-key (kbd "M-g a") 'lsp-execute-code-action)
 #+end_src
-Pycodestyle which have some irritating defaults can be changed by following [[http://pycodestyle.pycqa.org/en/latest/intro.html][this link]].
 
 "M-." is used for jump-to-definition in lsp-mode, so it needs to be removed from the js-mode keymap.
 #+begin_src emacs-lisp
@@ -468,20 +481,30 @@ Pycodestyle which have some irritating defaults can be changed by following [[ht
 ** Lsp-ui
 Some more lsp-mode integration.
 #+begin_src emacs-lisp
-(use-package flycheck
-  :diminish flycheck-mode)
 (use-package lsp-ui
-  :requires lsp-mode flycheck
   :config
-  (setq lsp-ui-flycheck-enable t
-        lsp-ui-flycheck-list-position 'right
-        lsp-ui-flycheck-live-reporting t
+  (setq lsp-prefer-flymake nil
+        lsp-ui-doc-enable nil
         lsp-ui-sideline-enable nil
-        lsp-ui-doc-enable nil)
-  (add-hook 'lsp-mode-hook 'lsp-ui-mode)
-  :bind
-  (:map lsp-mode-map
-        ("C-c s"   . lsp-ui-sideline-mode)))
+        lsp-ui-flycheck-enable t)
+  (define-key lsp-ui-mode-map
+    [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
+  (define-key lsp-ui-mode-map
+    [remap xref-find-references] #'lsp-ui-peek-find-references)
+  :after lsp-mode)
+#+end_src
+* Java
+#+begin_src emacs-lisp
+(add-hook 'java-mode-hook (lambda ()
+                            (setq c-basic-offset 4
+                                  tab-width 4
+                                  indent-tabs-mode t)))
+#+end_src
+** Java-lsp
+Gives some more opporunities for java.
+#+begin_src emacs-lisp
+(use-package lsp-java
+  :after lsp)
 #+end_src
 * Company
 Company is the "front end" for autocompletion and is setup to use lsp as its "backend".
