@@ -1,0 +1,26 @@
+# -*- mode: snippet -*-
+# name: header
+# key: header
+# --
+:properties:
+#+TITLE: ${1:Tittel}
+#+AUTHOR: Simen Holmestad
+#+EMAIL: simen@holmestad.com
+#+LATEX_CLASS: article
+#+LATEX_CLASS_OPTIONS:
+#+LATEX_HEADER: \usepackage[margin=1.0in]{geometry}
+#+LATEX_HEADER_EXTRA:
+#+ATTR_LATEX: :float nil
+#+DESCRIPTION:
+#+KEYWORDS:
+#+SUBTITLE:
+#+LATEX_COMPILER: pdflatex
+#+DATE:
+#+LANGUAGE: no
+#+OPTIONS: toc:nil num:nil
+#+OPTIONS: \n:t
+#+LATEX: \setlength\parindent{0pt}
+#+SETUPFILE: https://fniessen.github.io/org-html-themes/setup/theme-readtheorg.setup
+:END:
+
+$0
