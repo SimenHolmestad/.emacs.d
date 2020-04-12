@@ -730,6 +730,10 @@ Makes a source block in an org file and opens a new window for editing it.
     (revert-buffer :ignore-auto :noconfirm))
 (global-set-key (kbd "C-x C-å") `revert-buffer-no-confirm)
 #+end_src
+** Toggle frame fullscreen
+#+begin_src emacs-lisp
+(global-set-key (kbd "C-M-å") 'toggle-frame-fullscreen)
+#+end_src
 * Local settings
 Make a file for local code named "local_stuff.el" if this does not already exist.
 #+begin_src emacs-lisp
