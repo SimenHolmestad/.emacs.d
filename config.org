@@ -332,7 +332,7 @@ Allows for more than one cursor at once and is really handy.
   (define-key mc/keymap (kbd "<return>") nil)
   :bind (("C-æ" . 'mc/mark-next-like-this)
          ("M-æ" . 'mc/mark-previous-like-this)
-         ("C-x C-æ" . 'mc/mark-all-like-this)))
+         ("C-M-æ" . 'mc/mark-all-like-this)))
 #+end_src
 * Avy
 Makes you able to jump to a word on screen by inputting the first character.
