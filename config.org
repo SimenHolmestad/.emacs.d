@@ -335,12 +335,13 @@ Allows for more than one cursor at once and is really handy.
          ("C-M-æ" . 'mc/mark-all-like-this)))
 #+end_src
 * Avy
-Makes you able to jump to a word on screen by inputting the first character.
+Makes you able to jump to a word on screen by doing C-ø followed by the first character in the word. C-M-ø kan be used to jump to any sequence of characters: just start inputting all the characters from where you want to jump after doing C-M-ø.
 #+begin_src emacs-lisp
 (use-package avy
   :config
   (global-set-key (kbd "C-ø") 'avy-goto-word-or-subword-1)
-  (setq avy-styles-alist '((avy-goto-word-or-subword-1 . at-full)))
+  (global-set-key (kbd "C-M-ø") 'avy-goto-char-timer)
+  (setq avy-styles-alist '((avy-goto-word-or-subword-1 . at-full) (avy-goto-word-char-timer . at-full)))
   (setq avy-keys (number-sequence ?a ?w))
   (setq avy-background t))
 #+end_src
