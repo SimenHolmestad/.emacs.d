@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: shell
+# key: shell
+# --
+#+begin_src sh :results output replace :exports results
+$0
+#+end_src

@@ -2,6 +2,6 @@
 # name: python
 # key: python
 # --
-#+begin_src python :results output
+#+begin_src python :results output :exports results
 $0
 #+end_src

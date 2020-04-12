@@ -667,7 +667,9 @@ Add source block languages.
 #+begin_src emacs-lisp
 (org-babel-do-load-languages
  'org-babel-load-languages
- '((python . t) (latex . t)))
+ '((python . t)
+   (latex . t)
+   (shell . t)))
 (setq org-confirm-babel-evaluate nil)
 (setq org-babel-python-command "python3")
 #+end_src
