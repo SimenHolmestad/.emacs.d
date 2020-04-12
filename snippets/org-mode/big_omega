@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: big_omega
+# key: O
+# --
+\Omega$0

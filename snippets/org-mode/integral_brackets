@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: integral_brackets
+# key: int[
+# --
+\left[${3:body}\right]_{${1:bottom}}^{${2:top}}$0

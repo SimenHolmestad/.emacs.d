@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: big_theta
+# key: T
+# --
+\Theta$0

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: big_pi
+# key: P
+# --
+\Pi$0

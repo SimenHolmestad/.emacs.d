@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: round_brackets
+# key: (
+# --
+\left(${1:body}\right)$0
