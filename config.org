@@ -681,6 +681,13 @@ Do not indent after editing source block.
 #+begin_src emacs-lisp
 (setq org-edit-src-content-indentation 0)
 #+end_src
+** Org-pomodoro
+Used to track time using the pomodoro technique: https://francescocirillo.com/pages/pomodoro-technique. This will clock in a timer at the current heading and clock out 25 minutes later. When clocking out it makes a sound to tell that the pomodoro is over.
+
+#+begin_src emacs-lisp
+(use-package org-pomodoro
+  :config (define-key org-mode-map (kbd "C-c C-x C-p") 'org-pomodoro))
+#+end_src
 * Graphviz-dot-mode
 For drawing graphs by using .dot-files.
 #+begin_src emacs-lisp
