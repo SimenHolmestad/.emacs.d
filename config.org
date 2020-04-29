@@ -665,6 +665,10 @@ Remove line numbers and always open agenda view in same window.
 (setq org-agenda-window-setup 'current-window)
 (global-set-key (kbd "C-x C-o") `org-agenda)
 #+end_src
+Make sure that scheduled items with a deadline do not appear twice.
+#+begin_src emacs-lisp
+(setq org-agenda-skip-deadline-prewarning-if-scheduled t)
+#+end_src
 ** Exporting
 #+begin_src emacs-lisp
 ;; Github markdown
