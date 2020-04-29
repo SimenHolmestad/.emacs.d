@@ -678,6 +678,29 @@ Make sure that scheduled items with a deadline do not appear twice.
 ;; Syntax highlighting in exported html
 (use-package htmlize)
 #+end_src
+** Org-special-block-extras
+A way to make custom export blocks in org-mode. More info can be found here: https://alhassy.github.io/org-special-block-extras/
+#+begin_src emacs-lisp
+(use-package org-special-block-extras
+  :config (add-hook #'org-mode-hook #'org-special-block-extras-mode))
+#+end_src
+
+Below is a custom block I made for some assignment-writing. It goes with the header shown in the yasnippet located at [[file:snippets/org-mode/questions_and_answers_header]], and can be used to make a question-answer sheet look nice in latex. A snippet for creating the q_and_a-block can be found here: [[file:snippets/org-mode/question_and_answer_block]].
+#+begin_src emacs-lisp
+(defun org-special-block-extras--question (backend contents)
+  "Splits the text in two parts and format the block to a question and an answer"
+  (let ((string-parts (s-split "@@@ answer @@@" contents)))
+      (if (eq backend 'latex)
+	(concat "\\question{"
+		(string-remove-suffix "\\\\\n" (car string-parts))
+		"}\n{"
+		(string-remove-prefix "\\\\\n" (cadr string-parts))
+		"}")
+	(concat "<b>Question:</b>"
+            (car string-parts)
+		"<b>Answer:</b>"
+		(cadr string-parts)))))
+#+end_src
 ** Speed keys
 Extra shortcut while in front of an org heading like "t" for toggle todo.
 #+begin_src emacs-lisp

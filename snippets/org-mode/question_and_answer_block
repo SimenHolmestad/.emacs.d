@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: question_and_answer_block
+# key: q
+# --
+#+begin_question
+${1:question}
+@@@ answer @@@
+${2:answer}
+#+end_question
+$0

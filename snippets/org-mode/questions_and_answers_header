@@ -1,0 +1,36 @@
+# -*- mode: snippet -*-
+# name: questions_and_answers_header
+# key: q_and_a
+# --
+:properties:
+#+TITLE: ${1:Tittel}
+#+AUTHOR: Simen Holmestad
+#+EMAIL: simen@holmestad.com
+#+LATEX_CLASS: article
+#+LATEX_CLASS_OPTIONS:
+#+LATEX_HEADER: \usepackage[margin=1.0in]{geometry}
+#+LATEX_HEADER: \usepackage{framed}
+#+LATEX_HEADER: \usepackage{parskip}
+#+LATEX_HEADER_EXTRA:
+#+ATTR_LATEX: :float nil
+#+DESCRIPTION:
+#+KEYWORDS:
+#+SUBTITLE:
+#+LATEX_COMPILER: pdflatex
+#+DATE:
+#+LANGUAGE: no
+#+OPTIONS: toc:nil num:nil
+#+OPTIONS: \n:t
+#+LATEX: \setlength\parindent{0pt}
+#+LATEX: \newcounter{question}
+#+LATEX: \newcommand{\question}[2]{
+#+LATEX:   \refstepcounter{question}
+#+LATEX:   \begin{leftbar}
+#+LATEX:     \noindent \textbf{Q\arabic{question}:} #1
+#+LATEX:   \end{leftbar}
+#+LATEX:   \noindent \textbf{A: \hspace{.5em}} #2
+#+LATEX: }
+#+SETUPFILE: https://fniessen.github.io/org-html-themes/setup/theme-readtheorg.setup
+:END:
+
+$0
