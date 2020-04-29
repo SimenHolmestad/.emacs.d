@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: not_equal
+# key: !=
+# --
+\neq$0

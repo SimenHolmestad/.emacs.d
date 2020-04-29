@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: 2_by_2_matrix
+# key: 2x2
+# --
+\begin{bmatrix}
+${1:value1} & ${2:value2} \\\\
+${3:value3} & ${4:value4} \\\\
+\end{bmatrix}$0

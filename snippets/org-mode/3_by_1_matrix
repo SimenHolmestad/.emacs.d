@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: 3_by_1_matrix
+# key: 3x1
+# --
+\begin{bmatrix}
+${1:value1} \\\\
+${2:value2} \\\\
+${3:value3} \\\\
+\end{bmatrix}$0

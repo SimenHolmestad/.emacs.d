@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: setcounter
+# key: setcounter
+# --
+
+#+LATEX: \setcounter{${1:question}}{${2:number}}$0

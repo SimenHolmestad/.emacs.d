@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: greater_than_or_equal
+# key: >=
+# --
+\ge

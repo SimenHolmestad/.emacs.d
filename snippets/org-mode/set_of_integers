@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: set_of_integers
+# key: Z
+# --
+\mathbb{Z}$0

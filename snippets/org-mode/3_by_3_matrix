@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: 3_by_3_matrix
+# key: 3x3
+# --
+\begin{bmatrix}
+${1:value1} & ${2:value2} & ${3:value3} \\\\
+${4:value4} & ${5:value5} & ${6:value6} \\\\
+${7:value7} & ${8:value8} & ${9:value9} \\\\
+\end{bmatrix}$0

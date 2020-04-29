@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: 4_by_1_matrix
+# key: 4x1
+# --
+\begin{bmatrix}
+${1:value1} \\\\
+${2:value2} \\\\
+${3:value3} \\\\
+${4:value4} \\\\
+\end{bmatrix}$0

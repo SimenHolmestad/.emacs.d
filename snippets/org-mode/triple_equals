@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: triple_equals
+# key: ==
+# --
+\equiv$0
