@@ -685,11 +685,24 @@ Do not indent after editing source block.
 (setq org-edit-src-content-indentation 0)
 #+end_src
 ** Org-pomodoro
-Used to track time using the pomodoro technique: https://francescocirillo.com/pages/pomodoro-technique. This will clock in a timer at the current heading and clock out 25 minutes later. When clocking out it makes a sound to tell that the pomodoro is over.
+Org-pomodoro can be used to track time using the pomodoro technique: https://francescocirillo.com/pages/pomodoro-technique. This will clock in a timer at the current heading and clock out 25 minutes later. When clocking out it makes a sound to tell that the pomodoro is over.
 
 #+begin_src emacs-lisp
 (use-package org-pomodoro
-  :config (define-key org-mode-map (kbd "C-c C-x C-p") 'org-pomodoro))
+  :config
+  (define-key org-mode-map (kbd "C-c C-x C-p") 'org-pomodoro)
+  (add-hook 'org-agenda-mode-hook
+	    (lambda ()
+	      (local-set-key (kbd "P") 'org-pomodoro)
+          (local-set-key (kbd "C-c C-x C-p") 'org-pomodoro))))
+
+#+end_src
+
+The code below is for reporting time in pomodoros when doing an agenda-clock-report. This can be done by pressing "R" while in the agenda view. By doing this it is possible to see how many pomodoros you have spent on different tasks. The =maxlevel=-parameter can be increased if using nested todos.
+
+#+begin_src emacs-lisp
+(setq org-agenda-clockreport-parameter-plist
+ '(:fileskip0 t :link t :maxlevel 1 :formula "$4=($3)*(60/25);t"))
 #+end_src
 * Graphviz-dot-mode
 For drawing graphs by using .dot-files.
