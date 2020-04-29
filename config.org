@@ -413,6 +413,11 @@ Counsel adds ivy features to more places.
   :config
   (counsel-mode))
 #+end_src
+
+The smex package is really nice as it lets you see the most recently used commands when using "counsel-M-x" (which is bound to "M-x").
+#+begin_src emacs-lisp
+(use-package smex)
+#+end_src
 * Projectile
 Projectile is used for managing projects in emacs and comes with a lot of handful features.
 #+begin_src emacs-lisp
