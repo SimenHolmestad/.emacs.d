@@ -119,9 +119,10 @@ Compile all packages.
 #+end_src
 * Themes
 ** Solarized
-I like this theme.
+I like this theme, but they did some changes to the magit-faces which I do not like, so I use an old version.
 #+begin_src emacs-lisp
-(use-package solarized-theme)
+(add-to-list 'load-path "~/.emacs.d/themes/old_solarized_theme/")
+(require 'solarized-theme)
 (load-theme 'solarized-dark)
 #+end_src
 ** Spaceline
