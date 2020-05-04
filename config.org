@@ -192,6 +192,49 @@ Makes it possible to toggle themes with "C-x t".
 
 (global-set-key (kbd "C-x t") 'haba/toggle-theme)
 #+end_src
+** Toggling of fonts
+I have not yet decided if i like the FiraCode font, so I made a function to be able to switch between FiraCode and the standard font (Monaco on mac):
+#+begin_src emacs-lisp
+(setq sh-fira-used t)
+(setq sh-default-font (face-attribute 'default :font)) ;; This needs to be done before changing to FiraCode
+
+(defun sh-change-font ()
+  "Toggles between the FiraCode font and the standard font for emacs"
+  (interactive)
+  (if sh-fira-used
+      (progn (setq sh-fira-used nil)
+	     (set-frame-font sh-default-font)
+	     (message "Now using default font"))
+      (progn (setq sh-fira-used t)
+	     (set-frame-font "Fira Code")
+	     (set-face-attribute 'default nil :height 130)
+	     (message "Now using font: Fira Code"))))
+
+
+(global-set-key (kbd "C-x T") 'sh-change-font)
+#+end_src
+** Change default font
+Change default font to FiraCode: https://github.com/tonsky/FiraCode.
+#+begin_src emacs-lisp
+(set-frame-font "Fira Code")
+(set-face-attribute 'default nil :height 130)
+(mac-auto-operator-composition-mode) ;; for showing ligatures
+#+end_src
+
+The bold in FiraCode is a little bit too bold, so this function changes all bold to semibold:
+#+begin_src emacs-lisp
+(defun sh-change-from-bold-to-semibold ()
+  "Changes every bold font to semibold"
+  (mapc
+   (lambda (face)
+     (when (eq (face-attribute face :weight) 'bold)
+       (set-face-attribute face nil :weight 'semibold)))
+   (face-list)))
+
+;; This needs to be done after changing themes also
+(add-hook 'sh-post-theme-change-hook (lambda ()
+				       (sh-change-from-bold-to-semibold)))
+#+end_src
 * Window configuration
 A window in emacs is a part of the screen, while the "system window" which emacs runs in is called a frame.
 ** Windmove
