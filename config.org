@@ -347,12 +347,24 @@ To download all docsets in the list, it is possible to run "M-x sh-install-dash-
   (sh-install-docsets sh-docset-list))
 #+end_src
 * Ispell
-Ispell is for spellchecking in emacs. "M-x flyspell-mode" and "M-x flyspell-prog-mode" can be used to see misspelled words in buffer. Ispell-word is useful for checking a current word, while ispell-buffer is interacitve for the whole buffer.
+Ispell is for spellchecking in emacs. "M-x flyspell-mode" and "M-x flyspell-prog-mode" can be used to see misspelled words in buffer. Ispell-word is useful for checking a current word, while ispell-buffer is interacitve for the whole buffer. For spellchecking while programming, ispell-comments-and-strings is nice.
 #+begin_src emacs-lisp
 (setq ispell-program-name "aspell")
-(ispell-change-dictionary "english" t)
+(ispell-change-dictionary "english" t) ;; Change to english dict globally
+
+(defun sh-toggle-dictionary ()
+  (interactive)
+  (cond ((string-equal ispell-dictionary "english")
+	 (ispell-change-dictionary "norsk" t)
+	 (message "Changed to dictionary: Norsk"))
+	((string-equal ispell-dictionary "norsk")
+	 (ispell-change-dictionary "english" t)
+	 (message "Changed to dictionary: English"))))
+
 (global-set-key (kbd "M-g o") 'ispell-word)
 (global-set-key (kbd "M-g O") 'ispell-buffer)
+(global-set-key (kbd "M-g C-M-o") 'sh-toggle-dictionary)
+(global-set-key (kbd "M-g C-M-c") 'ispell-comments-and-strings)
 #+end_src
 * PDF-tools
 PDF-tools is a better mode for displaying pdfs. It makes it possible to search through the text in the file.
