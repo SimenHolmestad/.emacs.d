@@ -166,31 +166,27 @@ Use diminish to hide some minor modes in the mode line. Minor modes can be shown
 ** Toggling of themes
 Makes it possible to toggle themes with "C-x t".
 #+begin_src emacs-lisp
-(defvar *haba-theme-dark* 'solarized-dark)
-(defvar *haba-theme-light* 'solarized-light)
-(defvar *haba-current-theme* *haba-theme-dark*)
+(defvar sh-theme-dark 'solarized-dark)
+(defvar sh-theme-light 'solarized-light)
+(defvar sh-current-theme sh-theme-dark)
 
-;; disable other themes before loading new one
+;; Disable other themes before loading new one
 (defadvice load-theme (before theme-dont-propagate activate)
   "Disable theme before loading new one."
   (mapc #'disable-theme custom-enabled-themes))
 
-(defun haba/next-theme (theme)
-  (if (eq theme 'default)
-      (disable-theme *haba-current-theme*)
-    (progn
-      (load-theme theme t)))
-  (setq *haba-current-theme* theme))
+(defun sh-set-next-theme (theme)
+  (load-theme theme t)
+  (setq sh-current-theme theme))
 
-(defun haba/toggle-theme ()
+(defun sh-toggle-theme ()
   (interactive)
-  (cond ((eq *haba-current-theme* *haba-theme-dark*) (haba/next-theme *haba-theme-light*))
-        ((eq *haba-current-theme* *haba-theme-light*) (haba/next-theme 'default))
-        ((eq *haba-current-theme* 'default) (haba/next-theme *haba-theme-dark*)))
+  (cond ((eq sh-current-theme sh-theme-dark) (sh-set-next-theme sh-theme-light))
+        ((eq sh-current-theme sh-theme-light) (sh-set-next-theme sh-theme-dark)))
   (powerline-reset)
   (run-hooks 'sh-post-theme-change-hook)) ;; Some stuff needs to reset after theme change
 
-(global-set-key (kbd "C-x t") 'haba/toggle-theme)
+(global-set-key (kbd "C-x t") 'sh-toggle-theme)
 #+end_src
 ** Toggling of fonts
 I have not yet decided if i like the FiraCode font, so I made a function to be able to switch between FiraCode and the standard font (Monaco on mac):
