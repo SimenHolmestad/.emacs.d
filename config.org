@@ -202,18 +202,18 @@ I have not yet decided if i like the FiraCode font, so I made a function to be a
 	     (set-frame-font sh-default-font)
 	     (message "Now using default font"))
       (progn (setq sh-fira-used t)
-	     (set-frame-font "Fira Code")
-	     (set-face-attribute 'default nil :height 130)
+	     (set-frame-font "FancyFiraCode A")
+	     (set-face-attribute 'default nil :height 120)
 	     (message "Now using font: Fira Code"))))
 
 
 (global-set-key (kbd "C-x T") 'sh-change-font)
 #+end_src
 ** Change default font
-Change default font to FiraCode: https://github.com/tonsky/FiraCode.
+Change default font to FiraCode: https://github.com/tonsky/FiraCode. I have modified the font file a little bit by baking in stylistic sets using https://github.com/twardoch/fonttools-opentype-feature-freezer. That is why the font is called "FancyFiraCode A". The font files can be found here: http://folk.ntnu.no/simehol/FancyFiraCode/.
 #+begin_src emacs-lisp
-(set-frame-font "Fira Code")
-(set-face-attribute 'default nil :height 130)
+(set-frame-font "FancyFiraCode A")
+(set-face-attribute 'default nil :height 120)
 (mac-auto-operator-composition-mode) ;; for showing ligatures
 #+end_src
 
