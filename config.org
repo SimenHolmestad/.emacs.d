@@ -821,6 +821,36 @@ The code below is for reporting time in pomodoros when doing an agenda-clock-rep
 (setq org-agenda-clockreport-parameter-plist
  '(:fileskip0 t :link t :maxlevel 1 :formula "$4=($3)*(60/25);t"))
 #+end_src
+* Tramp
+Below is a function for changing to sudo while in tramp mode.
+#+begin_src emacs-lisp
+(defun sudo-remote-find-file (file-string)
+    "Opens remote file with root privileges."
+    (interactive "FFind file: ")
+    (if (s-contains? "|sudo:root@" file-string)
+      (set-buffer (find-file file-string)) ;; Just do a normal find-file
+      (let ((begin (replace-regexp-in-string  "scp" "ssh" (car (split-string file-string ":/"))))
+	    (end (cadr (split-string file-string "@"))))
+	(set-buffer (find-file (concat begin "|sudo:root@" end))))))
+
+(global-set-key (kbd "C-x C-M-f") 'sudo-remote-find-file)
+#+end_src
+
+To change to SCP again it is possible to use this function:
+#+begin_src emacs-lisp
+(defun scp-remote-find-file (file-string)
+    "Opens remote file with scp."
+    (interactive "FFind file: ")
+    (if (s-contains? "/scp:" file-string)
+      (set-buffer (find-file file-string)) ;; Just do a normal find-file
+      (let ((begin (replace-regexp-in-string  "ssh" "scp" (car (split-string file-string "@"))))
+	    (end (car (last (split-string file-string "@")))))
+	(set-buffer (find-file (concat begin "@" end))))))
+
+(global-set-key (kbd "C-x M-f") 'scp-remote-find-file)
+#+end_src
+
+SCP is great for transfering large files with dired, but does not give sudo-privileges.
 * Graphviz-dot-mode
 For drawing graphs by using .dot-files.
 #+begin_src emacs-lisp
