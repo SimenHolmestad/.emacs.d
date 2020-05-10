@@ -231,13 +231,18 @@ The bold in FiraCode is a little bit too bold, so this function changes all bold
 (add-hook 'sh-post-theme-change-hook (lambda ()
 				       (sh-change-from-bold-to-semibold)))
 #+end_src
-** Version control icon in modeline
+** Change icons in modeline
 It is a bit cooler to have a version control icon instead of the modeline saying "Git:master". The code is taken from [[https://www.reddit.com/r/emacs/comments/5fjri7/how_to_use_git_logo_in_modeline_instead_of/][this post]].
 #+begin_src emacs-lisp
 (defadvice vc-mode-line (after strip-backend () activate)
   (when (stringp vc-mode)
     (let ((gitlogo (replace-regexp-in-string "^ Git." " " vc-mode)))
           (setq vc-mode gitlogo))))
+#+end_src
+
+I also replace "Projectile" in the modeline with an icon, since "Projectile" takes a bit of spaces.
+#+begin_src emacs-lisp
+(setq projectile-mode-line-prefix " 🌐 ")
 #+end_src
 * Window configuration
 A window in emacs is a part of the screen, while the "system window" which emacs runs in is called a frame.
@@ -664,7 +669,7 @@ Use M-g c to compile and M-g C to recompile.
 (global-set-key (kbd "M-g C") 'recompile)
 #+end_src
 
-This function is used to toggle whether the finished compilation should show or not. Most of it is taken from [[https://emacs.stackexchange.com/questions/62/hide-compilation-window][this page]].
+This function is used to toggle whether the finished compilation should show or not. Most of it is taken from [[https://emacs.stackexchange.com/questions/62/hide-compilation-window][this page]]. Not showing finished compilations is nice when working with graphs, as the compilation buffer often go in front of the buffer showing the graph.
 #+begin_src emacs-lisp
 (defun toggle-show-compile ()
   (interactive)
