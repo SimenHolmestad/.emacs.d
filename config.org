@@ -8,6 +8,7 @@ A list of stuff that should be installed to utilize everything in this config:
 - Git: `brew install git`
 - Typescript language server: `npm install -g typescript-language-server`
 - Aspell: `brew install aspell`
+- GraphViz (for drawing graphs with nodes and edges): `brew install graphviz`
 - Documentation: see [[Dash]]
 
 To change the errors provided by pycodestyle it is possible to follow the instructions in [[http://pycodestyle.pycqa.org/en/latest/intro.html][this link]].
@@ -787,7 +788,8 @@ Add source block languages.
  'org-babel-load-languages
  '((python . t)
    (latex . t)
-   (shell . t)))
+   (shell . t)
+   (dot . t)))
 (setq org-confirm-babel-evaluate nil)
 (setq org-babel-python-command "python3")
 #+end_src
