@@ -79,6 +79,12 @@ This is useful when using tools like multiple cursors to select a sentence. It i
 #+begin_src emacs-lisp
 (setq sentence-end-double-space nil)
 #+end_src
+** Performance
+These settings are said to give better performance for example in LSP-mode: https://emacs-lsp.github.io/lsp-mode/page/performance/.
+#+begin_src emacs-lisp
+(setq gc-cons-threshold 100000000)
+(setq read-process-output-max (* 3 1024 1024))
+#+end_src
 * Package handling
 ** Package.el
 Is used for installing packages and is required for use-package.
@@ -535,7 +541,9 @@ Language server protocol integration for autocompletion, jump-to-definition and 
   :config
   (setq lsp-prefer-flymake nil
         lsp-enable-snippet nil
-        lsp-eldoc-enable-hover nil)
+        lsp-eldoc-enable-hover nil
+        lsp-prefer-capf t
+        lsp-idle-dalay 0.0)
   :hook(
         (python-mode . lsp)
         (css-mode . lsp)
@@ -593,17 +601,6 @@ Company is the "front end" for autocompletion and is setup to use lsp as its "ba
   (setq company-idle-delay 0.2
         company-minimum-prefix-length 1)
   :hook (lsp-mode . company-mode))
-
-(use-package company-lsp
-  :requires company
-  :config
-  (setq company-backends ())
-  (push 'company-lsp company-backends)
-
-   ;; Disable client-side cache because the LSP server does a better job.
-  (setq company-transformers nil
-        company-lsp-async t
-        company-lsp-cache-candidates nil))
 #+end_src
 * Javascript
 RJSX-mode for javascript and jsx syntax highlighting and such.
