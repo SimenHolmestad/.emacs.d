@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: GraphViz_dot_source_block
+# key: dot
+# --
+#+begin_src dot :cmd ${1:neato/fdp/sfdp/twopi/circo} :file ${2:filename.png}
+$0
+#+end_src

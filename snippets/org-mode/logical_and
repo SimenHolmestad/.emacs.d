@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: logical_and
+# key: and
+# --
+\land$0

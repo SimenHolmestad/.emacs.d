@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: element_of
+# key: in
+# --
+\in$0

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: perpendicular
+# key: perp
+# --
+\bot$0

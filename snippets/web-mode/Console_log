@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: Console_log
+# key: cl
+# --
+console.log($0);
