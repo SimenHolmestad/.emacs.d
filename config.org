@@ -395,14 +395,16 @@ Selects an area around point and increases selection by logical units for every 
 (use-package expand-region
   :bind (("M-ø" . er/expand-region)))
 #+end_src
-* Wgrep
-Makes it possible to change content of multiple lines from a grep-search.
+* Grepping
+Ripgrep is a very nice way of doing greps. In the grep buffer it is possible to see the locations of the matches when using "p" and "n".
 #+begin_src emacs-lisp
-(use-package wgrep
-  :bind (("M-g g" . rgrep)
-         ("M-g w" . wgrep-change-to-wgrep-mode)
-         ("M-g s" . wgrep-save-all-buffers)))
+(use-package rg
+    :bind (("M-g g" . rg)))
+(use-package ripgrep)
 #+end_src
+For further options after the grep is done, it is possible to use "m" in the grep buffer. This will bring up a list of possible changes to the grep like "context" for displaying lines before and after the matches. "g" will rerun the grep.
+
+It is further possible to use "e" to edit the buffer, followed by "C-x C-s" to save the changes. To save all files which are now changed, it is best to use "C-x s !".
 * Magit
 A really good tool for git.
 #+begin_src emacs-lisp
