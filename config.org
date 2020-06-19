@@ -519,11 +519,11 @@ Language server protocol integration for autocompletion, jump-to-definition and 
         lsp-idle-dalay 0.0)
   :hook(
         (python-mode . lsp)
-        (css-mode . lsp)
         (js-mode . lsp)
         (java-mode . lsp)
         (rjsx-mode . lsp)
         (html-mode . lsp)
+        (web-mode . lsp)
         (emacs-lisp-mode . lsp)))
 (global-set-key (kbd "M-g i") 'lsp-describe-thing-at-point)
 (global-set-key (kbd "M-g f") 'lsp-find-references)
@@ -578,10 +578,18 @@ Company is the "front end" for autocompletion and is setup to use lsp as its "ba
 * Javascript
 RJSX-mode for javascript and jsx syntax highlighting and such.
 #+begin_src emacs-lisp
-(use-package rjsx-mode
+(use-package web-mode
   :config
-  (add-to-list 'auto-mode-alist '("\\.js\\'" . rjsx-mode))
-  (setq js-switch-indent-offset 2))
+  (add-to-list 'auto-mode-alist '("\\.js\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.ts\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.json\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.css\\'" . web-mode))
+  (setq js-switch-indent-offset 2)
+  (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-css-indent-offset 2)
+  (setq web-mode-code-indent-offset 2))
 #+end_src
 
 Indent with two spaces instead of four.
