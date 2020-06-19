@@ -468,6 +468,14 @@ Projectile is used for managing projects in emacs and comes with a lot of handfu
   :config
   (counsel-projectile-mode))
 #+end_src
+* Goto-change
+This package lets you go to the previous change in the buffer. This is nice in some cases.
+#+begin_src emacs-lisp
+(use-package goto-chg
+  :config
+  (global-set-key (kbd "C-å") 'goto-last-change)
+  (global-set-key (kbd "C-M-å") 'goto-last-change-reverse))
+#+end_src
 * Yasnippet
 Yasnippet is used for handling snippets.
 #+begin_src emacs-lisp
