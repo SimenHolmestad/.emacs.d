@@ -10,6 +10,7 @@ A list of stuff that should be installed to utilize everything in this config:
 - Aspell: `brew install aspell`
 - GraphViz (for drawing graphs with nodes and edges): `brew install graphviz`
 - Documentation: see [[Dash]]
+- npm i -g vscode-json-languageserver
 
 To change the errors provided by pycodestyle it is possible to follow the instructions in [[http://pycodestyle.pycqa.org/en/latest/intro.html][this link]].
 * Startup
@@ -405,6 +406,7 @@ A really good tool for git.
   :bind ("C-x g" . magit-status)
   :config
   (global-set-key (kbd "M-g b") 'magit-blame)
+  (global-set-key (kbd "M-g B") 'magit-log-buffer-file)
   (global-set-key (kbd "M-g h") 'magit-log-buffer-file))
 #+end_src
 
@@ -853,7 +855,7 @@ Makes a source block in an org file and opens a new window for editing it.
 #+end_src
 ** Toggle frame fullscreen
 #+begin_src emacs-lisp
-(global-set-key (kbd "C-M-å") 'toggle-frame-fullscreen)
+(global-set-key (kbd "C-M-Ø") 'toggle-frame-fullscreen)
 #+end_src
 * Local settings
 Make a file for local code named "local_stuff.el" if this does not already exist.
