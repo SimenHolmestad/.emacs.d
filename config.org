@@ -86,6 +86,10 @@ These settings are said to give better performance for example in LSP-mode: http
 (setq gc-cons-threshold 100000000)
 (setq read-process-output-max (* 3 1024 1024))
 #+end_src
+** Spaces instead of tabs
+#+begin_src emacs-lisp
+(setq-default indent-tabs-mode nil)
+#+end_src
 * Package handling
 ** Package.el
 Is used for installing packages and is required for use-package.
