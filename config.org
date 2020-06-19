@@ -321,51 +321,10 @@ Refresh dired buffers and be silent about it.
 (setq global-auto-revert-non-file-buffers t)
 (setq auto-revert-verbose nil)
 #+end_src
-* Dash
-Dash is a nice way of accessing documentation "M-x counsel-dash-install-docset" can be used to install more docsets, but if this is done, they must be added to the correct major-mode below. It looks like it might be possible to download files with documentation as well. This is described in the git-repo of [[https://github.com/dash-docs-el/helm-dash][helm-dash]].
-
-The list of docsets i have installed is listed here:
+* Devdocs
 #+begin_src emacs-lisp
-(setq sh-docset-list '("Python 3"
-                       "NumPy"
-                       "Matplotlib"
-                       "Emacs Lisp"
-                       "CSS"
-                       "HTML"
-                       "JavaScript"
-                       "React"
-                       "Express"))
-#+end_src
-
-And the code adding these to the correct major-mode is here:
-#+begin_src emacs-lisp
-(use-package counsel-dash
-  :config
-  (setq counsel-dash-common-docsets sh-docset-list
-        dash-docs-enable-debugging  t
-        counsel-dash-min-length     2)
-  (add-hook 'python-mode-hook (lambda () (setq-local counsel-dash-docsets '("python 3" "NumPy" "Matplotlib"))))
-  (add-hook 'js-mode-hook (lambda () (setq-local counsel-dash-docsets '("CSS" "HTML" "JavaScript" "React" "Express"))))
-  (add-hook 'css-mode-hook (lambda () (setq-local counsel-dash-docsets '("CSS"))))
-  (add-hook 'html-mode-hook (lambda () (setq-local counsel-dash-docsets '("HTML" "CSS" "JavaScript"))))
-  (add-hook 'org-mode-hook (lambda () (setq-local counsel-dash-docsets '("Emacs Lisp"))))
-
-  (global-set-key (kbd "M-g d") 'counsel-dash-at-point)
-  (global-set-key (kbd "M-g D") 'counsel-dash))
-#+end_src
-
-To download all docsets in the list, it is possible to run "M-x sh-install-dash-docsets" which is defined below, but this might take 20 minutes.
-#+begin_src emacs-lisp
-(defun sh-install-docsets (docset-list)
-  "Install all docsets in docset-list recursively"
-  (dash-docs-install-docset (replace-regexp-in-string " " "_" (car docset-list)))
-  (if (cdr docset-list)
-      (sh-install-docsets (cdr docset-list))))
-
-(defun sh-install-dash-docsets ()
-  "Install all specified docsets in sh-docset-list. This might take a while"
-  (interactive)
-  (sh-install-docsets sh-docset-list))
+(use-package devdocs)
+ (global-set-key (kbd "M-g d") 'devdocs-search)
 #+end_src
 * Ispell
 Ispell is for spellchecking in emacs. "M-x flyspell-mode" and "M-x flyspell-prog-mode" can be used to see misspelled words in buffer. Ispell-word is useful for checking a current word, while ispell-buffer is interacitve for the whole buffer. For spellchecking while programming, ispell-comments-and-strings is nice.
