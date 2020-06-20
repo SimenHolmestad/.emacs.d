@@ -62,6 +62,11 @@ Except for image and PDF-files.
 (setq auto-revert-interval 1) ;; Refresh buffers faster
 (auto-revert-set-timer) ;; For updating the auto-refresh.
 #+end_src
+** Remove error sound
+Emacs normally makes a sound when a command does not execute and such. This is often annoying.
+#+begin_src emacs-lisp
+(setq ring-bell-function 'ignore)
+#+end_src
 ** Whitespace control
 Remove whitespace at end of line on save and require newline at end of file.
 #+begin_src emacs-lisp
