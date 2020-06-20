@@ -289,6 +289,7 @@ Remove conflicting keybindings for "C-M-i".
 #+begin_src emacs-lisp
 (define-key text-mode-map (kbd "C-M-i") 'nil)
 (define-key help-mode-map (kbd "C-M-i") 'nil)
+(define-key lisp-interaction-mode-map (kbd "C-M-i") 'nil) ;; For scratch-buffer
 (use-package markdown-mode
   :config
   (define-key markdown-mode-map (kbd "C-M-i") nil))
