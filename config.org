@@ -1,7 +1,6 @@
 #+PROPERTY: header-args :results silent
 * Requirements
 A list of stuff that should be installed to utilize everything in this config:
-- The silver searcher: `brew install ag`
 - Python: `brew install python3`
 - Python language server: `pip install python-language-server`
 - Pycodestyle: `pip install pycodestyle`
@@ -9,8 +8,8 @@ A list of stuff that should be installed to utilize everything in this config:
 - Typescript language server: `npm install -g typescript-language-server`
 - Aspell: `brew install aspell`
 - GraphViz (for drawing graphs with nodes and edges): `brew install graphviz`
-- Documentation: see [[Dash]]
-- npm i -g vscode-json-languageserver
+- Language server for json: `npm i -g vscode-json-languageserver`
+- Ripgrep: `brew install ripgrep`
 
 To change the errors provided by pycodestyle it is possible to follow the instructions in [[http://pycodestyle.pycqa.org/en/latest/intro.html][this link]].
 * Startup
