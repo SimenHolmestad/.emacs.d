@@ -409,7 +409,14 @@ Ripgrep is a very nice way of doing greps. In the grep buffer it is possible to 
 #+end_src
 For further options after the grep is done, it is possible to use "m" in the grep buffer. This will bring up a list of possible changes to the grep like "context" for displaying lines before and after the matches. "g" will rerun the grep.
 
-It is further possible to use "e" to edit the buffer, followed by "C-x C-s" to save the changes. To save all files which are now changed, it is best to use "C-x s !".
+It is further possible to use "e" to enable wgrep and edit the buffer, followed by "C-x C-s" to save the changes. To save all files which are now changed, it is best to use "C-x s !".
+
+#+begin_src emacs-lisp
+(use-package wgrep
+  :config
+  (global-set-key (kbd "M-g w") 'wgrep-change-to-wgrep-mode))
+#+end_src
+The "M-g w" shortcut is necessary when editing grep buffers made with [[Projectile][counsel-projectile]].
 * Magit
 A really good tool for git.
 #+begin_src emacs-lisp
@@ -456,6 +463,7 @@ Counsel adds ivy features to more places.
    :map ivy-minibuffer-map
    ("M-y" . ivy-next-line-and-call))
   :config
+  (global-set-key (kbd "M-g ø") 'swiper)
   (counsel-mode))
 #+end_src
 
@@ -470,11 +478,16 @@ Projectile is used for managing projects in emacs and comes with a lot of handfu
   :config
   (projectile-mode)
   (define-key projectile-mode-map (kbd "C-c C-p") 'projectile-command-map))
+#+end_src
 
+Counsel-projectile provides some extra completion-functionality for projectile.
+#+begin_src emacs-lisp
 (use-package counsel-projectile
   :config
+  (global-set-key (kbd "M-g s") 'projectile-ripgrep) ;; Project-wide search
   (counsel-projectile-mode))
 #+end_src
+For making the project-wide-search into a grep buffer it is possible to use the binding "C-c C-o". After this it is possible to make use of some of the features available when doing normal [[Grepping][grepping]]. In this new buffer, "n" and "p" works as usual.
 * Goto-change
 This package lets you go to the previous change in the buffer. This is nice in some cases.
 #+begin_src emacs-lisp
