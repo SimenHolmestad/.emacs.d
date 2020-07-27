@@ -515,6 +515,17 @@ Yasnippet comes with a lot of default snippets in the yasnippet-snippets-package
 #+begin_src emacs-lisp
 (use-package yasnippet-snippets)
 #+end_src
+** Handy functions for yasnippets
+It is possible to create a yasnippet which uses emacs lisp-code to transform some of the input. A function for capitalizing a word (without setting the rest of the word to lowercase) is found below:
+#+begin_src emacs-lisp
+(defun sh-capitalize-first-char (&optional string)
+  "Capitalize only the first character of the input STRING."
+  (when (and string (> (length string) 0))
+    (let ((first-char (substring string nil 1))
+          (rest-str   (substring string 1)))
+      (concat (capitalize first-char) rest-str))))
+#+end_src
+This code is taken directly from [[https://emacs.stackexchange.com/questions/12613/convert-the-first-character-to-uppercase-capital-letter-using-yasnippet][this page]].
 * Treemacs
 I do not use this a lot, but sometimes it can be nice.
 #+begin_src emacs-lisp

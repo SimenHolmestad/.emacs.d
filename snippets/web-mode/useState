@@ -1,0 +1,4 @@
+# key: us
+# name: useState
+# --
+const [${1:variable}, set${1:$(sh-capitalize-first-char yas-text)}] = React.useState(${2:defaultValue});$0

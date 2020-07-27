@@ -1,0 +1,14 @@
+# key: rfct
+# name: react_functional_component_typescript
+# --
+import React from 'react';
+
+interface Props {
+  ${2:$(apply #'concat (mapcar (lambda (prop) (concat prop ": any;\n")) (split-string yas-text ", ")))}
+}
+
+const ${1:ComponentName}: React.FC<Props> = ({${2:props}}) => {
+  $0
+}
+
+export default $1

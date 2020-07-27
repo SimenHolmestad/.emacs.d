@@ -1,14 +1,13 @@
-# key: rfc
+# -*- mode: snippet -*-
 # name: react_functional_component
+# key: rfc
 # --
 import React from 'react';
 
-interface Props {
-  ${2:$(apply #'concat (mapcar (lambda (prop) (concat prop ": any;\n")) (split-string yas-text ", ")))}
+function ${1:ComponentName}(props) {
+  return (
+    $0
+  );
 }
 
-const ${1:ComponentName}: React.FC<Props> = ({${2:props}}) => {
-  $0
-}
-
-export default $1
+export default $1;
