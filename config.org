@@ -334,7 +334,7 @@ Refresh dired buffers and be silent about it.
 * Devdocs
 #+begin_src emacs-lisp
 (use-package devdocs)
- (global-set-key (kbd "M-g d") 'devdocs-search)
+ (global-set-key (kbd "M-g I") 'devdocs-search)
 #+end_src
 * Ispell
 Ispell is for spellchecking in emacs. "M-x flyspell-mode" and "M-x flyspell-prog-mode" can be used to see misspelled words in buffer. Ispell-word is useful for checking a current word, while ispell-buffer is interacitve for the whole buffer. For spellchecking while programming, ispell-comments-and-strings is nice.
@@ -588,7 +588,7 @@ Some more lsp-mode integration.
 (add-hook 'java-mode-hook (lambda ()
                             (setq c-basic-offset 4
                                   tab-width 4
-                                  indent-tabs-mode t)))
+                                  indent-tabs-mode nil)))
 #+end_src
 ** Java-lsp
 Gives some more opporunities for java.
@@ -602,7 +602,7 @@ Company is the "front end" for autocompletion and is setup to use lsp as its "ba
 (use-package company
   :diminish company-mode
   :config
-  (setq company-idle-delay 0.2
+  (setq company-idle-delay 0.0
         company-minimum-prefix-length 1)
   :hook (lsp-mode . company-mode))
 #+end_src
@@ -617,6 +617,8 @@ RJSX-mode for javascript and jsx syntax highlighting and such.
   (add-to-list 'auto-mode-alist '("\\.json\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.css\\'" . web-mode))
+  (setq web-mode-content-types-alist '(("jsx" . "\\.js[x]?\\'")))
+  (setq web-mode-enable-auto-quoting nil)
   (setq js-switch-indent-offset 2)
   (setq web-mode-markup-indent-offset 2)
   (setq web-mode-css-indent-offset 2)
