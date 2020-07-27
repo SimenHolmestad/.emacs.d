@@ -612,6 +612,20 @@ Some more lsp-mode integration.
     [remap xref-find-references] #'lsp-ui-peek-find-references)
   :after lsp-mode)
 #+end_src
+** Lsp-ivy
+With this package, the ivy completion framework is used together with lsp-mode.
+#+begin_src emacs-lisp
+(use-package lsp-ivy)
+#+end_src
+* Dumb Jump
+Dumb jump is another way of jumping and might be useful when the language server does not work (for example when finding css-classes in a react-project). The keybinding "M-," can be used to jump back.
+#+begin_src emacs-lisp
+(use-package dumb-jump
+  :config
+  (setq dumb-jump-selector 'ivy)
+  (global-set-key (kbd "M-g d") 'dumb-jump-go))
+#+end_src
+
 * Java
 #+begin_src emacs-lisp
 (add-hook 'java-mode-hook (lambda ()
