@@ -584,7 +584,7 @@ Language server protocol integration for autocompletion, jump-to-definition and 
         (rjsx-mode . lsp)
         (html-mode . lsp)
         (web-mode . lsp)
-        (emacs-lisp-mode . lsp)))
+        (kotlin-mode . lsp)))
 (global-set-key (kbd "M-g i") 'lsp-describe-thing-at-point)
 (global-set-key (kbd "M-g f") 'lsp-find-references)
 (global-set-key (kbd "M-g r") 'lsp-rename)
@@ -624,6 +624,16 @@ Gives some more opporunities for java.
 #+begin_src emacs-lisp
 (use-package lsp-java
   :after lsp)
+#+end_src
+* Kotlin
+For editing kotlin files. The [[https://github.com/fwcd/kotlin-language-server][kotlin lsp-server]] is currently not as good as other lsp-servers.
+#+begin_src emacs-lisp
+(use-package kotlin-mode)
+#+end_src
+* Groovy
+For editing groovy files, e.g gradle-stuff.
+#+begin_src emacs-lisp
+(use-package groovy-mode)
 #+end_src
 * Company
 Company is the "front end" for autocompletion and is setup to use lsp as its "backend".
