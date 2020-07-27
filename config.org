@@ -422,10 +422,9 @@ A really good tool for git.
 #+begin_src emacs-lisp
 (use-package magit
   :bind ("C-x g" . magit-status)
-  :config
-  (global-set-key (kbd "M-g b") 'magit-blame)
-  (global-set-key (kbd "M-g B") 'magit-log-buffer-file)
-  (global-set-key (kbd "M-g h") 'magit-log-buffer-file))
+        ("M-g b" . magit-blame)
+        ("M-g B" . magit-log-buffer-file)
+        ("M-g h" . magit-log-buffer-file))
 #+end_src
 
 Magit forge lets you see issues and pull-requests from github and gitlab in emacs.
