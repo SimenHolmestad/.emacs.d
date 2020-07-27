@@ -48,6 +48,7 @@ If this is not done the backup-files will be everywhere.
 #+begin_src emacs-lisp
 (require 'linum)
 (global-linum-mode t)
+(setq linum-format "%3d ")
 #+end_src
 
 Except for image and PDF-files.
@@ -431,6 +432,35 @@ Magit forge lets you see issues and pull-requests from github and gitlab in emac
 #+begin_src emacs-lisp
 (use-package forge
   :after magit)
+#+end_src
+* Git-gutter
+For showing changes made to a file since last commit. Taken from [[https://www.reddit.com/r/emacs/comments/cbh8f0/minimal_looking_diff_in_fringegutter/][this reddit-thread]].
+#+begin_src emacs-lisp
+(use-package git-gutter-fringe
+  :hook ((markdown-mode . git-gutter-mode)
+         (prog-mode . git-gutter-mode))
+  :init
+  :config
+  (setq git-gutter:disabled-modes '(org-mode asm-mode image-mode)
+        git-gutter:update-interval 1
+        git-gutter:ask-p nil)
+  :diminish git-gutter-mode
+  :demand fringe-helper
+  :config
+  ;; subtle diff indicators in the fringe
+  ;; places the git gutter outside the margins.
+  (setq-default fringes-outside-margins t)
+
+  ;; thin fringe bitmaps
+  (define-fringe-bitmap 'git-gutter-fr:added
+  [224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224]
+  nil nil 'center)
+  (define-fringe-bitmap 'git-gutter-fr:modified
+  [224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224 224]
+  nil nil 'center)
+  (define-fringe-bitmap 'git-gutter-fr:deleted
+  [0 0 0 0 0 0 0 0 0 0 0 0 0 128 192 224 240 248]
+  nil nil 'center))
 #+end_src
 * Ivy, swiper and counsel
 Ivy is a tool to easily select from many candidates, like when finding files. It is very similar to the package helm, but has a little less functionality and might be a bit faster.
