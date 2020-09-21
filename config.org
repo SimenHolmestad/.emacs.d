@@ -457,6 +457,7 @@ For showing changes made to a file since last commit. Taken from [[https://www.r
   (setq git-gutter:disabled-modes '(org-mode asm-mode image-mode)
         git-gutter:update-interval 1
         git-gutter:ask-p nil)
+  (global-set-key (kbd "M-g g") 'git-gutter-mode)
   :diminish git-gutter-mode
   :demand fringe-helper
   :config
