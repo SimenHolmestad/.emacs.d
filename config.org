@@ -57,6 +57,11 @@ Except for image and PDF-files.
 (add-hook 'doc-view-mode-hook (lambda () (linum-mode 0)))
 (add-hook 'pdf-view-mode-hook (lambda () (linum-mode 0)))
 #+end_src
+
+Add function for toggling line numbers
+#+begin_src emacs-lisp
+(global-set-key (kbd "M-g L") 'linum-mode)
+#+end_src
 ** Auto refresh of buffers
 #+begin_src emacs-lisp
 (global-auto-revert-mode 1)
