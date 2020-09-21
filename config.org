@@ -672,11 +672,12 @@ Company is the "front end" for autocompletion and is setup to use lsp as its "ba
   :hook (lsp-mode . company-mode))
 #+end_src
 * Javascript
-RJSX-mode for javascript and jsx syntax highlighting and such.
+Web-mode works nice for javascript jsx syntax highlighting and such.
 #+begin_src emacs-lisp
 (use-package web-mode
   :config
   (add-to-list 'auto-mode-alist '("\\.js\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.jsx\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.ts\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.json\\'" . web-mode))
