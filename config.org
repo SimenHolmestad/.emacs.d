@@ -403,8 +403,11 @@ Lets you choose a character and go to the next instance of it.
 #+begin_src emacs-lisp
 (use-package iy-go-to-char
   :bind (("C-l" . 'iy-go-to-char)
-         ("C-M-l" . 'iy-go-to-char-backward)))
+         ("C-M-l" . 'iy-go-to-char-backward)
+         ("C-." . 'recenter-top-bottom)))
+
 #+end_src
+The function `recenter-top-bottom` is originally bound to `C-l`.
 * Expand region
 Selects an area around point and increases selection by logical units for every time "M-ø" is done.
 #+begin_src emacs-lisp
