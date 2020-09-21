@@ -291,6 +291,9 @@ Remove conflicting keybindings for "C-M-i".
 (define-key text-mode-map (kbd "C-M-i") 'nil)
 (define-key help-mode-map (kbd "C-M-i") 'nil)
 (define-key lisp-interaction-mode-map (kbd "C-M-i") 'nil) ;; For scratch-buffer
+(add-hook 'eshell-mode-hook
+          (lambda ()
+            (define-key eshell-mode-map (kbd "C-M-i") 'nil)))
 (use-package markdown-mode
   :config
   (define-key markdown-mode-map (kbd "C-M-i") nil))
