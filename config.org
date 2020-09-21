@@ -661,6 +661,10 @@ For editing groovy files, e.g gradle-stuff.
 #+begin_src emacs-lisp
 (use-package groovy-mode)
 #+end_src
+* Rust
+#+begin_src emacs-lisp
+(use-package rust-mode)
+#+end_src
 * Company
 Company is the "front end" for autocompletion and is setup to use lsp as its "backend".
 #+begin_src emacs-lisp
