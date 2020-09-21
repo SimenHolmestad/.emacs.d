@@ -448,6 +448,11 @@ Magit forge lets you see issues and pull-requests from github and gitlab in emac
 (use-package forge
   :after magit)
 #+end_src
+
+Gitignore mode is nice for editing .gitignore-files.
+#+begin_src emacs-lisp
+(use-package gitignore-mode)
+#+end_src
 * Git-gutter
 For showing changes made to a file since last commit. Taken from [[https://www.reddit.com/r/emacs/comments/cbh8f0/minimal_looking_diff_in_fringegutter/][this reddit-thread]].
 #+begin_src emacs-lisp
