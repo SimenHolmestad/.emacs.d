@@ -899,6 +899,24 @@ The code below is for reporting time in pomodoros when doing an agenda-clock-rep
 (setq org-agenda-clockreport-parameter-plist
  '(:fileskip0 t :link t :maxlevel 1 :formula "$4=($3)*(60/25);t"))
 #+end_src
+** Minted
+Minted is used for exporting code blocks to latex with cooler highlighting.
+#+begin_src emacs-lisp
+(setq org-src-fontify-natively t)
+(require 'ox-latex)
+(add-to-list 'org-latex-packages-alist '("" "minted"))
+(setq org-latex-listings 'minted)
+
+(setq org-latex-pdf-process
+      '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+        "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+        "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+#+end_src
+
+
+To use a diffent theme for minted it is possible to add "#+LaTeX_HEADER: \usemintedstyle{style-name}" (without the quotes) to the org file. For seeing the different possible styles it is possible to do "pygmentize -L styles" in the shell.
+
+For minted to work, the python package "pygments" must be installed. This can be done by doing "pip3 install pygments".
 * Tramp
 Below is a function for changing to sudo while in tramp mode.
 #+begin_src emacs-lisp
