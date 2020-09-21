@@ -418,7 +418,7 @@ Selects an area around point and increases selection by logical units for every 
 Ripgrep is a very nice way of doing greps. In the grep buffer it is possible to see the locations of the matches when using "p" and "n".
 #+begin_src emacs-lisp
 (use-package rg
-    :bind (("M-g g" . rg)))
+    :bind (("M-g G" . rg)))
 (use-package ripgrep)
 #+end_src
 For further options after the grep is done, it is possible to use "m" in the grep buffer. This will bring up a list of possible changes to the grep like "context" for displaying lines before and after the matches. "g" will rerun the grep.
@@ -426,11 +426,8 @@ For further options after the grep is done, it is possible to use "m" in the gre
 It is further possible to use "e" to enable wgrep and edit the buffer, followed by "C-x C-s" to save the changes. To save all files which are now changed, it is best to use "C-x s !".
 
 #+begin_src emacs-lisp
-(use-package wgrep
-  :config
-  (global-set-key (kbd "M-g w") 'wgrep-change-to-wgrep-mode))
+(use-package wgrep)
 #+end_src
-The "M-g w" shortcut is necessary when editing grep buffers made with [[Projectile][counsel-projectile]].
 * Magit
 A really good tool for git.
 #+begin_src emacs-lisp
@@ -528,9 +525,37 @@ Counsel-projectile provides some extra completion-functionality for projectile.
 (use-package counsel-projectile
   :config
   (global-set-key (kbd "M-g s") 'projectile-ripgrep) ;; Project-wide search
+  (global-set-key (kbd "M-g F") 'sh-projectile-ripgrep-ivy-occur-at-point)
+  (define-key ivy-occur-grep-mode-map (kbd "n") 'sh-ivy-occur-next-line)
+  (define-key ivy-occur-grep-mode-map (kbd "q") 'quit-window)
+  (define-key ivy-occur-grep-mode-map (kbd "p") 'sh-ivy-occur-previous-line)
+  (define-key ivy-occur-grep-mode-map (kbd "e") 'wgrep-change-to-wgrep-mode)
+  (setq counsel-projectile-rg-initial-input '(ivy-thing-at-point))
   (counsel-projectile-mode))
 #+end_src
 For making the project-wide-search into a grep buffer it is possible to use the binding "C-c C-o". After this it is possible to make use of some of the features available when doing normal [[Grepping][grepping]]. In this new buffer, "n" and "p" works as usual.
+
+Some functions for easier grepping is provided below:
+#+begin_src emacs-lisp
+(defun sh-projectile-ripgrep-ivy-occur-at-point ()
+  (interactive)
+  "Run projectile-ripgrep and ivy occur for thing at point"
+  (xref-push-marker-stack)
+  (progn (run-at-time nil nil #'ivy-occur)
+  (counsel-projectile-rg)))
+
+(defun sh-ivy-occur-next-line ()
+  (interactive)
+  "Go to next line and show result in other window"
+  (ivy-occur-next-line)
+  (ivy-occur-press))
+
+(defun sh-ivy-occur-previous-line ()
+  (interactive)
+  "Go to previous line and show result in other window"
+  (ivy-occur-previous-line 1)
+  (ivy-occur-press))
+#+end_src
 * Goto-change
 This package lets you go to the previous change in the buffer. This is nice in some cases.
 #+begin_src emacs-lisp
