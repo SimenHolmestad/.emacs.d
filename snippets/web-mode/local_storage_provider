@@ -1,0 +1,27 @@
+# key: lsprovider
+# name: local_storage_provider
+# --
+import React, { createContext, useEffect, useState } from "react";
+
+export const ${1:Name}Context = createContext();
+
+const $1Provider = ({ children }) => {
+  const [${2:variable}, set${2:$(sh-capitalize-first-char yas-text)}] = useState(
+    () => JSON.parse(localStorage.getItem("$2")) || []
+  );
+
+  useEffect(() => {
+    localStorage.setItem("$2", JSON.stringify($2));
+  }, [$2]);
+
+  // it is possible to create other methods to pass to the providers
+  // value-property here, like add${2:$(sh-capitalize-first-char yas-text)}
+
+  return (
+    <$1.Provider value={{ $2, set${2:$(sh-capitalize-first-char yas-text)} }}>
+      {children}
+    </$1.Provider>
+  );
+};
+
+export default $1Provider;

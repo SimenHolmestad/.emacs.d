@@ -1,0 +1,6 @@
+# key: int
+# name: interface
+# --
+interface ${1:InterfaceName} {
+  ${2:variableName}: $0
+}

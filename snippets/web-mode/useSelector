@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: useSelector
+# key: use
+# --
+const ${1:name} = useSelector((state) => state.${2:property});
