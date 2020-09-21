@@ -858,12 +858,6 @@ Add source block languages.
 (setq org-babel-python-command "python3")
 #+end_src
 
-Make lowercase the standard for templates.
-#+begin_src emacs-lisp
-(mapc (lambda (arg) (setcdr arg (list (downcase (cadr arg)))))
-    org-structure-template-alist)
-#+end_src
-
 Do not indent after editing source block.
 #+begin_src emacs-lisp
 (setq org-edit-src-content-indentation 0)
