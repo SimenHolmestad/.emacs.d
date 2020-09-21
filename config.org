@@ -595,7 +595,6 @@ Language server protocol integration for autocompletion, jump-to-definition and 
         (python-mode . lsp)
         (js-mode . lsp)
         (java-mode . lsp)
-        (rjsx-mode . lsp)
         (html-mode . lsp)
         (web-mode . lsp)
         (kotlin-mode . lsp)))
@@ -639,7 +638,6 @@ Dumb jump is another way of jumping and might be useful when the language server
   (setq dumb-jump-selector 'ivy)
   (global-set-key (kbd "M-g d") 'dumb-jump-go))
 #+end_src
-
 * Java
 #+begin_src emacs-lisp
 (add-hook 'java-mode-hook (lambda ()
