@@ -306,7 +306,7 @@ Make sure the emacs path for shell is the same as the system path.
 
 Run shell with M-g z
 #+begin_src emacs-lisp
-(global-set-key (kbd "M-g z") 'shell)
+(global-set-key (kbd "M-g z") 'eshell)
 #+end_src
 * Dired
 Configuration for Emacs' file navigation system.
