@@ -324,10 +324,12 @@ If there are two dired windows, the copy and move command should have the other 
 (setq dired-dwim-target t)
 #+end_src
 ** Better navigation
-Define b to go up a directory in dired mode, as f is used to go down/open a file.
+Define b to go up a directory in dired mode, as f is used to go down/open a file. Also, set tab to be used to preview files and e to edit buffer.
 #+begin_src emacs-lisp
 (eval-after-load 'dired
-  '(define-key dired-mode-map (kbd "b") 'dired-up-directory))
+  '(progn (define-key dired-mode-map (kbd "b") 'dired-up-directory)
+          (define-key dired-mode-map (kbd "e") 'dired-toggle-read-only) ;; edit
+          (define-key dired-mode-map (kbd "<tab>") 'dired-display-file)))
 #+end_src
 ** Auto-refresh of dired buffers
 Refresh dired buffers and be silent about it.
