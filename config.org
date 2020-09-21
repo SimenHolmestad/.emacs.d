@@ -337,6 +337,11 @@ Refresh dired buffers and be silent about it.
 (setq global-auto-revert-non-file-buffers t)
 (setq auto-revert-verbose nil)
 #+end_src
+** Do not use --dired
+By default, dired calls ls with "--dired" as argument. This is not necessary.
+#+begin_src emacs-lisp
+(setq dired-use-ls-dired nil)
+#+end_src
 * Devdocs
 #+begin_src emacs-lisp
 (use-package devdocs)
