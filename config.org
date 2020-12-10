@@ -315,10 +315,14 @@ Make sure the emacs path for shell is the same as the system path.
   (when (memq window-system '(mac ns x))
     (exec-path-from-shell-initialize)))
 #+end_src
-
-Run shell with M-g z
+** Eshell
+Run eshell with M-g z
 #+begin_src emacs-lisp
 (global-set-key (kbd "M-g z") 'eshell)
+#+end_src
+
+#+begin_src emacs-lisp
+(setq eshell-scroll-to-bottom-on-input t)
 #+end_src
 * Dired
 Configuration for Emacs' file navigation system.
