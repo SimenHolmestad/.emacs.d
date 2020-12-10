@@ -880,6 +880,22 @@ Make sure that scheduled items with a deadline do not appear twice.
 ;; Syntax highlighting in exported html
 (use-package htmlize)
 #+end_src
+** Open html links in new tab
+When exporting org-mode files to html, the html-links should open in a new tab. This code is taken from https://emacs.stackexchange.com/questions/14320/org-mode-links-open-in-new-tab/46383.
+
+#+begin_src emacs-lisp
+(defun my-org-export-add-target-blank-to-http-links (text backend info)
+  "Add target=\"_blank\" to external links."
+  (when (and
+         (org-export-derived-backend-p backend 'html)
+         (string-match "href=\"http[^\"]+" text)
+         (not (string-match "target=\"" text)))
+    (string-match "<a " text)
+    (replace-match "<a target=\"_blank\" " nil nil text)))
+
+(add-to-list 'org-export-filter-link-functions
+             'my-org-export-add-target-blank-to-http-links)
+#+end_src
 ** Org-special-block-extras
 A way to make custom export blocks in org-mode. More info can be found here: https://alhassy.github.io/org-special-block-extras/
 #+begin_src emacs-lisp
