@@ -289,7 +289,6 @@ For configuring multiple workspaces. The workspace number is shown in the lower 
   (setq eyebrowse-mode-map nil)
   :config
   (eyebrowse-mode t)
-  (define-key org-mode-map (kbd "C-M-i") nil)
   (global-set-key (kbd "C-M-j") 'eyebrowse-create-window-config)
   (global-set-key (kbd "C-M-o") 'eyebrowse-close-window-config)
   (global-set-key (kbd "C-M-i") 'eyebrowse-next-window-config)
@@ -299,7 +298,10 @@ Remove conflicting keybindings for "C-M-i".
 #+begin_src emacs-lisp
 (define-key text-mode-map (kbd "C-M-i") 'nil)
 (define-key help-mode-map (kbd "C-M-i") 'nil)
+(define-key org-mode-map (kbd "C-M-i") nil)
 (define-key lisp-interaction-mode-map (kbd "C-M-i") 'nil) ;; For scratch-buffer
+(define-key emacs-lisp-mode-map (kbd "C-M-i") 'nil)
+(define-key emacs-lisp-mode-map (kbd "C-M-h") 'completion-at-point)
 (add-hook 'eshell-mode-hook
           (lambda ()
             (define-key eshell-mode-map (kbd "C-M-i") 'nil)))
