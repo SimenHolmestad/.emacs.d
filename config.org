@@ -520,7 +520,8 @@ Counsel adds ivy features to more places.
    ("M-y" . ivy-next-line-and-call))
   :config
   (global-set-key (kbd "M-g ø") 'swiper)
-  (counsel-mode))
+  (counsel-mode)
+  (setq ivy-initial-inputs-alist nil))
 #+end_src
 
 The smex package is really nice as it lets you see the most recently used commands when using "counsel-M-x" (which is bound to "M-x").
