@@ -635,11 +635,9 @@ Language server protocol integration for autocompletion, jump-to-definition and 
   :init
   (setq lsp-keymap-prefix "C-x C-l")
   :config
-  (setq lsp-prefer-flymake nil
-        lsp-enable-snippet nil
-        lsp-eldoc-enable-hover nil
-        lsp-prefer-capf t
-        lsp-idle-dalay 0.0)
+  (setq lsp-enable-snippet t
+        lsp-eldoc-enable-hover t
+        lsp-idle-delay 0.0)
   :hook(
         (python-mode . lsp)
         (js-mode . lsp)
@@ -664,10 +662,10 @@ Some more lsp-mode integration.
 #+begin_src emacs-lisp
 (use-package lsp-ui
   :config
-  (setq lsp-prefer-flymake nil
-        lsp-ui-doc-enable nil
-        lsp-ui-sideline-enable nil
-        lsp-ui-flycheck-enable t)
+  (setq lsp-ui-doc-enable nil
+        lsp-ui-sideline-show-diagnostics nil
+        lsp-ui-sideline-show-hover nil
+        lsp-ui-sideline-show-code-actions t)
   (define-key lsp-ui-mode-map
     [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
   (define-key lsp-ui-mode-map
