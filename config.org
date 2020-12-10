@@ -527,6 +527,13 @@ The smex package is really nice as it lets you see the most recently used comman
 #+begin_src emacs-lisp
 (use-package smex)
 #+end_src
+
+Ivy-rich gives extra information when doing commands like "M-x".
+#+begin_src emacs-lisp
+(use-package ivy-rich
+  :config
+  (ivy-rich-mode 1))
+#+end_src
 * Projectile
 Projectile is used for managing projects in emacs and comes with a lot of handful features.
 #+begin_src emacs-lisp
