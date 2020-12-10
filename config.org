@@ -748,6 +748,19 @@ Show possible keybindings if a keybinding is started and some time goes by.
   :config
   (which-key-mode))
 #+end_src
+* Helpful
+For better help messages.
+#+begin_src emacs-lisp
+(use-package helpful
+  :custom
+  (counsel-describe-function-function #'helpful-callable)
+  (counsel-describe-variable-function #'helpful-variable)
+  :bind
+  ([remap describe-function] . counsel-describe-function)
+  ([remap describe-command] . helpful-command)
+  ([remap describe-variable] . counsel-describe-variable)
+  ([remap describe-key] . helpful-key))
+#+end_src
 * Change of keybindings
 ** Undo
 Lets better set both control-z and command-z as undo just to be sure.
