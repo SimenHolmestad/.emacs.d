@@ -275,6 +275,12 @@ Windmove is for moving between windows. The keys are in arrow-key-formation on t
 (global-set-key (kbd "M-K") 'windmove-down)
 (global-set-key (kbd "M-L") 'windmove-right)
 #+end_src
+** Shrinking and expanding window size
+The default bindings for shrinking and enlarging windows are not that good in my opinion.
+#+begin_src emacs-lisp
+(global-set-key (kbd "M-O") 'shrink-window-horizontally)
+(global-set-key (kbd "M-U") 'enlarge-window-horizontally)
+#+end_src
 ** Eyebrowse
 For configuring multiple workspaces. The workspace number is shown in the lower left corner with spaceline.
 #+begin_src emacs-lisp
@@ -285,7 +291,7 @@ For configuring multiple workspaces. The workspace number is shown in the lower 
   (eyebrowse-mode t)
   (define-key org-mode-map (kbd "C-M-i") nil)
   (global-set-key (kbd "C-M-j") 'eyebrowse-create-window-config)
-  (global-set-key (kbd "C-x C-M-j") 'eyebrowse-close-window-config)
+  (global-set-key (kbd "C-M-o") 'eyebrowse-close-window-config)
   (global-set-key (kbd "C-M-i") 'eyebrowse-next-window-config)
   (global-set-key (kbd "C-M-k") 'eyebrowse-prev-window-config))
 #+end_src
