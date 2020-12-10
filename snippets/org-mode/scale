@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: scale
+# key: scale
+# --
+#+ATTR_LATEX: :scale $0

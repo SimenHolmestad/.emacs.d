@@ -1,0 +1,15 @@
+# key: reqjson
+# name: json_request
+# --
+#+begin_src python :results output :exports results
+import requests
+import json
+
+URL = "${1:url}"
+PARAMS = {$2}
+
+json_response = requests.${3:get}(url=URL, params=PARAMS, timeout=1.0).json()
+
+print(json.dumps(json_response, indent=2))
+#+end_src
+$0

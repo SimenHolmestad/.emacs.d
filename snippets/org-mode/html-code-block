@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: html-code-block
+# key: html
+# --
+#+begin_src html
+$0
+#+end_src
