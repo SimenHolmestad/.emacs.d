@@ -555,6 +555,9 @@ Counsel-projectile provides some extra completion-functionality for projectile.
   (define-key ivy-occur-grep-mode-map (kbd "p") 'sh-ivy-occur-previous-line)
   (define-key ivy-occur-grep-mode-map (kbd "e") 'wgrep-change-to-wgrep-mode)
   (setq counsel-projectile-rg-initial-input '(ivy-thing-at-point))
+  (counsel-projectile-modify-action
+   'counsel-projectile-switch-project-action
+   '((default counsel-projectile-switch-project-action-dired)))
   (counsel-projectile-mode))
 #+end_src
 For making the project-wide-search into a grep buffer it is possible to use the binding "C-c C-o". After this it is possible to make use of some of the features available when doing normal [[Grepping][grepping]]. In this new buffer, "n" and "p" works as usual.
