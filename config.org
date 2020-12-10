@@ -686,6 +686,7 @@ Dumb jump is another way of jumping and might be useful when the language server
 (use-package dumb-jump
   :config
   (setq dumb-jump-selector 'ivy)
+  (setq dumb-jump-disable-obsolete-warnings t)
   (global-set-key (kbd "M-g d") 'dumb-jump-go))
 #+end_src
 * Java
