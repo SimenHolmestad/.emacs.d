@@ -804,6 +804,7 @@ Use M-g c to compile and M-g C to recompile.
 #+begin_src emacs-lisp
 (global-set-key (kbd "M-g c") 'compile)
 (global-set-key (kbd "M-g C") 'recompile)
+(global-set-key (kbd "M-g k") 'recompile)
 #+end_src
 
 This function is used to toggle whether the finished compilation should show or not. Most of it is taken from [[https://emacs.stackexchange.com/questions/62/hide-compilation-window][this page]]. Not showing finished compilations is nice when working with graphs, as the compilation buffer often go in front of the buffer showing the graph.
