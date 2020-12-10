@@ -463,12 +463,9 @@ Gitignore mode is nice for editing .gitignore-files.
 (use-package gitignore-mode)
 #+end_src
 * Git-gutter
-For showing changes made to a file since last commit. Taken from [[https://www.reddit.com/r/emacs/comments/cbh8f0/minimal_looking_diff_in_fringegutter/][this reddit-thread]].
+For showing changes made to a file since last commit. Taken from [[https://www.reddit.com/r/emacs/comments/cbh8f0/minimal_looking_diff_in_fringegutter/][this reddit-thread]]. I don't like having it on all the time, so it is nice to be able to toggle it with "M-g g".
 #+begin_src emacs-lisp
 (use-package git-gutter-fringe
-  :hook ((markdown-mode . git-gutter-mode)
-         (prog-mode . git-gutter-mode))
-  :init
   :config
   (setq git-gutter:disabled-modes '(org-mode asm-mode image-mode)
         git-gutter:update-interval 1
