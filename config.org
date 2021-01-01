@@ -693,7 +693,8 @@ Some more lsp-mode integration.
   (setq lsp-ui-doc-enable nil
         lsp-ui-sideline-show-diagnostics nil
         lsp-ui-sideline-show-hover nil
-        lsp-ui-sideline-show-code-actions t)
+        lsp-ui-sideline-show-code-actions t
+        lsp-headerline-breadcrumb-enable nil)
   (define-key lsp-ui-mode-map
     [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
   (define-key lsp-ui-mode-map
