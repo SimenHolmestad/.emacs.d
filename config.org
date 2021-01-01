@@ -548,16 +548,26 @@ Counsel adds ivy features to more places.
   (setq ivy-initial-inputs-alist nil))
 #+end_src
 
-The smex package is really nice as it lets you see the most recently used commands when using "counsel-M-x" (which is bound to "M-x").
-#+begin_src emacs-lisp
-(use-package smex)
-#+end_src
-
 Ivy-rich gives extra information when doing commands like "M-x".
 #+begin_src emacs-lisp
 (use-package ivy-rich
   :config
-  (ivy-rich-mode 1))
+  (ivy-rich-mode 1)
+  (setq ivy-rich-parse-remote-buffer nil))
+#+end_src
+** Prescient
+Prescient is used for sorting and filtering when selecting between a set of candidates in emacs.
+#+begin_src emacs-lisp
+(use-package prescient
+  :config
+  (prescient-persist-mode 1))
+(use-package ivy-prescient
+  :after counsel
+  :config
+  (ivy-prescient-mode 1))
+(use-package company-prescient
+  :config
+  (company-prescient-mode 1))
 #+end_src
 * Projectile
 Projectile is used for managing projects in emacs and comes with a lot of handful features.
