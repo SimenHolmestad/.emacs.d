@@ -674,6 +674,7 @@ Language server protocol integration for autocompletion, jump-to-definition and 
         (kotlin-mode . lsp)))
 (global-set-key (kbd "M-g i") 'lsp-describe-thing-at-point)
 (global-set-key (kbd "M-g f") 'lsp-find-references)
+(global-set-key (kbd "M--") 'lsp-find-references)
 (global-set-key (kbd "M-g r") 'lsp-rename)
 (global-set-key (kbd "M-g T") 'lsp-ui-imenu)
 (global-set-key (kbd "M-g l") 'lsp-format-buffer)
