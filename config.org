@@ -91,8 +91,8 @@ This is useful when using tools like multiple cursors to select a sentence. It i
 ** Performance
 These settings are said to give better performance for example in LSP-mode: https://emacs-lsp.github.io/lsp-mode/page/performance/.
 #+begin_src emacs-lisp
-(setq gc-cons-threshold 100000000)
-(setq read-process-output-max (* 3 1024 1024))
+;; (setq gc-cons-threshold 100000000)
+(setq read-process-output-max (* 16 1024 1024))
 #+end_src
 ** Spaces instead of tabs
 #+begin_src emacs-lisp
