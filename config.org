@@ -725,6 +725,22 @@ Dumb jump is another way of jumping and might be useful when the language server
   (setq dumb-jump-disable-obsolete-warnings t)
   (global-set-key (kbd "M-g d") 'dumb-jump-go))
 #+end_src
+* Python
+#+begin_src emacs-lisp
+(use-package python-mode
+  :custom
+  (python-shell-interpreter "python3")
+  :config
+  (define-key python-mode-map (kbd "C-<backspace>") 'nil)
+  (add-hook 'python-mode-hook
+          (lambda () (py-underscore-word-syntax-p-off)))) ;; Do not treat "_" as part of word
+#+end_src
+** Virtual environment handling
+#+begin_src emacs-lisp
+(use-package pyvenv
+  :config
+  (pyvenv-mode 1))
+#+end_src
 * Java
 #+begin_src emacs-lisp
 (add-hook 'java-mode-hook (lambda ()
