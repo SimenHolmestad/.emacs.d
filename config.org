@@ -725,21 +725,45 @@ Dumb jump is another way of jumping and might be useful when the language server
   (setq dumb-jump-disable-obsolete-warnings t)
   (global-set-key (kbd "M-g d") 'dumb-jump-go))
 #+end_src
-* Python
+* Clojure
+** Clojure mode
+https://github.com/clojure-emacs/clojure-mode
 #+begin_src emacs-lisp
-(use-package python-mode
-  :custom
-  (python-shell-interpreter "python3")
-  :config
-  (define-key python-mode-map (kbd "C-<backspace>") 'nil)
-  (add-hook 'python-mode-hook
-          (lambda () (py-underscore-word-syntax-p-off)))) ;; Do not treat "_" as part of word
+(use-package clojure-mode)
 #+end_src
-** Virtual environment handling
+** Clj-refactor
 #+begin_src emacs-lisp
-(use-package pyvenv
+(use-package clj-refactor)
+#+end_src
+** Paredit
+#+begin_src emacs-lisp
+(use-package paredit
+  :hook (clojure-mode . paredit-mode)
   :config
-  (pyvenv-mode 1))
+  (define-key paredit-mode-map (kbd "M-J") 'nil)
+  (define-key paredit-mode-map (kbd "M-j") 'paredit-join-sexps)
+  (define-key paredit-mode-map (kbd "M-8") 'paredit-backward-slurp-sexp)
+  (define-key paredit-mode-map (kbd "M-9") 'paredit-forward-slurp-sexp)
+  (define-key paredit-mode-map (kbd "C-M-8") 'paredit-backward-barf-sexp)
+  (define-key paredit-mode-map (kbd "C-M-9") 'paredit-forward-barf-sexp)
+  (define-key paredit-mode-map (kbd "C-M-n") 'nil)
+  (define-key paredit-mode-map (kbd "C-M-p") 'nil)
+  (define-key paredit-mode-map (kbd "M-n") 'paredit-forward)
+  (define-key paredit-mode-map (kbd "M-p") 'paredit-backward)
+  (define-key paredit-mode-map (kbd "C-<backspace>") 'paredit-backward-kill-word)
+)
+#+end_src
+** Cider
+https://github.com/clojure-emacs/cider
+#+begin_src emacs-lisp
+(use-package cider
+  :config
+  (define-key cider-mode-map (kbd "C-M-i") 'nil))
+#+end_src
+** Rainbow delimiters
+#+begin_src emacs-lisp
+(use-package rainbow-delimiters
+  :hook (clojure-mode . rainbow-delimiters-mode))
 #+end_src
 * Java
 #+begin_src emacs-lisp
