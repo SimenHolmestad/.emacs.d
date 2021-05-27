@@ -1,3 +1,5 @@
+Note: I have decided to try out [doom-emacs](https://github.com/hlissner/doom-emacs) for the time being and will probably not work on this config for a while. The new config can be found [here](https://github.com/SimenHolmestad/.doom.d).
+
 # .emacs.d
 My configuration file for the emacs text editor. It is written in an org-mode-file (.org) for easier organisation and a better editing experience in emacs. All the code blocks in the org-file are run with the `org-babel-load-file`-function in `init.el` when emacs starts.
 
